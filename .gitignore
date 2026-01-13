@@ -8,6 +8,9 @@ node_modules
 /.svelte-kit
 /build
 
+# context
+.trae
+
 # OS
 .DS_Store
 Thumbs.db

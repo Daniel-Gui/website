@@ -25,6 +25,7 @@
 	let textEl = $state<HTMLDivElement | null>(null);
 
 	let isVisible = $state(true);
+	let showText = $state(false);
 	let currentIndex = $state(0);
 
 	function sleep(ms: number) {
@@ -48,34 +49,66 @@
 			const { animate } = await import('motion');
 
 			stopAll();
+			showText = false;
 
 			overlayEl.style.opacity = '1';
 			overlayEl.style.transform = 'translateY(0)';
 
-			imageEl.style.opacity = '1';
-			imageEl.style.transform = 'none';
-
 			const prefersReducedMotion =
 				typeof window !== 'undefined' &&
 				window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
+
+			imageEl.style.opacity = '1';
+			imageEl.style.transform = prefersReducedMotion ? 'none' : 'scale(0.92)';
+			imageEl.style.willChange = prefersReducedMotion ? '' : 'transform';
 
 			const imageRevealMs = prefersReducedMotion ? 0 : 900;
 			imageWrapEl.style.clipPath = 'inset(0% 0% 100% 0%)';
 			imageWrapEl.style.willChange = 'clip-path';
 
 			if (!prefersReducedMotion) {
-				controls.push(
-					animate(
-						imageWrapEl,
-						{ clipPath: 'inset(0% 0% 0% 0%)' },
-						{ duration: imageRevealMs / 1000, ease: [0.42, 0, 1, 1] }
-					)
+				const wipeControls = animate(
+					imageWrapEl,
+					{ clipPath: 'inset(0% 0% 0% 0%)' },
+					{ duration: imageRevealMs / 1000, ease: [0.42, 0, 1, 1] }
 				);
+				const zoomControls = animate(
+					imageEl,
+					{ scale: 1 },
+					{ type: 'spring', stiffness: 260, damping: 18, delay: 0.12 }
+				);
+				controls.push(wipeControls, zoomControls);
+
+				const waitFor = async (c: unknown, fallbackMs: number) => {
+					if (
+						typeof c === 'object' &&
+						c !== null &&
+						'finished' in c &&
+						(c as { finished?: Promise<unknown> }).finished
+					) {
+						try {
+							await (c as { finished: Promise<unknown> }).finished;
+						} catch {
+							return;
+						}
+						return;
+					}
+					await sleep(fallbackMs);
+				};
+
+				await Promise.all([
+					waitFor(wipeControls, imageRevealMs),
+					waitFor(zoomControls, imageRevealMs)
+				]);
 			} else {
 				imageWrapEl.style.clipPath = 'inset(0% 0% 0% 0%)';
+				await tick();
 			}
 
-			await sleep(imageRevealMs);
+			if (cancelled) return;
+
+			showText = true;
+			await tick();
 			if (cancelled) return;
 
 			for (let i = 0; i < texts.length; i++) {
@@ -149,16 +182,20 @@
 				/>
 			</div>
 
-			{#key currentIndex}
-				<div
-					bind:this={textEl}
-					class="pointer-events-none absolute inset-0 grid place-items-center px-6 text-center"
-				>
-					<div class="text-xl font-medium tracking-tight text-balance sm:text-2xl">
-						{texts[currentIndex]}
+			{#if showText}
+				{#key currentIndex}
+					<div
+						class="pointer-events-none absolute top-1/2 left-1/2 w-[min(92vw,900px)] -translate-x-1/2 -translate-y-1/2 px-6 text-center"
+					>
+						<div
+							bind:this={textEl}
+							class="text-4xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-5xl md:text-6xl"
+						>
+							{texts[currentIndex]}
+						</div>
 					</div>
-				</div>
-			{/key}
+				{/key}
+			{/if}
 		</div>
 	</div>
 {/if}

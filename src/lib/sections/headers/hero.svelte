@@ -294,116 +294,114 @@
 	});
 </script>
 
-<section
-	class={`container-page pt-20 pb-20 sm:pt-24 sm:pb-24 ${heroRevealed ? '' : 'hero-reveal'}`}
->
-	<div class="relative">
-		<div
-			class="pointer-events-none absolute top-[-56px] left-1/2 h-[220px] w-[min(900px,92vw)] -translate-x-1/2 rounded-full opacity-70 blur-3xl"
-			style="background: radial-gradient(closest-side, rgba(24, 24, 28, 0.12), transparent 70%);"
-			aria-hidden="true"
-		></div>
-
-		<div class="mx-auto max-w-[880px] text-center">
-			<div class="hero-showcase-bleed">
-				<div bind:this={showcaseEl} class="hero-showcase" aria-hidden="true" data-hero-item>
-					<div
-						class="hero-showcase-card hero-showcase-left"
-						style="background-image: url('https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80');"
-						data-showcase-card
-					></div>
-					<div
-						class="hero-showcase-card hero-showcase-center"
-						style="background-image: url('https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=800&q=80');"
-						data-showcase-card
-					></div>
-					<div
-						class="hero-showcase-card hero-showcase-right"
-						style="background-image: url('https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=800&q=80');"
-						data-showcase-card
-					></div>
+<section class={`hero-surface ${heroRevealed ? '' : 'hero-reveal'}`}>
+	<div class="container-page pt-20 pb-20 sm:pt-24 sm:pb-24">
+		<div class="relative">
+			<div class="mx-auto max-w-[880px] text-center">
+				<div class="hero-showcase-bleed">
+					<div bind:this={showcaseEl} class="hero-showcase" aria-hidden="true" data-hero-item>
+						<div
+							class="hero-showcase-card hero-showcase-left"
+							style="background-image: url('https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80');"
+							data-showcase-card
+						></div>
+						<div
+							class="hero-showcase-card hero-showcase-center"
+							style="background-image: url('https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=800&q=80');"
+							data-showcase-card
+						></div>
+						<div
+							class="hero-showcase-card hero-showcase-right"
+							style="background-image: url('https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=800&q=80');"
+							data-showcase-card
+						></div>
+					</div>
 				</div>
-			</div>
 
-			<div bind:this={chipsWrapEl} class="mb-7 flex flex-wrap justify-center gap-2" data-hero-item>
-				<span class="chip">Product Designer</span>
-				<span class="chip">UI/UX</span>
-				<span class="chip">Frontend</span>
-			</div>
-
-			<h1
-				class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
-				bind:this={headingEl}
-				data-hero-item
-			>
-				Design de produto com estética, clareza e entrega.
-			</h1>
-
-			<p
-				class="text-muted mx-auto mt-5 max-w-[62ch] text-lg text-pretty sm:text-xl"
-				bind:this={leadEl}
-				data-hero-item
-			>
-				Sou Product Designer (UI/UX) e desenvolvedor Frontend. Eu desenho interfaces e protótipos
-				que viram produto — e implemento com cuidado nos detalhes.
-			</p>
-
-			<div class="mt-10 flex justify-center" bind:this={ctaWrapEl} data-hero-item>
 				<div
-					bind:this={ctaEl}
-					class="hero-segmented segmented"
-					aria-label="Ações principais"
-					onpointerleave={onLeave}
+					bind:this={chipsWrapEl}
+					class="mb-7 flex flex-wrap justify-center gap-2"
+					data-hero-item
 				>
-					<div bind:this={highlightEl} class="hero-highlight" aria-hidden="true"></div>
-
-					<a
-						bind:this={emailEl}
-						class="hero-item segmented-item"
-						href={mailtoHref}
-						onpointerenter={onEnterItem}
-						onfocus={onEnterItem}
-					>
-						<span class="hero-icon" aria-hidden="true">
-							<IconMail class="h-[1.05rem] w-[1.05rem]" />
-						</span>
-						Email
-					</a>
-
-					<a
-						bind:this={whatsappEl}
-						class="hero-item segmented-item"
-						href={whatsappHref}
-						target="_blank"
-						rel="noreferrer"
-						onpointerenter={onEnterItem}
-						onfocus={onEnterItem}
-					>
-						<span class="hero-icon" aria-hidden="true">
-							<IconWhatsapp class="h-[1.05rem] w-[1.05rem]" />
-						</span>
-						WhatsApp
-					</a>
-
-					<a
-						bind:this={worksEl}
-						class="hero-item hero-item-primary segmented-item"
-						href="#trabalhos"
-						onpointerenter={onEnterItem}
-						onfocus={onEnterItem}
-					>
-						<span class="hero-icon" aria-hidden="true">
-							<IconSparkle class="h-[1.05rem] w-[1.05rem]" />
-						</span>
-						Ver trabalhos
-					</a>
+					<span class="chip">Product Designer</span>
+					<span class="chip">UI/UX</span>
+					<span class="chip">Frontend</span>
 				</div>
-			</div>
 
-			<div class="hero-availability text-muted mt-7" bind:this={availabilityEl} data-hero-item>
-				<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
-				></span>
-				<span class="hero-availability-text">{availabilityText}</span>
+				<h1
+					class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
+					bind:this={headingEl}
+					data-hero-item
+				>
+					Design de produto com estética, clareza e entrega.
+				</h1>
+
+				<p
+					class="text-muted mx-auto mt-5 max-w-[62ch] text-lg text-pretty sm:text-xl"
+					bind:this={leadEl}
+					data-hero-item
+				>
+					Sou Product Designer (UI/UX) e desenvolvedor Frontend. Eu desenho interfaces e protótipos
+					que viram produto — e implemento com cuidado nos detalhes.
+				</p>
+
+				<div class="mt-10 flex justify-center" bind:this={ctaWrapEl} data-hero-item>
+					<div
+						bind:this={ctaEl}
+						class="hero-segmented segmented"
+						aria-label="Ações principais"
+						onpointerleave={onLeave}
+					>
+						<div bind:this={highlightEl} class="hero-highlight" aria-hidden="true"></div>
+
+						<a
+							bind:this={emailEl}
+							class="hero-item segmented-item"
+							href={mailtoHref}
+							onpointerenter={onEnterItem}
+							onfocus={onEnterItem}
+						>
+							<span class="hero-icon" aria-hidden="true">
+								<IconMail class="h-[1.05rem] w-[1.05rem]" />
+							</span>
+							Email
+						</a>
+
+						<a
+							bind:this={whatsappEl}
+							class="hero-item segmented-item"
+							href={whatsappHref}
+							target="_blank"
+							rel="noreferrer"
+							onpointerenter={onEnterItem}
+							onfocus={onEnterItem}
+						>
+							<span class="hero-icon" aria-hidden="true">
+								<IconWhatsapp class="h-[1.05rem] w-[1.05rem]" />
+							</span>
+							WhatsApp
+						</a>
+
+						<a
+							bind:this={worksEl}
+							class="hero-item hero-item-primary segmented-item"
+							href="#trabalhos"
+							onpointerenter={onEnterItem}
+							onfocus={onEnterItem}
+						>
+							<span class="hero-icon" aria-hidden="true">
+								<IconSparkle class="h-[1.05rem] w-[1.05rem]" />
+							</span>
+							Ver trabalhos
+						</a>
+					</div>
+				</div>
+
+				<div class="hero-availability text-muted mt-7" bind:this={availabilityEl} data-hero-item>
+					<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
+					></span>
+					<span class="hero-availability-text">{availabilityText}</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -413,6 +411,67 @@
 	.hero-reveal [data-hero-item] {
 		opacity: 0;
 		transform: translateY(14px);
+	}
+
+	.hero-surface {
+		--hero-top: #05010a;
+		--hero-purple: #5b21b6;
+		--hero-blue: #2563eb;
+		--hero-bottom: rgb(var(--bg));
+		--hero-bleed-top: 120px;
+		position: relative;
+		isolation: isolate;
+		overflow-x: clip;
+	}
+
+	@supports not (overflow: clip) {
+		.hero-surface {
+			overflow-x: hidden;
+		}
+	}
+
+	.hero-surface::before {
+		content: '';
+		position: absolute;
+		top: calc(-1 * var(--hero-bleed-top));
+		right: 0;
+		bottom: 0;
+		left: 0;
+		z-index: -1;
+		pointer-events: none;
+		background:
+			radial-gradient(
+				900px 420px at 22% 6%,
+				color-mix(in srgb, var(--hero-purple) 58%, transparent) 0%,
+				transparent 70%
+			),
+			radial-gradient(
+				900px 420px at 78% 10%,
+				color-mix(in srgb, var(--hero-blue) 52%, transparent) 0%,
+				transparent 72%
+			),
+			radial-gradient(
+				700px 360px at 50% 18%,
+				color-mix(in srgb, #000 26%, transparent) 0%,
+				transparent 76%
+			),
+			linear-gradient(
+				180deg,
+				var(--hero-top) 0%,
+				color-mix(in srgb, var(--hero-top) 65%, var(--hero-purple)) 18%,
+				color-mix(in srgb, var(--hero-purple) 70%, var(--hero-blue)) 42%,
+				color-mix(in srgb, var(--hero-blue) 60%, var(--hero-bottom)) 62%,
+				var(--hero-bottom) 82%,
+				var(--hero-bottom) 100%
+			);
+	}
+
+	.hero-surface h1 {
+		color: rgb(255 255 255 / 0.92);
+	}
+
+	.hero-surface p.text-muted {
+		color: rgb(255 255 255 / 0.72);
 	}
 
 	.hero-showcase {
@@ -489,6 +548,14 @@
 		justify-content: center;
 		gap: 0.55rem;
 		font-size: 0.95rem;
+		color: rgb(var(--fg) / 0.78);
+		border: 1px solid rgb(var(--border) / 0.12);
+		background: rgb(var(--surface) / 0.7);
+		border-radius: 9999px;
+		padding: 0.45rem 0.85rem;
+		box-shadow: var(--shadow-1);
+		backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 	}
 
 	.hero-availability-dot {
@@ -621,7 +688,7 @@
 
 		.hero-segmented {
 			display: grid;
-			grid-template-columns: 1fr;
+			grid-template-columns: 1fr 1fr;
 			padding: 0;
 			gap: 0.55rem;
 			border: 0;
@@ -629,6 +696,8 @@
 			box-shadow: none;
 			backdrop-filter: none;
 			-webkit-backdrop-filter: none;
+			width: min(420px, 100%);
+			margin-inline: auto;
 		}
 
 		.hero-highlight {
@@ -636,8 +705,8 @@
 		}
 
 		.hero-item {
-			width: min(420px, 100%);
-			margin-inline: auto;
+			width: 100%;
+			margin-inline: 0;
 			justify-content: center;
 			padding: 0.95rem 1.15rem;
 			border-radius: 9999px;
@@ -651,6 +720,7 @@
 		}
 
 		.hero-item-primary {
+			grid-column: 1 / -1;
 			background: rgb(var(--surface) / 0.92);
 			box-shadow: var(--shadow-2);
 		}

@@ -3,6 +3,12 @@
 	import Brand from '$lib/components/branding/brand.svelte';
 	import { tick } from 'svelte';
 	import { introDone } from '$lib/stores/intro';
+	import IconClose from '$lib/components/icons/icon-close.svelte';
+	import IconFileArrowDown from '$lib/components/icons/icon-file-arrow-down.svelte';
+	import IconLinkedin from '$lib/components/icons/icon-linkedin.svelte';
+	import IconMail from '$lib/components/icons/icon-mail.svelte';
+	import IconMenu from '$lib/components/icons/icon-menu.svelte';
+	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
 
 	type Props = {
 		class?: string;
@@ -258,20 +264,11 @@
 				onclick={toggleMenu}
 			>
 				<span class="sr-only">Menu</span>
-				<svg
-					aria-hidden="true"
-					viewBox="0 0 24 24"
-					fill="none"
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-5 w-5"
-				>
-					<path
-						d="M4 7H20M4 12H20M4 17H20"
-						stroke="currentColor"
-						stroke-width="1.8"
-						stroke-linecap="round"
-					/>
-				</svg>
+				{#if menuMounted}
+					<IconClose class="h-5 w-5" />
+				{:else}
+					<IconMenu class="h-5 w-5" />
+				{/if}
 			</button>
 
 			{#if menuMounted}
@@ -297,27 +294,7 @@
 							<span
 								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<svg
-									aria-hidden="true"
-									viewBox="0 0 24 24"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-6 w-6"
-								>
-									<path
-										d="M12 3V14M12 14L8 10M12 14L16 10"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-									<path
-										d="M4 17V19C4 20.1046 4.89543 21 6 21H18C19.1046 21 20 20.1046 20 19V17"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-									/>
-								</svg>
+								<IconFileArrowDown class="h-6 w-6" />
 							</span>
 							<span class="text-sm font-medium">Baixar currículo</span>
 							<span class="text-muted text-xs">PDF</span>
@@ -334,38 +311,7 @@
 							<span
 								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<svg
-									aria-hidden="true"
-									viewBox="0 0 24 24"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-6 w-6"
-								>
-									<path
-										d="M7 10V17"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-									/>
-									<path
-										d="M7 7.5V7.4"
-										stroke="currentColor"
-										stroke-width="2.4"
-										stroke-linecap="round"
-									/>
-									<path
-										d="M11 17V12.8C11 11.2536 12.2536 10 13.8 10C15.3464 10 16.6 11.2536 16.6 12.8V17"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-									/>
-									<path
-										d="M11 12.2C11.4 10.9 12.6 10 14 10"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-									/>
-								</svg>
+								<IconLinkedin class="h-6 w-6" />
 							</span>
 							<span class="text-sm font-medium">LinkedIn</span>
 							<span class="text-muted text-xs">Perfil</span>
@@ -380,27 +326,7 @@
 							<span
 								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<svg
-									aria-hidden="true"
-									viewBox="0 0 24 24"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-6 w-6"
-								>
-									<path
-										d="M4.5 7.5H19.5V16.5C19.5 17.6046 18.6046 18.5 17.5 18.5H6.5C5.39543 18.5 4.5 17.6046 4.5 16.5V7.5Z"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linejoin="round"
-									/>
-									<path
-										d="M5.5 8.5L12 13.2L18.5 8.5"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
+								<IconMail class="h-6 w-6" />
 							</span>
 							<span class="text-sm font-medium">Email</span>
 							<span class="text-muted text-xs">Contato</span>
@@ -417,28 +343,7 @@
 							<span
 								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<svg
-									aria-hidden="true"
-									viewBox="0 0 24 24"
-									fill="none"
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-6 w-6"
-								>
-									<path
-										d="M7.5 19.5L8.2 16.8C7.2 15.6 6.6 14.1 6.6 12.5C6.6 8.9 9.5 6 13.1 6C16.7 6 19.6 8.9 19.6 12.5C19.6 16.1 16.7 19 13.1 19C11.6 19 10.2 18.5 9.1 17.6L7.5 19.5Z"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-									<path
-										d="M11 11.2C11.2 10.6 11.6 10.4 12.2 10.4C12.5 10.4 12.8 10.5 13.1 10.8L14.1 11.8C14.4 12.1 14.4 12.6 14.1 12.9L13.6 13.4C14.2 14.4 15 15.2 16 15.8L16.5 15.3C16.8 15 17.3 15 17.6 15.3L18.6 16.3C18.9 16.6 19 16.9 19 17.2C19 17.8 18.7 18.2 18.1 18.4"
-										stroke="currentColor"
-										stroke-width="1.8"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
+								<IconWhatsapp class="h-6 w-6" />
 							</span>
 							<span class="text-sm font-medium">WhatsApp</span>
 							<span class="text-muted text-xs">Mensagem</span>

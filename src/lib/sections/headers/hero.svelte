@@ -1,6 +1,27 @@
 <script lang="ts">
 	import { tick } from 'svelte';
 	import { introDone } from '$lib/stores/intro';
+	import IconMail from '$lib/components/icons/icon-mail.svelte';
+	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
+	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
+
+	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
+
+	type Props = {
+		availabilityText?: string;
+		availabilityStatus?: AvailabilityStatus;
+		revealStartDelayMs?: number;
+		showcaseRevealDurationMs?: number;
+		showcaseRevealStaggerMs?: number;
+	};
+
+	let {
+		availabilityText = 'Disponível para propostas',
+		availabilityStatus = 'available',
+		revealStartDelayMs = 220,
+		showcaseRevealDurationMs = 350,
+		showcaseRevealStaggerMs = 50
+	}: Props = $props();
 
 	const EMAIL = 'seuemail@exemplo.com';
 	const WHATSAPP_E164 = '5511999999999';
@@ -24,7 +45,8 @@
 	let headingEl = $state<HTMLHeadingElement | null>(null);
 	let leadEl = $state<HTMLParagraphElement | null>(null);
 	let ctaWrapEl = $state<HTMLDivElement | null>(null);
-	let availabilityEl = $state<HTMLParagraphElement | null>(null);
+	let availabilityEl = $state<HTMLElement | null>(null);
+	let showcaseEl = $state<HTMLDivElement | null>(null);
 	let heroRevealed = $state(false);
 	let heroDidAnimate = $state(false);
 
@@ -108,95 +130,160 @@
 			const { animate } = await import('motion');
 			await tick();
 
+			const showcaseCards = showcaseEl
+				? Array.from(showcaseEl.querySelectorAll<HTMLElement>('[data-showcase-card]'))
+				: [];
 			const chips = chipsWrapEl
 				? Array.from(chipsWrapEl.querySelectorAll<HTMLSpanElement>('span.chip'))
 				: [];
 
-			const items = [chipsWrapEl, headingEl, leadEl, ctaWrapEl, availabilityEl].filter(
+			const items = [showcaseEl, chipsWrapEl, headingEl, leadEl, ctaWrapEl, availabilityEl].filter(
 				Boolean
 			) as HTMLElement[];
 
 			for (const el of items) {
 				el.style.opacity = '0';
 				el.style.transform = 'translateY(14px)';
+				el.style.filter = '';
 				el.style.willChange = 'opacity, transform';
+			}
+			for (const el of showcaseCards) {
+				const base =
+					getComputedStyle(el).getPropertyValue('--card-transform').trim() ||
+					'translate(-50%, -50%)';
+				el.style.transition = 'none';
+				el.style.opacity = '0';
+				el.style.transform = `${base} translateY(14px) scale(0.92)`;
+				el.style.filter = 'blur(14px)';
+				el.style.willChange = 'opacity, transform, filter';
 			}
 			for (const el of chips) {
 				el.style.opacity = '0';
 				el.style.transform = 'translateY(10px)';
 				el.style.willChange = 'opacity, transform';
 			}
+			if (chipsWrapEl && chips.length) {
+				chipsWrapEl.style.opacity = '1';
+				chipsWrapEl.style.transform = 'none';
+				chipsWrapEl.style.willChange = '';
+			}
+			if (headingEl) headingEl.style.filter = 'blur(12px)';
+			if (leadEl) leadEl.style.filter = 'blur(12px)';
 
-			await new Promise((r) => setTimeout(r, 560));
+			await new Promise((r) => setTimeout(r, revealStartDelayMs));
 
-			const animations = [];
+			if (showcaseCards.length) {
+				if (showcaseEl) {
+					await animate(
+						showcaseEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }
+					).finished;
+				}
+
+				for (const [index, el] of showcaseCards.entries()) {
+					const base =
+						getComputedStyle(el).getPropertyValue('--card-transform').trim() ||
+						'translate(-50%, -50%)';
+
+					if (index > 0) await new Promise((r) => setTimeout(r, showcaseRevealStaggerMs));
+
+					await animate(
+						el,
+						{
+							opacity: [0, 1],
+							transform: [
+								`${base} translateY(14px) scale(0.92)`,
+								`${base} translateY(-2px) scale(1.03)`,
+								`${base} translateY(0px) scale(1)`
+							],
+							filter: ['blur(14px)', 'blur(0px)']
+						} as unknown as Record<string, unknown>,
+						{ duration: showcaseRevealDurationMs / 1000, ease: [0.16, 1, 0.3, 1] }
+					).finished;
+				}
+			} else if (showcaseEl) {
+				await animate(
+					showcaseEl,
+					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
+				).finished;
+			}
+
 			if (chips.length) {
-				for (const [index, el] of chips.entries()) {
-					animations.push(
+				const chipAnims = chips.map(
+					(el, index) =>
 						animate(
 							el,
 							{ opacity: [0, 1], transform: ['translateY(10px)', 'translateY(0px)'] },
 							{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: index * 0.07 }
 						).finished
-					);
-				}
-			} else if (chipsWrapEl) {
-				animations.push(
-					animate(
-						chipsWrapEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }
-					).finished
 				);
+				await Promise.all(chipAnims);
+			} else if (chipsWrapEl) {
+				await animate(
+					chipsWrapEl,
+					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+					{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }
+				).finished;
 			}
 
 			if (headingEl) {
-				animations.push(
-					animate(
-						headingEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.12 }
-					).finished
-				);
+				await animate(
+					headingEl,
+					{
+						opacity: [0, 1],
+						transform: ['translateY(14px)', 'translateY(0px)'],
+						filter: ['blur(12px)', 'blur(0px)']
+					} as unknown as Record<string, unknown>,
+					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
+				).finished;
 			}
 
 			if (leadEl) {
-				animations.push(
-					animate(
-						leadEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.24 }
-					).finished
-				);
+				await animate(
+					leadEl,
+					{
+						opacity: [0, 1],
+						transform: ['translateY(14px)', 'translateY(0px)'],
+						filter: ['blur(12px)', 'blur(0px)']
+					} as unknown as Record<string, unknown>,
+					{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.06 }
+				).finished;
 			}
 
 			if (ctaWrapEl) {
-				animations.push(
-					animate(
-						ctaWrapEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.36 }
-					).finished
-				);
+				await animate(
+					ctaWrapEl,
+					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
+				).finished;
 			}
 
 			if (availabilityEl) {
-				animations.push(
-					animate(
-						availabilityEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.48 }
-					).finished
-				);
+				await animate(
+					availabilityEl,
+					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+					{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.08 }
+				).finished;
 			}
 
-			await Promise.all(animations);
 			heroRevealed = true;
 
 			for (const el of items) {
 				el.style.opacity = '';
 				el.style.transform = '';
+				el.style.filter = '';
 				el.style.willChange = '';
+			}
+			for (const el of showcaseCards) {
+				el.style.transition = 'none';
+				el.style.opacity = '';
+				el.style.transform = '';
+				el.style.filter = '';
+				el.style.willChange = '';
+				void el.offsetHeight;
+				el.style.transition = '';
 			}
 			for (const el of chips) {
 				el.style.opacity = '';
@@ -218,6 +305,26 @@
 		></div>
 
 		<div class="mx-auto max-w-[880px] text-center">
+			<div class="hero-showcase-bleed">
+				<div bind:this={showcaseEl} class="hero-showcase" aria-hidden="true" data-hero-item>
+					<div
+						class="hero-showcase-card hero-showcase-left"
+						style="background-image: url('https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80');"
+						data-showcase-card
+					></div>
+					<div
+						class="hero-showcase-card hero-showcase-center"
+						style="background-image: url('https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=800&q=80');"
+						data-showcase-card
+					></div>
+					<div
+						class="hero-showcase-card hero-showcase-right"
+						style="background-image: url('https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=800&q=80');"
+						data-showcase-card
+					></div>
+				</div>
+			</div>
+
 			<div bind:this={chipsWrapEl} class="mb-7 flex flex-wrap justify-center gap-2" data-hero-item>
 				<span class="chip">Product Designer</span>
 				<span class="chip">UI/UX</span>
@@ -258,21 +365,7 @@
 						onfocus={onEnterItem}
 					>
 						<span class="hero-icon" aria-hidden="true">
-							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M4.5 7.5H19.5V16.5C19.5 17.6046 18.6046 18.5 17.5 18.5H6.5C5.39543 18.5 4.5 17.6046 4.5 16.5V7.5Z"
-									stroke="currentColor"
-									stroke-width="1.8"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M5.5 8.5L12 13.2L18.5 8.5"
-									stroke="currentColor"
-									stroke-width="1.8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<IconMail class="h-[1.05rem] w-[1.05rem]" />
 						</span>
 						Email
 					</a>
@@ -287,22 +380,7 @@
 						onfocus={onEnterItem}
 					>
 						<span class="hero-icon" aria-hidden="true">
-							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M7.5 19.5L8.2 16.8C7.2 15.6 6.6 14.1 6.6 12.5C6.6 8.9 9.5 6 13.1 6C16.7 6 19.6 8.9 19.6 12.5C19.6 16.1 16.7 19 13.1 19C11.6 19 10.2 18.5 9.1 17.6L7.5 19.5Z"
-									stroke="currentColor"
-									stroke-width="1.8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-								<path
-									d="M11 11.2C11.2 10.6 11.6 10.4 12.2 10.4C12.5 10.4 12.8 10.5 13.1 10.8L14.1 11.8C14.4 12.1 14.4 12.6 14.1 12.9L13.6 13.4C14.2 14.4 15 15.2 16 15.8L16.5 15.3C16.8 15 17.3 15 17.6 15.3L18.6 16.3C18.9 16.6 19 16.9 19 17.2C19 17.8 18.7 18.2 18.1 18.4"
-									stroke="currentColor"
-									stroke-width="1.8"
-									stroke-linecap="round"
-									stroke-linejoin="round"
-								/>
-							</svg>
+							<IconWhatsapp class="h-[1.05rem] w-[1.05rem]" />
 						</span>
 						WhatsApp
 					</a>
@@ -315,32 +393,18 @@
 						onfocus={onEnterItem}
 					>
 						<span class="hero-icon" aria-hidden="true">
-							<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M4.5 6.5C4.5 5.39543 5.39543 4.5 6.5 4.5H10.5C11.6046 4.5 12.5 5.39543 12.5 6.5V10.5C12.5 11.6046 11.6046 12.5 10.5 12.5H6.5C5.39543 12.5 4.5 11.6046 4.5 10.5V6.5Z"
-									stroke="currentColor"
-									stroke-width="1.8"
-								/>
-								<path
-									d="M11.5 13.5H17.5C18.6046 13.5 19.5 14.3954 19.5 15.5V17.5C19.5 18.6046 18.6046 19.5 17.5 19.5H13.5C12.3954 19.5 11.5 18.6046 11.5 17.5V13.5Z"
-									stroke="currentColor"
-									stroke-width="1.8"
-								/>
-								<path
-									d="M13.5 4.5H17.5C18.6046 4.5 19.5 5.39543 19.5 6.5V10.5C19.5 11.6046 18.6046 12.5 17.5 12.5H13.5C12.3954 12.5 11.5 11.6046 11.5 10.5V6.5C11.5 5.39543 12.3954 4.5 13.5 4.5Z"
-									stroke="currentColor"
-									stroke-width="1.8"
-								/>
-							</svg>
+							<IconSparkle class="h-[1.05rem] w-[1.05rem]" />
 						</span>
 						Ver trabalhos
 					</a>
 				</div>
 			</div>
 
-			<p class="text-muted mt-7 text-sm" bind:this={availabilityEl} data-hero-item>
-				Disponível para freelas, squads e produtos em evolução.
-			</p>
+			<div class="hero-availability text-muted mt-7" bind:this={availabilityEl} data-hero-item>
+				<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
+				></span>
+				<span class="hero-availability-text">{availabilityText}</span>
+			</div>
 		</div>
 	</div>
 </section>
@@ -349,6 +413,113 @@
 	.hero-reveal [data-hero-item] {
 		opacity: 0;
 		transform: translateY(14px);
+	}
+
+	.hero-showcase {
+		position: relative;
+		margin: 0 auto 1.5rem;
+		width: min(560px, 100%);
+		height: 220px;
+	}
+
+	.hero-showcase-bleed {
+		width: 100vw;
+		margin-left: calc(50% - 50vw);
+		overflow-x: clip;
+	}
+
+	@supports not (overflow: clip) {
+		.hero-showcase-bleed {
+			overflow-x: hidden;
+		}
+	}
+
+	.hero-showcase-card {
+		--card-y: 0px;
+		--card-scale: 1;
+		--card-transform: translate(-50%, -50%);
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 220px;
+		height: 180px;
+		transform: var(--card-transform) translateY(var(--card-y)) scale(var(--card-scale));
+		border-radius: 26px;
+		border: 1px solid transparent;
+		background-position: center;
+		background-size: cover;
+		box-shadow: var(--shadow-2);
+		overflow: hidden;
+		transition:
+			transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+			box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
+			border-color 260ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.hero-showcase-left {
+		--card-transform: translate(calc(-50% - 160px), calc(-50% + 14px)) rotate(-10deg);
+		filter: grayscale(0.1);
+	}
+
+	.hero-showcase-center {
+		z-index: 1;
+		width: 240px;
+		height: 196px;
+		--card-transform: translate(-50%, -50%);
+	}
+
+	.hero-showcase-right {
+		--card-transform: translate(calc(-50% + 160px), calc(-50% + 14px)) rotate(10deg);
+		filter: grayscale(0.12);
+	}
+
+	.hero-showcase-card:hover {
+		z-index: 3;
+		border-color: rgba(255, 255, 255, 0.92);
+		box-shadow:
+			0 0 0 3px rgba(255, 255, 255, 0.9),
+			var(--shadow-2);
+		transform: var(--card-transform) translateY(calc(var(--card-y) - 8px))
+			scale(calc(var(--card-scale) * 1.06));
+	}
+
+	.hero-availability {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.55rem;
+		font-size: 0.95rem;
+	}
+
+	.hero-availability-dot {
+		width: 10px;
+		height: 10px;
+		border-radius: 9999px;
+		background: #22c55e;
+		box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.16);
+		animation: hero-dot-pulse 1.4s ease-in-out infinite;
+	}
+
+	.hero-availability-dot[data-status='busy'] {
+		background: #f59e0b;
+		box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.16);
+	}
+
+	.hero-availability-dot[data-status='unavailable'] {
+		background: #ef4444;
+		box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.16);
+	}
+
+	@keyframes hero-dot-pulse {
+		0%,
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+		50% {
+			transform: scale(0.84);
+			opacity: 0.75;
+		}
 	}
 
 	.hero-segmented {
@@ -390,11 +561,6 @@
 		height: 1.05rem;
 	}
 
-	.hero-icon svg {
-		width: 100%;
-		height: 100%;
-	}
-
 	.hero-highlight {
 		position: absolute;
 		z-index: 0;
@@ -418,9 +584,41 @@
 		.hero-item {
 			transition: none;
 		}
+
+		.hero-availability-dot {
+			animation: none;
+		}
+
+		.hero-showcase-card {
+			transition: none;
+		}
 	}
 
 	@media (max-width: 639px) {
+		.hero-showcase {
+			height: 200px;
+			width: min(520px, 100%);
+			margin-bottom: 1.25rem;
+		}
+
+		.hero-showcase-card {
+			width: 200px;
+			height: 170px;
+		}
+
+		.hero-showcase-left {
+			--card-transform: translate(calc(-50% - 112px), calc(-50% + 14px)) rotate(-9deg);
+		}
+
+		.hero-showcase-center {
+			width: 220px;
+			height: 188px;
+		}
+
+		.hero-showcase-right {
+			--card-transform: translate(calc(-50% + 112px), calc(-50% + 14px)) rotate(9deg);
+		}
+
 		.hero-segmented {
 			display: grid;
 			grid-template-columns: 1fr;

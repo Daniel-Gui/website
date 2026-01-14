@@ -239,7 +239,7 @@
 </script>
 
 <header
-	class={`relative z-50 ${className}`}
+	class={`sticky top-0 z-50 ${className}`}
 	bind:this={headerEl}
 	style={navbarRevealed
 		? undefined

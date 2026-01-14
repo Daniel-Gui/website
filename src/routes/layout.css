@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+/* Supports weights 100-900 */
+@import '@fontsource-variable/archivo';
 
 @layer base {
 	:root {
@@ -34,6 +36,7 @@
 		min-height: 100dvh;
 		background: rgb(var(--bg));
 		color: rgb(var(--fg));
+		font-family: 'Archivo Variable', sans-serif;
 	}
 
 	::selection {

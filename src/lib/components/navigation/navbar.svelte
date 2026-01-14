@@ -250,7 +250,7 @@
 			class="glass relative z-50 flex items-center justify-between gap-4 px-6 py-4"
 			aria-label="Principal"
 		>
-			<a href={resolve('/')} class="inline-flex items-center gap-3 rounded-full">
+			<a href={resolve('/', {})} class="inline-flex items-center gap-3 rounded-full">
 				<Brand class="h-6 w-auto" />
 				<span class="sr-only">Início</span>
 			</a>
@@ -286,7 +286,7 @@
 					<div class="relative grid grid-cols-2 gap-3 sm:grid-cols-4">
 						<a
 							bind:this={cardCvEl}
-							href={resolve('/curriculo.pdf' as unknown as '/')}
+							href={resolve('/curriculo.pdf' as unknown as '/', {})}
 							download
 							class={`card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_18px_48px_rgba(0,0,0,0.12)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98] ${menuOpening ? 'translate-y-3 scale-[0.985] opacity-0' : ''}`}
 							onclick={() => void closeMenu()}

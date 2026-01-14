@@ -459,9 +459,9 @@
 				180deg,
 				var(--hero-top) 0%,
 				color-mix(in srgb, var(--hero-top) 65%, var(--hero-purple)) 18%,
-				color-mix(in srgb, var(--hero-purple) 70%, var(--hero-blue)) 42%,
-				color-mix(in srgb, var(--hero-blue) 60%, var(--hero-bottom)) 62%,
-				var(--hero-bottom) 82%,
+				color-mix(in srgb, var(--hero-purple) 70%, var(--hero-blue)) 50%,
+				color-mix(in srgb, var(--hero-blue) 60%, var(--hero-bottom)) 72%,
+				var(--hero-bottom) 90%,
 				var(--hero-bottom) 100%
 			);
 	}

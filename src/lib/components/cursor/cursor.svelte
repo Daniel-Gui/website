@@ -2,10 +2,16 @@
 	type Props = {
 		size?: number;
 		hiddenNativeCursor?: boolean;
+		color?: string;
 		class?: string;
 	};
 
-	let { size = 18, hiddenNativeCursor = true, class: className = '' }: Props = $props();
+	let {
+		size = 18,
+		hiddenNativeCursor = true,
+		color = '#2563EB',
+		class: className = ''
+	}: Props = $props();
 
 	let x = $state(-100);
 	let y = $state(-100);
@@ -79,7 +85,7 @@
 		class:is-visible={isVisible}
 		class:reduced={prefersReducedMotion}
 		aria-hidden="true"
-		style={`--cursor-size:${size}px; --cursor-x:${x}px; --cursor-y:${y}px;`}
+		style={`--cursor-size:${size}px; --cursor-x:${x}px; --cursor-y:${y}px; --cursor-color:${color};`}
 	>
 		<div class="cursor-core"></div>
 	</div>
@@ -126,13 +132,12 @@
 		width: 100%;
 		height: 100%;
 		border-radius: 9999px;
-		background: conic-gradient(from 0deg, #f4f4f5, #d4d4d8, #a1a1aa, #52525b, #e4e4e7, #f4f4f5);
+		background: var(--cursor-color);
 		box-shadow:
 			0 0 0 1px rgba(0, 0, 0, 0.08),
 			0 18px 40px rgba(0, 0, 0, 0.14);
 		filter: blur(0px);
 		transform-origin: 50% 50%;
-		animation: cursor-spin 1.15s linear infinite;
 	}
 
 	.cursor-core::before {
@@ -149,15 +154,6 @@
 	}
 
 	.cursor.reduced .cursor-core {
-		animation: none;
-	}
-
-	@keyframes cursor-spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
+		transform: none;
 	}
 </style>

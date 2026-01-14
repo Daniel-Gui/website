@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import Brand from '$lib/components/branding/brand.svelte';
 	import { tick } from 'svelte';
+	import { introDone } from '$lib/stores/intro';
 
 	type Props = {
 		class?: string;
@@ -19,6 +20,7 @@
 	let menuMounted = $state(false);
 	let isAnimating = $state(false);
 	let menuOpening = $state(false);
+	let navbarRevealed = $state(false);
 
 	const EMAIL = 'seuemail@exemplo.com';
 	const WHATSAPP_E164 = '5511999999999';
@@ -169,6 +171,43 @@
 	};
 
 	$effect(() => {
+		if (!$introDone) return;
+		if (navbarRevealed) return;
+		if (!headerEl) return;
+		if (typeof window === 'undefined') {
+			navbarRevealed = true;
+			return;
+		}
+
+		void (async () => {
+			const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+			if (reduce) {
+				navbarRevealed = true;
+				return;
+			}
+
+			const { animate } = await import('motion');
+
+			headerEl.style.opacity = '0';
+			headerEl.style.transform = 'translateY(-10px)';
+			headerEl.style.pointerEvents = 'none';
+			await tick();
+
+			const anim = animate(
+				headerEl,
+				{ opacity: [0, 1], transform: ['translateY(-10px)', 'translateY(0px)'] },
+				{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.05 }
+			);
+
+			await anim.finished;
+			navbarRevealed = true;
+			headerEl.style.opacity = '';
+			headerEl.style.transform = '';
+			headerEl.style.pointerEvents = '';
+		})();
+	});
+
+	$effect(() => {
 		if (!menuMounted) return;
 		if (typeof window === 'undefined') return;
 
@@ -193,7 +232,13 @@
 	});
 </script>
 
-<header class={`relative z-50 ${className}`} bind:this={headerEl}>
+<header
+	class={`relative z-50 ${className}`}
+	bind:this={headerEl}
+	style={navbarRevealed
+		? undefined
+		: 'opacity:0; transform: translateY(-10px); pointer-events:none;'}
+>
 	<div class="container-page relative isolate pt-6">
 		<nav
 			class="glass relative z-50 flex items-center justify-between gap-4 px-6 py-4"

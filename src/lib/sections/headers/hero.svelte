@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
+	import { introDone } from '$lib/stores/intro';
 
 	const EMAIL = 'seuemail@exemplo.com';
 	const WHATSAPP_E164 = '5511999999999';
@@ -19,6 +20,13 @@
 	let whatsappEl = $state<HTMLAnchorElement | null>(null);
 	let worksEl = $state<HTMLAnchorElement | null>(null);
 	let activeEl = $state<HTMLAnchorElement | null>(null);
+	let chipsWrapEl = $state<HTMLDivElement | null>(null);
+	let headingEl = $state<HTMLHeadingElement | null>(null);
+	let leadEl = $state<HTMLParagraphElement | null>(null);
+	let ctaWrapEl = $state<HTMLDivElement | null>(null);
+	let availabilityEl = $state<HTMLParagraphElement | null>(null);
+	let heroRevealed = $state(false);
+	let heroDidAnimate = $state(false);
 
 	const updateHighlight = (target?: HTMLAnchorElement | null) => {
 		if (!ctaEl || !highlightEl) return;
@@ -78,9 +86,130 @@
 			setActive(worksEl);
 		})();
 	});
+
+	$effect(() => {
+		if (!$introDone) return;
+		if (heroDidAnimate) return;
+
+		heroDidAnimate = true;
+
+		if (typeof window === 'undefined') {
+			heroRevealed = true;
+			return;
+		}
+
+		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+		if (reduce) {
+			heroRevealed = true;
+			return;
+		}
+
+		void (async () => {
+			const { animate } = await import('motion');
+			await tick();
+
+			const chips = chipsWrapEl
+				? Array.from(chipsWrapEl.querySelectorAll<HTMLSpanElement>('span.chip'))
+				: [];
+
+			const items = [chipsWrapEl, headingEl, leadEl, ctaWrapEl, availabilityEl].filter(
+				Boolean
+			) as HTMLElement[];
+
+			for (const el of items) {
+				el.style.opacity = '0';
+				el.style.transform = 'translateY(14px)';
+				el.style.willChange = 'opacity, transform';
+			}
+			for (const el of chips) {
+				el.style.opacity = '0';
+				el.style.transform = 'translateY(10px)';
+				el.style.willChange = 'opacity, transform';
+			}
+
+			await new Promise((r) => setTimeout(r, 560));
+
+			const animations = [];
+			if (chips.length) {
+				for (const [index, el] of chips.entries()) {
+					animations.push(
+						animate(
+							el,
+							{ opacity: [0, 1], transform: ['translateY(10px)', 'translateY(0px)'] },
+							{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: index * 0.07 }
+						).finished
+					);
+				}
+			} else if (chipsWrapEl) {
+				animations.push(
+					animate(
+						chipsWrapEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }
+					).finished
+				);
+			}
+
+			if (headingEl) {
+				animations.push(
+					animate(
+						headingEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.12 }
+					).finished
+				);
+			}
+
+			if (leadEl) {
+				animations.push(
+					animate(
+						leadEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.24 }
+					).finished
+				);
+			}
+
+			if (ctaWrapEl) {
+				animations.push(
+					animate(
+						ctaWrapEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.36 }
+					).finished
+				);
+			}
+
+			if (availabilityEl) {
+				animations.push(
+					animate(
+						availabilityEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.48 }
+					).finished
+				);
+			}
+
+			await Promise.all(animations);
+			heroRevealed = true;
+
+			for (const el of items) {
+				el.style.opacity = '';
+				el.style.transform = '';
+				el.style.willChange = '';
+			}
+			for (const el of chips) {
+				el.style.opacity = '';
+				el.style.transform = '';
+				el.style.willChange = '';
+			}
+		})();
+	});
 </script>
 
-<section class="container-page pt-20 pb-20 sm:pt-24 sm:pb-24">
+<section
+	class={`container-page pt-20 pb-20 sm:pt-24 sm:pb-24 ${heroRevealed ? '' : 'hero-reveal'}`}
+>
 	<div class="relative">
 		<div
 			class="pointer-events-none absolute top-[-56px] left-1/2 h-[220px] w-[min(900px,92vw)] -translate-x-1/2 rounded-full opacity-70 blur-3xl"
@@ -89,7 +218,7 @@
 		></div>
 
 		<div class="mx-auto max-w-[880px] text-center">
-			<div class="mb-7 flex flex-wrap justify-center gap-2">
+			<div bind:this={chipsWrapEl} class="mb-7 flex flex-wrap justify-center gap-2" data-hero-item>
 				<span class="chip">Product Designer</span>
 				<span class="chip">UI/UX</span>
 				<span class="chip">Frontend</span>
@@ -97,16 +226,22 @@
 
 			<h1
 				class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
+				bind:this={headingEl}
+				data-hero-item
 			>
 				Design de produto com estética, clareza e entrega.
 			</h1>
 
-			<p class="text-muted mx-auto mt-5 max-w-[62ch] text-lg text-pretty sm:text-xl">
+			<p
+				class="text-muted mx-auto mt-5 max-w-[62ch] text-lg text-pretty sm:text-xl"
+				bind:this={leadEl}
+				data-hero-item
+			>
 				Sou Product Designer (UI/UX) e desenvolvedor Frontend. Eu desenho interfaces e protótipos
 				que viram produto — e implemento com cuidado nos detalhes.
 			</p>
 
-			<div class="mt-10 flex justify-center">
+			<div class="mt-10 flex justify-center" bind:this={ctaWrapEl} data-hero-item>
 				<div
 					bind:this={ctaEl}
 					class="hero-segmented segmented"
@@ -203,12 +338,19 @@
 				</div>
 			</div>
 
-			<p class="text-muted mt-7 text-sm">Disponível para freelas, squads e produtos em evolução.</p>
+			<p class="text-muted mt-7 text-sm" bind:this={availabilityEl} data-hero-item>
+				Disponível para freelas, squads e produtos em evolução.
+			</p>
 		</div>
 	</div>
 </section>
 
 <style>
+	.hero-reveal [data-hero-item] {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+
 	.hero-segmented {
 		position: relative;
 		max-width: 100%;

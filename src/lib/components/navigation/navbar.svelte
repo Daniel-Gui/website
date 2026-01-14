@@ -27,6 +27,7 @@
 	let isAnimating = $state(false);
 	let menuOpening = $state(false);
 	let navbarRevealed = $state(false);
+	let navbarAtTop = $state(true);
 
 	const EMAIL = 'dandanielofc@gmail.com';
 	const WHATSAPP_E164 = '5591993105821';
@@ -180,6 +181,34 @@
 	};
 
 	$effect(() => {
+		if (typeof window === 'undefined') return;
+
+		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+		let raf = 0;
+
+		const update = () => {
+			navbarAtTop = window.scrollY <= 4;
+		};
+
+		const onScroll = () => {
+			if (reduce) return update();
+			if (raf) return;
+			raf = window.requestAnimationFrame(() => {
+				raf = 0;
+				update();
+			});
+		};
+
+		update();
+		window.addEventListener('scroll', onScroll, { passive: true });
+
+		return () => {
+			window.removeEventListener('scroll', onScroll);
+			if (raf) window.cancelAnimationFrame(raf);
+		};
+	});
+
+	$effect(() => {
 		if (!$introDone) return;
 		if (navbarRevealed) return;
 		if (!headerEl) return;
@@ -250,17 +279,19 @@
 >
 	<div class="container-page relative isolate pt-6">
 		<nav
-			class="glass relative z-50 flex items-center justify-between gap-4 px-6 py-4"
+			class={`navbar-shell relative z-50 flex items-center justify-between gap-4 px-6 py-4 ${
+				navbarAtTop ? 'navbar-top' : 'navbar-stuck'
+			}`}
 			aria-label="Principal"
 		>
-			<a href={resolve('/', {})} class="inline-flex items-center gap-3 rounded-full">
+			<a href={resolve('/', {})} class="navbar-brand inline-flex items-center gap-3 rounded-full">
 				<Brand class="h-6 w-auto" />
 				<span class="sr-only">Início</span>
 			</a>
 
 			<button
 				type="button"
-				class="btn btn-ghost aspect-square h-11 w-11 p-0 transition-transform duration-200 ease-out active:scale-95"
+				class="btn aspect-square h-11 w-11 p-0 transition-transform duration-200 ease-out active:scale-95"
 				aria-label="Abrir menu"
 				aria-expanded={menuMounted}
 				aria-controls="navbar-menu"
@@ -278,7 +309,7 @@
 				<div
 					id="navbar-menu"
 					bind:this={panelEl}
-					class={`glass-strong absolute top-full right-0 left-0 z-50 mt-3 overflow-hidden px-4 py-4 shadow-[0_18px_48px_rgba(0,0,0,0.12)] ${menuOpening ? 'opacity-0' : ''}`}
+					class={`navbar-menu-panel glass-strong absolute top-full right-0 left-0 z-50 mt-3 overflow-hidden px-4 py-4 shadow-[0_18px_48px_rgba(0,0,0,0.12)] ${menuOpening ? 'opacity-0' : ''}`}
 					role="dialog"
 					aria-label="Menu"
 				>
@@ -294,7 +325,6 @@
 							class={`card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_18px_48px_rgba(0,0,0,0.12)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98] ${menuOpening ? 'translate-y-3 scale-[0.985] opacity-0' : ''}`}
 							onclick={(e) => {
 								e.preventDefault();
-								// inicia dois downloads em sequência
 								const a1 = document.createElement('a');
 								a1.href = RESUME_PTBR;
 								a1.download = '';
@@ -379,3 +409,75 @@
 		</nav>
 	</div>
 </header>
+
+<style>
+	.navbar-shell {
+		border-radius: var(--radius-xl);
+		transition:
+			color 260ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.navbar-shell::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		background: rgb(var(--surface) / 0.55);
+		border: 1px solid rgb(var(--border) / 0.12);
+		box-shadow: var(--shadow-1);
+		backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+		opacity: 0;
+		z-index: 0;
+		transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.navbar-shell > .navbar-brand,
+	.navbar-shell > button {
+		position: relative;
+		z-index: 1;
+	}
+
+	.navbar-top {
+		color: rgb(255 255 255 / 0.92);
+	}
+
+	.navbar-top::before {
+		opacity: 0;
+	}
+
+	.navbar-stuck {
+		color: rgb(var(--fg));
+	}
+
+	.navbar-stuck::before {
+		opacity: 1;
+	}
+
+	.navbar-top .btn {
+		background: rgb(255 255 255 / 0.16);
+		border-color: rgb(255 255 255 / 0.18);
+		color: rgb(255 255 255 / 0.92);
+		box-shadow: none;
+	}
+
+	.navbar-top .btn:hover {
+		background: rgb(255 255 255 / 0.22);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.navbar-shell,
+		.navbar-shell::before {
+			transition: none;
+		}
+	}
+
+	.navbar-menu-panel {
+		color: rgb(var(--fg));
+	}
+
+	.navbar-menu-panel .text-muted {
+		color: rgb(var(--muted));
+	}
+</style>

@@ -81,7 +81,7 @@
 
 {#if !isCoarse}
 	<div
-		class={'cursor ' + className}
+		class={'cursor rounded-full border-2 border-solid border-gray-400/50 ' + className}
 		class:is-visible={isVisible}
 		class:reduced={prefersReducedMotion}
 		aria-hidden="true"

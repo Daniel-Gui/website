@@ -28,9 +28,12 @@
 	let menuOpening = $state(false);
 	let navbarRevealed = $state(false);
 
-	const EMAIL = 'seuemail@exemplo.com';
-	const WHATSAPP_E164 = '5511999999999';
-	const LINKEDIN_URL = 'https://www.linkedin.com/in/seu-usuario/';
+	const EMAIL = 'dandanielofc@gmail.com';
+	const WHATSAPP_E164 = '5591993105821';
+	const LINKEDIN_URL = 'https://www.linkedin.com/in/danielguii';
+
+	const RESUME_PTBR = resolve('/resume/resume-daniel-guimaraes-ptbr.pdf', {});
+	const RESUME_EN = resolve('/resume/resume-daniel-guimaraes-english.pdf', {});
 
 	const emailSubject = 'Projeto / oportunidade';
 	const emailBody = 'Olá Daniel! Vi seu portfólio e gostaria de conversar.';
@@ -286,10 +289,32 @@
 					<div class="relative grid grid-cols-2 gap-3 sm:grid-cols-4">
 						<a
 							bind:this={cardCvEl}
-							href={resolve('/curriculo.pdf' as unknown as '/', {})}
+							href={RESUME_PTBR}
 							download
 							class={`card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_18px_48px_rgba(0,0,0,0.12)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98] ${menuOpening ? 'translate-y-3 scale-[0.985] opacity-0' : ''}`}
-							onclick={() => void closeMenu()}
+							onclick={(e) => {
+								e.preventDefault();
+								// inicia dois downloads em sequência
+								const a1 = document.createElement('a');
+								a1.href = RESUME_PTBR;
+								a1.download = '';
+								a1.rel = 'noreferrer';
+								a1.target = '_blank';
+								document.body.appendChild(a1);
+								a1.click();
+								document.body.removeChild(a1);
+
+								const a2 = document.createElement('a');
+								a2.href = RESUME_EN;
+								a2.download = '';
+								a2.rel = 'noreferrer';
+								a2.target = '_blank';
+								document.body.appendChild(a2);
+								a2.click();
+								document.body.removeChild(a2);
+
+								void closeMenu();
+							}}
 						>
 							<span
 								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"

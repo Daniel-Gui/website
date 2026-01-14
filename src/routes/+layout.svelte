@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<Cursor color="#000" />
+<Cursor color="#fff" />
 <Navbar />
 {@render children()}
 

@@ -23,8 +23,8 @@
 		showcaseRevealStaggerMs = 50
 	}: Props = $props();
 
-	const EMAIL = 'seuemail@exemplo.com';
-	const WHATSAPP_E164 = '5511999999999';
+	const EMAIL = 'dandanielofc@gmail.com';
+	const WHATSAPP_E164 = '5591993105821';
 
 	const emailSubject = 'Projeto / oportunidade';
 	const emailBody = 'Olá Daniel! Vi seu portfólio e gostaria de conversar.';
@@ -41,7 +41,6 @@
 	let whatsappEl = $state<HTMLAnchorElement | null>(null);
 	let worksEl = $state<HTMLAnchorElement | null>(null);
 	let activeEl = $state<HTMLAnchorElement | null>(null);
-	let chipsWrapEl = $state<HTMLDivElement | null>(null);
 	let headingEl = $state<HTMLHeadingElement | null>(null);
 	let leadEl = $state<HTMLParagraphElement | null>(null);
 	let ctaWrapEl = $state<HTMLDivElement | null>(null);
@@ -133,11 +132,8 @@
 			const showcaseCards = showcaseEl
 				? Array.from(showcaseEl.querySelectorAll<HTMLElement>('[data-showcase-card]'))
 				: [];
-			const chips = chipsWrapEl
-				? Array.from(chipsWrapEl.querySelectorAll<HTMLSpanElement>('span.chip'))
-				: [];
 
-			const items = [showcaseEl, chipsWrapEl, headingEl, leadEl, ctaWrapEl, availabilityEl].filter(
+			const items = [showcaseEl, headingEl, leadEl, ctaWrapEl, availabilityEl].filter(
 				Boolean
 			) as HTMLElement[];
 
@@ -156,16 +152,6 @@
 				el.style.transform = `${base} translateY(14px) scale(0.92)`;
 				el.style.filter = 'blur(14px)';
 				el.style.willChange = 'opacity, transform, filter';
-			}
-			for (const el of chips) {
-				el.style.opacity = '0';
-				el.style.transform = 'translateY(10px)';
-				el.style.willChange = 'opacity, transform';
-			}
-			if (chipsWrapEl && chips.length) {
-				chipsWrapEl.style.opacity = '1';
-				chipsWrapEl.style.transform = 'none';
-				chipsWrapEl.style.willChange = '';
 			}
 			if (headingEl) headingEl.style.filter = 'blur(12px)';
 			if (leadEl) leadEl.style.filter = 'blur(12px)';
@@ -207,24 +193,6 @@
 					showcaseEl,
 					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
 					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-				).finished;
-			}
-
-			if (chips.length) {
-				const chipAnims = chips.map(
-					(el, index) =>
-						animate(
-							el,
-							{ opacity: [0, 1], transform: ['translateY(10px)', 'translateY(0px)'] },
-							{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: index * 0.07 }
-						).finished
-				);
-				await Promise.all(chipAnims);
-			} else if (chipsWrapEl) {
-				await animate(
-					chipsWrapEl,
-					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-					{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }
 				).finished;
 			}
 
@@ -285,11 +253,6 @@
 				void el.offsetHeight;
 				el.style.transition = '';
 			}
-			for (const el of chips) {
-				el.style.opacity = '';
-				el.style.transform = '';
-				el.style.willChange = '';
-			}
 		})();
 	});
 </script>
@@ -318,22 +281,12 @@
 					</div>
 				</div>
 
-				<div
-					bind:this={chipsWrapEl}
-					class="mb-7 flex flex-wrap justify-center gap-2"
-					data-hero-item
-				>
-					<span class="chip">Product Designer</span>
-					<span class="chip">UI/UX</span>
-					<span class="chip">Frontend</span>
-				</div>
-
 				<h1
 					class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
 					bind:this={headingEl}
 					data-hero-item
 				>
-					Design de produto com estética, clareza e entrega.
+					Olá, eu sou o <span class="font-serif italic">Dan</span>
 				</h1>
 
 				<p
@@ -341,8 +294,36 @@
 					bind:this={leadEl}
 					data-hero-item
 				>
-					Sou Product Designer (UI/UX) e desenvolvedor Frontend. Eu desenho interfaces e protótipos
-					que viram produto — e implemento com cuidado nos detalhes.
+					Product Designer (UI/UX) e desenvolvedor Frontend. <br />
+					<span class="hero-location">
+						Based in Belém, Brasil.
+						<span class="hero-flags">
+							<span class="hero-flag">
+								<img
+									src="/flags/flag-belem.svg"
+									alt="Bandeira de Belém"
+									loading="lazy"
+									decoding="async"
+								/>
+							</span>
+							<span class="hero-flag">
+								<img
+									src="/flags/flag-para.svg"
+									alt="Bandeira do Pará"
+									loading="lazy"
+									decoding="async"
+								/>
+							</span>
+							<span class="hero-flag">
+								<img
+									src="/flags/flag-brasil.svg"
+									alt="Bandeira do Brasil"
+									loading="lazy"
+									decoding="async"
+								/>
+							</span>
+						</span>
+					</span>
 				</p>
 
 				<div class="mt-10 flex justify-center" bind:this={ctaWrapEl} data-hero-item>
@@ -540,6 +521,55 @@
 			var(--shadow-2);
 		transform: var(--card-transform) translateY(calc(var(--card-y) - 8px))
 			scale(calc(var(--card-scale) * 1.06));
+	}
+
+	.hero-location {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.65rem;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	.hero-flags {
+		--flags-overlap: -0.7rem;
+		--flags-gap: 0.4rem;
+		display: inline-flex;
+		align-items: center;
+	}
+
+	.hero-flag {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.25rem;
+		height: 1.5rem;
+		border-radius: 0.5rem;
+		background: rgb(var(--surface) / 0.65);
+		box-shadow: var(--shadow-1);
+		overflow: hidden;
+		transition:
+			margin-left 260ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 260ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.hero-flag + .hero-flag {
+		margin-left: var(--flags-overlap);
+	}
+
+	.hero-flags:hover .hero-flag + .hero-flag {
+		margin-left: var(--flags-gap);
+	}
+
+	.hero-flags:hover .hero-flag {
+		transform: translateY(-1px);
+	}
+
+	.hero-flag img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
 	}
 
 	.hero-availability {

@@ -1,6 +1,14 @@
 <script lang="ts">
 	import Hero from '$lib/sections/headers/hero.svelte';
+	import ogImageAsset from '$lib/assets/ogimage.webp';
+	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+
+	const title = 'Daniel Gui — Product Design (UI/UX) & Frontend Developer';
+	const description =
+		'Portfólio de Daniel: projetos, experiência e contato como Frontend Developer e UI/UX Designer.';
+	const siteName = 'Daniel Gui';
+	const ogImage = ogImageAsset;
 
 	const noiseOpacity = 0.9;
 	const noiseFocusY = '35%';
@@ -40,6 +48,29 @@
 		};
 	});
 </script>
+
+<svelte:head>
+	<title>{title}</title>
+	<meta name="description" content={description} />
+	<meta name="robots" content="index,follow" />
+	<meta name="author" content="Daniel" />
+	<link rel="canonical" href={$page.url.origin + $page.url.pathname} />
+
+	<meta property="og:site_name" content={siteName} />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:url" content={$page.url.origin + $page.url.pathname} />
+	<meta property="og:image" content={$page.url.origin + ogImage} />
+	<meta property="og:locale" content="pt_BR" />
+
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content={$page.url.origin + ogImage} />
+
+	<meta name="theme-color" content="#05010a" />
+</svelte:head>
 
 <main>
 	<div

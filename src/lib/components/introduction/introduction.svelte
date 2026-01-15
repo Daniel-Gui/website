@@ -178,6 +178,7 @@
 					src={imageSrc}
 					alt={imageAlt}
 					loading="eager"
+					fetchpriority="high"
 					decoding="async"
 				/>
 			</div>

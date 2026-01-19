@@ -3,6 +3,7 @@
 	import GalleryWorks from '$lib/sections/mains/gallery-works.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
 	import { page } from '$app/stores';
+	import { lenisStore } from '$lib/stores/scroll';
 
 	const title = 'Daniel Gui — Product Design (UI/UX) & Frontend Developer';
 	const description =
@@ -33,6 +34,7 @@
 				lerp: 0.12,
 				smoothWheel: true
 			});
+			lenisStore.set(lenis);
 
 			const raf = (time: number) => {
 				lenis?.raf(time);

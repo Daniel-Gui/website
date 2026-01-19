@@ -5,6 +5,7 @@
 	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
 	import { cn } from '$lib/utils';
+	import { lenisStore } from '$lib/stores/scroll';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -99,6 +100,15 @@
 
 	const onLeave = () => {
 		updateHighlight(activeEl);
+	};
+
+	const scrollToWorks = (e: MouseEvent) => {
+		e.preventDefault();
+		if ($lenisStore) {
+			$lenisStore.scrollTo('#trabalhos', { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+		} else {
+			document.querySelector('#trabalhos')?.scrollIntoView({ behavior: 'smooth' });
+		}
 	};
 
 	$effect(() => {
@@ -259,7 +269,19 @@
 </script>
 
 <section class={cn('hero-surface', !heroRevealed && 'hero-reveal')}>
-	<div class="container-page pt-20 pb-20 sm:pt-24 sm:pb-24">
+	<!-- Decorative Grid Background -->
+	<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
+		<svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1" />
+				</pattern>
+			</defs>
+			<rect width="100%" height="100%" fill="url(#hero-grid)" />
+		</svg>
+	</div>
+
+	<div class="container-page relative z-10 pt-20 pb-20 sm:pt-24 sm:pb-24">
 		<div class="relative">
 			<div class="mx-auto max-w-[880px] space-y-10 text-center">
 				<div class="hero-showcase-bleed">
@@ -307,22 +329,30 @@
 				</div>
 
 				<h1
-					class="text-balance text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl md:text-7xl"
+					class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
 					bind:this={headingEl}
 					data-hero-item
 				>
 					Olá, eu sou o <span class="font-serif italic">Dan</span>
 				</h1>
 
-				<p
-					class="text-muted text-pretty mx-auto mt-5 max-w-[62ch] text-lg sm:text-xl"
+				<div
+					class="mx-auto mt-6 flex max-w-[62ch] flex-col items-center gap-4"
 					bind:this={leadEl}
 					data-hero-item
 				>
-					Product Designer (UI/UX) e desenvolvedor Frontend. <br />
-					<span class="hero-location">
-						Based in Belém, Brasil.
-						<span class="hero-flags">
+					<p class="text-lg text-pretty text-white/80 sm:text-xl">
+						Product Designer (UI/UX) e desenvolvedor Frontend.
+					</p>
+
+					<div
+						class="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md"
+					>
+						<span class="font-mono text-xs tracking-wider text-white/60 uppercase"
+							>Based in Belém, BR</span
+						>
+						<div class="h-3 w-px bg-white/10"></div>
+						<div class="hero-flags">
 							<span class="hero-flag">
 								<img
 									src="/flags/flag-belem.svg"
@@ -347,9 +377,9 @@
 									decoding="async"
 								/>
 							</span>
-						</span>
-					</span>
-				</p>
+						</div>
+					</div>
+				</div>
 
 				<div class="mt-10 flex justify-center" bind:this={ctaWrapEl} data-hero-item>
 					<div
@@ -394,6 +424,7 @@
 							href="#trabalhos"
 							onpointerenter={onEnterItem}
 							onfocus={onEnterItem}
+							onclick={scrollToWorks}
 						>
 							<span class="hero-icon" aria-hidden="true">
 								<IconSparkle class="size-[1.05rem]" />
@@ -403,10 +434,16 @@
 					</div>
 				</div>
 
-				<div class="hero-availability text-muted mt-7" bind:this={availabilityEl} data-hero-item>
-					<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
-					></span>
-					<span class="hero-availability-text">{availabilityText}</span>
+				<div class="mt-7 flex justify-center" bind:this={availabilityEl} data-hero-item>
+					<div
+						class="flex items-center gap-2 rounded-full border border-black/5 bg-white/40 px-4 py-2 shadow-sm backdrop-blur-md"
+					>
+						<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
+						></span>
+						<span class="font-mono text-xs font-medium tracking-wider text-neutral-700 uppercase"
+							>{availabilityText}</span
+						>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -509,8 +546,9 @@
 		width: 220px;
 		height: 200px;
 		transform: var(--card-transform) translateY(var(--card-y)) scale(var(--card-scale));
-		border-radius: 26px;
-		border: 3px solid rgba(255, 255, 255, 0.14);
+		border-radius: 20px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		background: rgba(255, 255, 255, 0.05);
 		box-shadow: var(--shadow-2);
 		overflow: hidden;
 		transition:
@@ -521,7 +559,9 @@
 
 	.hero-showcase-media {
 		position: absolute;
-		inset: 0;
+		inset: 2px;
+		border-radius: 18px;
+		overflow: hidden;
 		display: block;
 	}
 

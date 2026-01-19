@@ -9,6 +9,7 @@
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
 	import IconMenu from '$lib/components/icons/icon-menu.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
+	import ThemeToggle from '$lib/components/theme-toggle/theme-toggle.svelte';
 	import { cn } from '$lib/utils';
 
 	type Props = {
@@ -291,20 +292,23 @@
 				<span class="sr-only">Início</span>
 			</a>
 
-			<button
-				type="button"
-				class="btn aspect-square size-11 p-0 transition-transform duration-200 ease-out active:scale-95"
-				aria-label={menuMounted ? 'Fechar menu' : 'Abrir menu'}
-				aria-expanded={menuMounted}
-				aria-controls="navbar-menu"
-				onclick={toggleMenu}
-			>
-				{#if menuMounted}
-					<IconClose class="size-5" />
-				{:else}
-					<IconMenu class="size-5" />
-				{/if}
-			</button>
+			<div class="relative z-10 flex items-center gap-2">
+				<ThemeToggle />
+				<button
+					type="button"
+					class="btn aspect-square size-11 p-0 transition-transform duration-200 ease-out active:scale-95"
+					aria-label={menuMounted ? 'Fechar menu' : 'Abrir menu'}
+					aria-expanded={menuMounted}
+					aria-controls="navbar-menu"
+					onclick={toggleMenu}
+				>
+					{#if menuMounted}
+						<IconClose class="size-5" />
+					{:else}
+						<IconMenu class="size-5" />
+					{/if}
+				</button>
+			</div>
 
 			{#if menuMounted}
 				<div

@@ -329,11 +329,11 @@
 				</div>
 
 				<h1
-					class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
+					class="text-foreground text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
 					bind:this={headingEl}
 					data-hero-item
 				>
-					Olá, eu sou o <span class="font-serif italic">Dan</span>
+					Olá, eu sou o <span class="font-serif text-blue-600 italic dark:text-blue-400">Dan</span>
 				</h1>
 
 				<div
@@ -341,17 +341,17 @@
 					bind:this={leadEl}
 					data-hero-item
 				>
-					<p class="text-lg text-pretty text-white/80 sm:text-xl">
+					<p class="text-lg text-pretty text-muted sm:text-xl">
 						Product Designer (UI/UX) e desenvolvedor Frontend.
 					</p>
 
 					<div
-						class="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 backdrop-blur-md"
+						class="flex items-center gap-3 rounded-full border border-border/10 bg-surface/40 px-3 py-1.5 shadow-sm backdrop-blur-md"
 					>
-						<span class="font-mono text-xs tracking-wider text-white/60 uppercase"
+						<span class="font-mono text-xs tracking-wider text-muted uppercase"
 							>Based in Belém, BR</span
 						>
-						<div class="h-3 w-px bg-white/10"></div>
+						<div class="h-3 w-px bg-border/20"></div>
 						<div class="hero-flags">
 							<span class="hero-flag">
 								<img
@@ -457,14 +457,20 @@
 	}
 
 	.hero-surface {
-		--hero-top: #05010a;
-		--hero-purple: #5b21b6;
-		--hero-blue: #2563eb;
+		--hero-top: rgb(255 255 255);
+		--hero-purple: rgba(91, 33, 182, 0.1);
+		--hero-blue: rgba(37, 99, 235, 0.1);
 		--hero-bottom: rgb(var(--bg));
 		--hero-bleed-top: 120px;
 		position: relative;
 		isolation: isolate;
 		overflow-x: clip;
+	}
+
+	:global(html.dark) .hero-surface {
+		--hero-top: #05010a;
+		--hero-purple: #5b21b6;
+		--hero-blue: #2563eb;
 	}
 
 	@supports not (overflow: clip) {
@@ -510,11 +516,11 @@
 	}
 
 	.hero-surface h1 {
-		color: rgb(255 255 255 / 0.92);
+		color: rgb(var(--fg));
 	}
 
 	.hero-surface p.text-muted {
-		color: rgb(255 255 255 / 0.72);
+		color: rgb(var(--muted));
 	}
 
 	.hero-showcase {
@@ -547,8 +553,8 @@
 		height: 200px;
 		transform: var(--card-transform) translateY(var(--card-y)) scale(var(--card-scale));
 		border-radius: 20px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
-		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgb(var(--border) / 0.1);
+		background: rgb(var(--surface) / 0.05);
 		box-shadow: var(--shadow-2);
 		overflow: hidden;
 		transition:
@@ -591,7 +597,7 @@
 
 	.hero-showcase-card:hover {
 		z-index: 3;
-		border-color: rgba(255, 255, 255, 0.92);
+		border-color: rgb(var(--fg) / 0.92);
 		box-shadow: var(--shadow-2);
 		transform: var(--card-transform) translateY(calc(var(--card-y) - 8px))
 			scale(calc(var(--card-scale) * 1.06));

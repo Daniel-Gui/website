@@ -55,6 +55,18 @@
 		--z-max: 9999;
 	}
 
+	html.dark {
+		--bg: 10 10 12;
+		--fg: 240 240 242;
+		--muted: 160 160 160;
+		--surface: 20 20 24;
+		--border: 255 255 255;
+		--focus: 255 255 255;
+
+		--shadow-1: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 12px 32px rgba(0, 0, 0, 0.2);
+		--shadow-2: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 18px 48px rgba(0, 0, 0, 0.4);
+	}
+
 	html {
 		color-scheme: light;
 		text-rendering: geometricPrecision;

@@ -8,6 +8,7 @@
 	import Navbar from '$lib/components/navigation/navbar.svelte';
 	import { introDone } from '$lib/stores/intro';
 	import { onNavigate } from '$app/navigation';
+	import { ModeWatcher } from 'mode-watcher';
 
 	let { children } = $props();
 
@@ -31,6 +32,7 @@
 	<link rel="icon" type="image/webp" href={favicon2} sizes="32x32" />
 	<link rel="icon" type="image/webp" href={favicon3} sizes="48x48" />
 </svelte:head>
+<ModeWatcher />
 <Cursor color="#fff" />
 <Navbar />
 {@render children()}

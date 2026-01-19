@@ -27,32 +27,73 @@
 
 	<div class="container-page relative z-10">
 		<div class="flex flex-col lg:flex-row lg:gap-16">
-			<!-- Esquerda: Galeria de Imagens -->
-			<div class="flex-1 space-y-8 lg:space-y-12">
-				{#each work.galleryImages as imageBasename, i}
-					<div
-						class="overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm dark:border-white/10 dark:bg-white/5"
-						style:view-transition-name={i === 0 ? `work-image-${work.id}` : undefined}
-					>
-						<picture class="block w-full">
-							<source srcset="/images/works-covers/{imageBasename}.avif" type="image/avif" />
-							<source srcset="/images/works-covers/{imageBasename}.webp" type="image/webp" />
-							<img
-								src="/images/works-covers/{imageBasename}.webp"
-								alt={`${work.title} - View ${i + 1}`}
-								loading={i === 0 ? 'eager' : 'lazy'}
-								class="h-auto w-full object-cover"
-							/>
-						</picture>
+			<!-- Header Mobile (Aparece primeiro em telas pequenas) -->
+			<div class="mb-8 block lg:hidden">
+				<header class="space-y-6">
+					<div class="space-y-2">
+						<div class="flex items-center justify-between">
+							<span class="font-mono text-sm tracking-widest text-blue-600 uppercase">
+								// {work.year}
+							</span>
+							<a
+								href={work.link}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
+							>
+								Live Preview <IconArrowUpRight class="size-3" />
+							</a>
+						</div>
+						<h1
+							class="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
+							style:view-transition-name="work-title-{work.id}"
+						>
+							{work.title}
+						</h1>
 					</div>
-				{/each}
+
+					<div class="flex flex-wrap gap-2">
+						{#each work.tags as tag}
+							<span
+								class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2.5 py-1 font-mono text-xs tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
+							>
+								{tag}
+							</span>
+						{/each}
+					</div>
+				</header>
 			</div>
 
-			<!-- Direita: Informações (Sticky) -->
-			<div class="lg:w-[420px] lg:shrink-0">
+			<!-- Esquerda: Galeria de Imagens -->
+			<div class="flex-1 lg:space-y-12">
+				<div
+					class="scrollbar-hide ml-[calc(50%-50vw)] flex w-screen snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-8 lg:ml-0 lg:block lg:w-full lg:space-y-12 lg:overflow-visible lg:px-0 lg:pb-0"
+				>
+					{#each work.galleryImages as imageBasename, i}
+						<div
+							class="w-[85vw] shrink-0 snap-center overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm lg:w-full dark:border-white/10 dark:bg-white/5"
+							style:view-transition-name={i === 0 ? `work-image-${work.id}` : undefined}
+						>
+							<picture class="block w-full">
+								<source srcset="/images/works-covers/{imageBasename}.avif" type="image/avif" />
+								<source srcset="/images/works-covers/{imageBasename}.webp" type="image/webp" />
+								<img
+									src="/images/works-covers/{imageBasename}.webp"
+									alt={`${work.title} - View ${i + 1}`}
+									loading={i === 0 ? 'eager' : 'lazy'}
+									class="h-auto w-full object-cover"
+								/>
+							</picture>
+						</div>
+					{/each}
+				</div>
+			</div>
+
+			<!-- Direita: Informações (Sticky - Desktop / Abaixo - Mobile) -->
+			<div class="mt-12 lg:mt-0 lg:w-[420px] lg:shrink-0">
 				<div class="sticky top-32 space-y-12">
-					<!-- Header do Projeto -->
-					<header class="space-y-6">
+					<!-- Header do Projeto (Desktop Only) -->
+					<header class="hidden space-y-6 lg:block">
 						<div class="space-y-2">
 							<div class="flex items-center justify-between">
 								<span class="font-mono text-sm tracking-widest text-blue-600 uppercase">
@@ -87,34 +128,34 @@
 					</header>
 
 					<!-- Conteúdo Detalhado -->
-					<div class="space-y-10 text-muted-foreground">
+					<div class="text-muted-foreground space-y-10">
 						<section class="space-y-3">
-							<h2 class="font-mono text-xs font-semibold tracking-widest text-foreground uppercase">
+							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
 								[01] Overview
 							</h2>
-							<p class="text-pretty leading-relaxed">
+							<p class="leading-relaxed text-pretty">
 								{work.description}
 							</p>
 						</section>
 
 						<section class="space-y-3">
-							<h2 class="font-mono text-xs font-semibold tracking-widest text-foreground uppercase">
+							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
 								[02] The Challenge
 							</h2>
-							<p class="text-pretty leading-relaxed">
+							<p class="leading-relaxed text-pretty">
 								{work.details.challenge}
 							</p>
 						</section>
 
 						<section class="space-y-3">
-							<h2 class="font-mono text-xs font-semibold tracking-widest text-foreground uppercase">
+							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
 								[03] Solution & Impact
 							</h2>
 							<div class="space-y-4">
-								<p class="text-pretty leading-relaxed">
+								<p class="leading-relaxed text-pretty">
 									{work.details.solution}
 								</p>
-								<p class="text-pretty leading-relaxed">
+								<p class="leading-relaxed text-pretty">
 									{work.details.result}
 								</p>
 							</div>
@@ -122,7 +163,7 @@
 					</div>
 
 					<!-- Navegação Voltar -->
-					<div class="pt-8 border-t border-black/5 dark:border-white/10">
+					<div class="border-t border-black/5 pt-8 dark:border-white/10">
 						<a
 							href="/#trabalhos"
 							class="group inline-flex items-center gap-2 font-mono text-sm transition-colors hover:text-blue-600"

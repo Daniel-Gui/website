@@ -2,49 +2,7 @@
 	import { tick } from 'svelte';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import { cn } from '$lib/utils';
-
-	type WorkItem = {
-		id: string;
-		title: string;
-		description: string;
-		tags: string[];
-		link?: string;
-		imageBasename?: string;
-		year: string;
-	};
-
-	const WORKS: WorkItem[] = [
-		{
-			id: '01',
-			title: 'Projeto 01',
-			description:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-			tags: ['SvelteKit', 'Tailwind', 'D3.js'],
-			year: '2025',
-			link: '#',
-			imageBasename: 'cover-placeholder-01'
-		},
-		{
-			id: '02',
-			title: 'Projeto 02',
-			description:
-				'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.',
-			tags: ['Design System', 'A11y', 'Storybook'],
-			year: '2024',
-			link: '#',
-			imageBasename: 'cover-placeholder-02'
-		},
-		{
-			id: '03',
-			title: 'Projeto 03',
-			description:
-				'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.',
-			tags: ['React', 'Web3', 'Motion'],
-			year: '2024',
-			link: '#',
-			imageBasename: 'cover-placeholder-03'
-		}
-	];
+	import { WORKS } from '$lib/data/works';
 
 	let sectionEl = $state<HTMLElement | null>(null);
 	let revealed = $state(false);
@@ -153,7 +111,7 @@
 		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 			{#each WORKS as work}
 				<a
-					href={work.link}
+					href={`/work/${work.id}`}
 					class="group relative flex flex-col gap-4"
 					style="opacity: 0; transform: translateY(40px);"
 					data-gallery-card
@@ -161,6 +119,7 @@
 					<!-- Card Visual -->
 					<div
 						class="relative aspect-[4/3] overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
+						style:view-transition-name="work-image-{work.id}"
 					>
 						<!-- Image -->
 						{#if work.imageBasename}
@@ -196,7 +155,12 @@
 						>
 							<div class="flex items-center gap-3">
 								<span class="font-mono text-xs text-muted">/{work.id}</span>
-								<h3 class="text-lg font-medium tracking-tight">{work.title}</h3>
+								<h3
+									class="text-lg font-medium tracking-tight"
+									style:view-transition-name="work-title-{work.id}"
+								>
+									{work.title}
+								</h3>
 							</div>
 							<span class="font-mono text-xs text-muted">{work.year}</span>
 						</div>

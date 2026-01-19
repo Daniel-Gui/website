@@ -7,8 +7,20 @@
 	import Introduction from '$lib/components/introduction/introduction.svelte';
 	import Navbar from '$lib/components/navigation/navbar.svelte';
 	import { introDone } from '$lib/stores/intro';
+	import { onNavigate } from '$app/navigation';
 
 	let { children } = $props();
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <svelte:head>

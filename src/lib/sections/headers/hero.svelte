@@ -4,6 +4,7 @@
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
 	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
+	import { cn } from '$lib/utils';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -257,7 +258,7 @@
 	});
 </script>
 
-<section class={`hero-surface ${heroRevealed ? '' : 'hero-reveal'}`}>
+<section class={cn('hero-surface', !heroRevealed && 'hero-reveal')}>
 	<div class="container-page pt-20 pb-20 sm:pt-24 sm:pb-24">
 		<div class="relative">
 			<div class="mx-auto max-w-[880px] space-y-10 text-center">
@@ -306,7 +307,7 @@
 				</div>
 
 				<h1
-					class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
+					class="text-balance text-5xl leading-[0.95] font-semibold tracking-tight sm:text-6xl md:text-7xl"
 					bind:this={headingEl}
 					data-hero-item
 				>
@@ -314,7 +315,7 @@
 				</h1>
 
 				<p
-					class="text-muted mx-auto mt-5 max-w-[62ch] text-lg text-pretty sm:text-xl"
+					class="text-muted text-pretty mx-auto mt-5 max-w-[62ch] text-lg sm:text-xl"
 					bind:this={leadEl}
 					data-hero-item
 				>
@@ -367,7 +368,7 @@
 							onfocus={onEnterItem}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconMail class="h-[1.05rem] w-[1.05rem]" />
+								<IconMail class="size-[1.05rem]" />
 							</span>
 							Email
 						</a>
@@ -382,7 +383,7 @@
 							onfocus={onEnterItem}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconWhatsapp class="h-[1.05rem] w-[1.05rem]" />
+								<IconWhatsapp class="size-[1.05rem]" />
 							</span>
 							WhatsApp
 						</a>
@@ -395,7 +396,7 @@
 							onfocus={onEnterItem}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconSparkle class="h-[1.05rem] w-[1.05rem]" />
+								<IconSparkle class="size-[1.05rem]" />
 							</span>
 							Ver trabalhos
 						</a>

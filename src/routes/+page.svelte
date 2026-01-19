@@ -2,7 +2,6 @@
 	import Hero from '$lib/sections/headers/hero.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
 	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
 
 	const title = 'Daniel Gui — Product Design (UI/UX) & Frontend Developer';
 	const description =
@@ -14,7 +13,7 @@
 	const noiseFocusY = '35%';
 	const noiseFalloff = '70%';
 
-	onMount(() => {
+	$effect(() => {
 		if (typeof window === 'undefined') return;
 
 		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
@@ -22,12 +21,12 @@
 		if (reduce || coarse) return;
 
 		let rafId = 0;
-		let cancelled = false;
+		let destroyed = false;
 		let lenis: { raf: (time: number) => void; destroy: () => void } | null = null;
 
 		void (async () => {
 			const { default: Lenis } = await import('lenis');
-			if (cancelled) return;
+			if (destroyed) return;
 
 			lenis = new Lenis({
 				lerp: 0.12,
@@ -42,7 +41,7 @@
 		})();
 
 		return () => {
-			cancelled = true;
+			destroyed = true;
 			if (rafId) window.cancelAnimationFrame(rafId);
 			lenis?.destroy();
 		};
@@ -86,7 +85,7 @@
 		position: fixed;
 		inset: 0;
 		pointer-events: none;
-		z-index: 100;
+		z-index: var(--z-overlay, 100);
 		opacity: var(--noise-opacity, 0.06);
 		mix-blend-mode: soft-light;
 		filter: contrast(115%) brightness(100%);

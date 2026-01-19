@@ -9,6 +9,7 @@
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
 	import IconMenu from '$lib/components/icons/icon-menu.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
+	import { cn } from '$lib/utils';
 
 	type Props = {
 		class?: string;
@@ -271,7 +272,7 @@
 </script>
 
 <header
-	class={`sticky top-0 z-50 ${className}`}
+	class={cn('sticky top-0 z-[var(--z-sticky)]', className)}
 	bind:this={headerEl}
 	style={navbarRevealed
 		? undefined
@@ -279,9 +280,10 @@
 >
 	<div class="container-page relative isolate pt-6">
 		<nav
-			class={`navbar-shell relative z-50 flex items-center justify-between gap-4 px-6 py-4 ${
+			class={cn(
+				'navbar-shell relative z-[var(--z-sticky)] flex items-center justify-between gap-4 px-6 py-4',
 				navbarAtTop ? 'navbar-top' : 'navbar-stuck'
-			}`}
+			)}
 			aria-label="Principal"
 		>
 			<a href={resolve('/', {})} class="navbar-brand inline-flex items-center gap-3 rounded-full">
@@ -291,17 +293,16 @@
 
 			<button
 				type="button"
-				class="btn aspect-square h-11 w-11 p-0 transition-transform duration-200 ease-out active:scale-95"
-				aria-label="Abrir menu"
+				class="btn aspect-square size-11 p-0 transition-transform duration-200 ease-out active:scale-95"
+				aria-label={menuMounted ? 'Fechar menu' : 'Abrir menu'}
 				aria-expanded={menuMounted}
 				aria-controls="navbar-menu"
 				onclick={toggleMenu}
 			>
-				<span class="sr-only">Menu</span>
 				{#if menuMounted}
-					<IconClose class="h-5 w-5" />
+					<IconClose class="size-5" />
 				{:else}
-					<IconMenu class="h-5 w-5" />
+					<IconMenu class="size-5" />
 				{/if}
 			</button>
 
@@ -309,7 +310,10 @@
 				<div
 					id="navbar-menu"
 					bind:this={panelEl}
-					class={`navbar-menu-panel glass-strong absolute top-full right-0 left-0 z-50 mt-3 overflow-hidden px-4 py-4 shadow-[0_18px_48px_rgba(0,0,0,0.12)] ${menuOpening ? 'opacity-0' : ''}`}
+					class={cn(
+						'navbar-menu-panel glass-strong absolute top-full right-0 left-0 z-[var(--z-sticky)] mt-3 overflow-hidden px-4 py-4 shadow-[var(--shadow-2)]',
+						menuOpening && 'opacity-0'
+					)}
 					role="dialog"
 					aria-label="Menu"
 				>
@@ -322,7 +326,10 @@
 							bind:this={cardCvEl}
 							href={RESUME_PTBR}
 							download
-							class={`card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_18px_48px_rgba(0,0,0,0.12)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98] ${menuOpening ? 'translate-y-3 scale-[0.985] opacity-0' : ''}`}
+							class={cn(
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
+							)}
 							onclick={(e) => {
 								e.preventDefault();
 								const a1 = document.createElement('a');
@@ -347,12 +354,12 @@
 							}}
 						>
 							<span
-								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<IconFileArrowDown class="h-6 w-6" />
+								<IconFileArrowDown class="size-6" />
 							</span>
 							<span class="text-sm font-medium">Baixar currículo</span>
-							<span class="text-muted text-xs">PDF</span>
+							<span class="text-xs text-muted">PDF</span>
 						</a>
 
 						<a
@@ -360,31 +367,37 @@
 							href={LINKEDIN_URL}
 							target="_blank"
 							rel="noreferrer"
-							class={`card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_18px_48px_rgba(0,0,0,0.12)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98] ${menuOpening ? 'translate-y-3 scale-[0.985] opacity-0' : ''}`}
+							class={cn(
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
+							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<IconLinkedin class="h-6 w-6" />
+								<IconLinkedin class="size-6" />
 							</span>
 							<span class="text-sm font-medium">LinkedIn</span>
-							<span class="text-muted text-xs">Perfil</span>
+							<span class="text-xs text-muted">Perfil</span>
 						</a>
 
 						<a
 							bind:this={cardEmailEl}
 							href={mailtoHref}
-							class={`card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_18px_48px_rgba(0,0,0,0.12)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98] ${menuOpening ? 'translate-y-3 scale-[0.985] opacity-0' : ''}`}
+							class={cn(
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
+							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<IconMail class="h-6 w-6" />
+								<IconMail class="size-6" />
 							</span>
 							<span class="text-sm font-medium">Email</span>
-							<span class="text-muted text-xs">Contato</span>
+							<span class="text-xs text-muted">Contato</span>
 						</a>
 
 						<a
@@ -392,16 +405,19 @@
 							href={whatsappHref}
 							target="_blank"
 							rel="noreferrer"
-							class={`card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[0_18px_48px_rgba(0,0,0,0.12)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98] ${menuOpening ? 'translate-y-3 scale-[0.985] opacity-0' : ''}`}
+							class={cn(
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
+							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid h-12 w-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<IconWhatsapp class="h-6 w-6" />
+								<IconWhatsapp class="size-6" />
 							</span>
 							<span class="text-sm font-medium">WhatsApp</span>
-							<span class="text-muted text-xs">Mensagem</span>
+							<span class="text-xs text-muted">Mensagem</span>
 						</a>
 					</div>
 				</div>

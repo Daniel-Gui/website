@@ -14,6 +14,9 @@
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
 
+		// Impede que a intro apareça novamente ao navegar
+		introDone.set(true);
+
 		return new Promise((resolve) => {
 			document.startViewTransition(async () => {
 				resolve();

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Hero from '$lib/sections/headers/hero.svelte';
 	import GalleryWorks from '$lib/sections/mains/gallery-works.svelte';
+	import GalleryPosts from '$lib/sections/mains/gallery-posts.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
 	import { page } from '$app/state';
 	import { lenisStore } from '$lib/stores/scroll';
@@ -83,6 +84,7 @@
 	></div>
 	<Hero />
 	<GalleryWorks />
+	<GalleryPosts />
 </main>
 
 <style>

@@ -321,7 +321,7 @@
 						class="pointer-events-none absolute inset-0 bg-white/35 backdrop-blur-2xl"
 						aria-hidden="true"
 					></div>
-					
+
 					<!-- Decorative Grid Background -->
 					<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
 						<svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -340,7 +340,7 @@
 							href={RESUME_PTBR}
 							download
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={(e) => {
@@ -381,7 +381,7 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
@@ -399,7 +399,7 @@
 							bind:this={cardEmailEl}
 							href={mailtoHref}
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
@@ -419,7 +419,7 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
@@ -430,7 +430,8 @@
 								<IconWhatsapp class="size-6" />
 							</span>
 							<span class="text-sm font-medium">WhatsApp</span>
-							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Mensagem</span>
+							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Mensagem</span
+							>
 						</a>
 					</div>
 				</div>

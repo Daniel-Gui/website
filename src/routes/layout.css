@@ -3,9 +3,11 @@
 @plugin '@tailwindcss/typography';
 /* Supports weights 100-900 */
 @import '@fontsource-variable/archivo';
+@import '@fontsource-variable/jetbrains-mono';
 
 @theme {
 	--font-sans: 'Archivo Variable', sans-serif;
+	--font-mono: 'JetBrains Mono Variable', monospace;
 	
 	--color-bg: rgb(var(--bg));
 	--color-fg: rgb(var(--fg));

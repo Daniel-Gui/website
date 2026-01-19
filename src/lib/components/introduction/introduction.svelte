@@ -14,8 +14,8 @@
 		texts,
 		switchDelayMs = 2000,
 		revealDurationMs = 700,
-		imageSrc = 'https://images.unsplash.com/photo-1520975958225-44b5481a3c5f?auto=format&fit=crop&w=1200&q=80',
-		imageAlt = 'Placeholder portrait',
+		imageSrc = '/images/website-introduction/website-introduction.webp',
+		imageAlt = 'Imagem de introdução do portfólio',
 		onFinished
 	}: Props = $props();
 
@@ -172,15 +172,25 @@
 				bind:this={imageWrapEl}
 				class="relative aspect-square w-[min(72vw,420px)] overflow-hidden"
 			>
-				<img
-					bind:this={imageEl}
-					class="absolute inset-0 h-full w-full object-cover"
-					src={imageSrc}
-					alt={imageAlt}
-					loading="eager"
-					fetchpriority="high"
-					decoding="async"
-				/>
+				<picture class="absolute inset-0 block h-full w-full">
+					<source
+						srcset="/images/website-introduction/website-introduction.avif"
+						type="image/avif"
+					/>
+					<source
+						srcset="/images/website-introduction/website-introduction.webp"
+						type="image/webp"
+					/>
+					<img
+						bind:this={imageEl}
+						class="h-full w-full object-cover"
+						src={imageSrc}
+						alt={imageAlt}
+						loading="eager"
+						fetchpriority="high"
+						decoding="async"
+					/>
+				</picture>
 			</div>
 
 			{#if showText}

@@ -260,24 +260,48 @@
 <section class={`hero-surface ${heroRevealed ? '' : 'hero-reveal'}`}>
 	<div class="container-page pt-20 pb-20 sm:pt-24 sm:pb-24">
 		<div class="relative">
-			<div class="mx-auto max-w-[880px] text-center">
+			<div class="mx-auto max-w-[880px] space-y-10 text-center">
 				<div class="hero-showcase-bleed">
 					<div bind:this={showcaseEl} class="hero-showcase" aria-hidden="true" data-hero-item>
-						<div
-							class="hero-showcase-card hero-showcase-left"
-							style="background-image: url('https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80');"
-							data-showcase-card
-						></div>
-						<div
-							class="hero-showcase-card hero-showcase-center"
-							style="background-image: url('https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=800&q=80');"
-							data-showcase-card
-						></div>
-						<div
-							class="hero-showcase-card hero-showcase-right"
-							style="background-image: url('https://images.unsplash.com/photo-1526498460520-4c246339dccb?auto=format&fit=crop&w=800&q=80');"
-							data-showcase-card
-						></div>
+						<div class="hero-showcase-card hero-showcase-left" data-showcase-card>
+							<picture class="hero-showcase-media">
+								<source srcset="/images/hero/hero-image-01.avif" type="image/avif" />
+								<source srcset="/images/hero/hero-image-01.webp" type="image/webp" />
+								<img
+									src="/images/hero/hero-image-01.webp"
+									alt=""
+									loading="eager"
+									fetchpriority="low"
+									decoding="async"
+								/>
+							</picture>
+						</div>
+						<div class="hero-showcase-card hero-showcase-center" data-showcase-card>
+							<picture class="hero-showcase-media">
+								<source srcset="/images/hero/hero-image-02.avif" type="image/avif" />
+								<source srcset="/images/hero/hero-image-02.webp" type="image/webp" />
+								<img
+									src="/images/hero/hero-image-02.webp"
+									alt=""
+									loading="eager"
+									fetchpriority="low"
+									decoding="async"
+								/>
+							</picture>
+						</div>
+						<div class="hero-showcase-card hero-showcase-right" data-showcase-card>
+							<picture class="hero-showcase-media">
+								<source srcset="/images/hero/hero-image-03.avif" type="image/avif" />
+								<source srcset="/images/hero/hero-image-03.webp" type="image/webp" />
+								<img
+									src="/images/hero/hero-image-03.webp"
+									alt=""
+									loading="eager"
+									fetchpriority="low"
+									decoding="async"
+								/>
+							</picture>
+						</div>
 					</div>
 				</div>
 
@@ -482,18 +506,29 @@
 		top: 50%;
 		left: 50%;
 		width: 220px;
-		height: 180px;
+		height: 200px;
 		transform: var(--card-transform) translateY(var(--card-y)) scale(var(--card-scale));
 		border-radius: 26px;
-		border: 1px solid transparent;
-		background-position: center;
-		background-size: cover;
+		border: 3px solid rgba(255, 255, 255, 0.14);
 		box-shadow: var(--shadow-2);
 		overflow: hidden;
 		transition:
 			transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
 			box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
 			border-color 260ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.hero-showcase-media {
+		position: absolute;
+		inset: 0;
+		display: block;
+	}
+
+	.hero-showcase-media img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
 	}
 
 	.hero-showcase-left {
@@ -504,7 +539,7 @@
 	.hero-showcase-center {
 		z-index: 1;
 		width: 240px;
-		height: 196px;
+		height: 230px;
 		--card-transform: translate(-50%, -50%);
 	}
 
@@ -516,9 +551,7 @@
 	.hero-showcase-card:hover {
 		z-index: 3;
 		border-color: rgba(255, 255, 255, 0.92);
-		box-shadow:
-			0 0 0 3px rgba(255, 255, 255, 0.9),
-			var(--shadow-2);
+		box-shadow: var(--shadow-2);
 		transform: var(--card-transform) translateY(calc(var(--card-y) - 8px))
 			scale(calc(var(--card-scale) * 1.06));
 	}
@@ -700,7 +733,7 @@
 
 		.hero-showcase-card {
 			width: 200px;
-			height: 170px;
+			height: 200px;
 		}
 
 		.hero-showcase-left {
@@ -709,7 +742,7 @@
 
 		.hero-showcase-center {
 			width: 220px;
-			height: 188px;
+			height: 230px;
 		}
 
 		.hero-showcase-right {

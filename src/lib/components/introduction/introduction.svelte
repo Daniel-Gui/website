@@ -119,13 +119,26 @@
 
 				textEl.style.opacity = '0';
 				textEl.style.transform = 'translateY(10px)';
+				textEl.style.filter = 'blur(10px)';
 
-				controls.push(animate(textEl, { opacity: 1, y: 0 }, { duration: 0.35, ease: 'easeOut' }));
+				controls.push(
+					animate(
+						textEl,
+						{ opacity: 1, transform: 'translateY(0px)', filter: 'blur(0px)' },
+						{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }
+					)
+				);
 				await sleep(switchDelayMs);
 				if (cancelled) return;
 
-				controls.push(animate(textEl, { opacity: 0, y: -10 }, { duration: 0.25, ease: 'easeIn' }));
-				await sleep(250);
+				controls.push(
+					animate(
+						textEl,
+						{ opacity: 0, transform: 'translateY(-10px)', filter: 'blur(10px)' },
+						{ duration: 0.45, ease: [0.7, 0, 0.84, 0] }
+					)
+				);
+				await sleep(350);
 				if (cancelled) return;
 			}
 
@@ -142,7 +155,7 @@
 					: animate(
 							overlayEl,
 							{ clipPath: 'inset(100% 0% 0% 0%)' },
-							{ duration: revealDuration, ease: [0.42, 0, 1, 1] }
+							{ duration: revealDuration, ease: [0.8, 0, 0.1, 1] }
 						)
 			);
 			await sleep(revealDurationMs);
@@ -164,13 +177,13 @@
 {#if isVisible}
 	<div
 		bind:this={overlayEl}
-		class="fixed inset-0 z-50 grid place-items-center bg-black text-white"
+		class="fixed inset-0 z-[var(--z-max)] grid place-items-center bg-black text-white"
 		aria-hidden="true"
 	>
 		<div class="relative grid place-items-center">
 			<div
 				bind:this={imageWrapEl}
-				class="relative aspect-square w-[min(72vw,420px)] overflow-hidden"
+				class="relative aspect-square w-[min(72vw,420px)] overflow-hidden rounded-full border border-white/10"
 			>
 				<picture class="absolute inset-0 block h-full w-full">
 					<source

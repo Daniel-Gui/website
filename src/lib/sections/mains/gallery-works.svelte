@@ -9,40 +9,40 @@
 		description: string;
 		tags: string[];
 		link?: string;
-		image?: string;
+		imageBasename?: string;
 		year: string;
 	};
 
 	const WORKS: WorkItem[] = [
 		{
 			id: '01',
-			title: 'Nexus Dashboard',
+			title: 'Projeto 01',
 			description:
-				'Interface administrativa de alta densidade para monitoramento de clusters Kubernetes em tempo real.',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
 			tags: ['SvelteKit', 'Tailwind', 'D3.js'],
 			year: '2025',
 			link: '#',
-			image: '/images/hero/hero-image-01.webp' // Placeholder from existing assets
+			imageBasename: 'cover-placeholder-01'
 		},
 		{
 			id: '02',
-			title: 'Chronos UI',
+			title: 'Projeto 02',
 			description:
-				'Design System focado em performance e acessibilidade para aplicações enterprise.',
+				'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.',
 			tags: ['Design System', 'A11y', 'Storybook'],
 			year: '2024',
 			link: '#',
-			image: '/images/hero/hero-image-02.webp'
+			imageBasename: 'cover-placeholder-02'
 		},
 		{
 			id: '03',
-			title: 'Vortex Finance',
+			title: 'Projeto 03',
 			description:
-				'Plataforma de trading descentralizado com execução instantânea e UX simplificada.',
+				'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.',
 			tags: ['React', 'Web3', 'Motion'],
 			year: '2024',
 			link: '#',
-			image: '/images/hero/hero-image-03.webp'
+			imageBasename: 'cover-placeholder-03'
 		}
 	];
 
@@ -163,13 +163,17 @@
 						class="relative aspect-[4/3] overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
 					>
 						<!-- Image -->
-						{#if work.image}
-							<img
-								src={work.image}
-								alt={work.title}
-								loading="lazy"
-								class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
-							/>
+						{#if work.imageBasename}
+							<picture class="h-full w-full">
+								<source srcset="/images/works-covers/{work.imageBasename}.avif" type="image/avif" />
+								<source srcset="/images/works-covers/{work.imageBasename}.webp" type="image/webp" />
+								<img
+									src="/images/works-covers/{work.imageBasename}.webp"
+									alt={work.title}
+									loading="lazy"
+									class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
+								/>
+							</picture>
 						{/if}
 
 						<!-- Overlay Gradient -->

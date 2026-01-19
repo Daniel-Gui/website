@@ -321,13 +321,26 @@
 						class="pointer-events-none absolute inset-0 bg-white/35 backdrop-blur-2xl"
 						aria-hidden="true"
 					></div>
-					<div class="relative grid grid-cols-2 gap-3 sm:grid-cols-4">
+					
+					<!-- Decorative Grid Background -->
+					<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
+						<svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+							<defs>
+								<pattern id="nav-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+									<path d="M 20 0 L 0 0 0 20" fill="none" stroke="currentColor" stroke-width="1" />
+								</pattern>
+							</defs>
+							<rect width="100%" height="100%" fill="url(#nav-grid)" />
+						</svg>
+					</div>
+
+					<div class="relative z-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
 						<a
 							bind:this={cardCvEl}
 							href={RESUME_PTBR}
 							download
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={(e) => {
@@ -359,7 +372,7 @@
 								<IconFileArrowDown class="size-6" />
 							</span>
 							<span class="text-sm font-medium">Baixar currículo</span>
-							<span class="text-xs text-muted">PDF</span>
+							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">PDF</span>
 						</a>
 
 						<a
@@ -368,7 +381,7 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
@@ -379,14 +392,14 @@
 								<IconLinkedin class="size-6" />
 							</span>
 							<span class="text-sm font-medium">LinkedIn</span>
-							<span class="text-xs text-muted">Perfil</span>
+							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Perfil</span>
 						</a>
 
 						<a
 							bind:this={cardEmailEl}
 							href={mailtoHref}
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
@@ -397,7 +410,7 @@
 								<IconMail class="size-6" />
 							</span>
 							<span class="text-sm font-medium">Email</span>
-							<span class="text-xs text-muted">Contato</span>
+							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Contato</span>
 						</a>
 
 						<a
@@ -406,7 +419,7 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:bg-white/85 hover:border-black/20 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
@@ -417,7 +430,7 @@
 								<IconWhatsapp class="size-6" />
 							</span>
 							<span class="text-sm font-medium">WhatsApp</span>
-							<span class="text-xs text-muted">Mensagem</span>
+							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Mensagem</span>
 						</a>
 					</div>
 				</div>

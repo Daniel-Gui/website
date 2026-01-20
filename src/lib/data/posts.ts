@@ -88,9 +88,19 @@ export const POSTS: PostItem[] = [
 			{
 				type: 'image',
 				data: {
-					src: '/images/blog-covers/blog-cover-placeholder-02.webp',
-					alt: 'Exemplo de imagem renderizada no conteúdo',
-					caption: 'Legenda opcional para a imagem demonstrativa'
+					src: '/images/blog-covers/blog-cover-placeholder-02',
+					alt: 'Exemplo de imagem local otimizada (picture tag)',
+					caption: 'Imagem local renderizada via tag <picture> com suporte a AVIF/WebP',
+					sourceType: 'local'
+				}
+			},
+			{
+				type: 'image',
+				data: {
+					src: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop',
+					alt: 'Exemplo de imagem externa',
+					caption: 'Imagem carregada de uma URL externa (Unsplash)',
+					sourceType: 'external'
 				}
 			},
 			{

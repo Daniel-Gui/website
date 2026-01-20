@@ -54,20 +54,20 @@
 	<meta name="description" content={post.excerpt} />
 </svelte:head>
 
-<main class="min-h-dvh bg-black text-white selection:bg-white/20 selection:text-white">
+<main class="min-h-dvh bg-bg text-fg selection:bg-fg/10 selection:text-fg">
 	<div class="container-page mx-auto max-w-4xl px-6 py-24 sm:py-32">
 		<!-- Breadcrumb & Navigation -->
-		<nav class="mb-12 flex items-center gap-4 text-sm text-neutral-400" data-animate>
+		<nav class="mb-12 flex items-center gap-4 text-sm text-muted" data-animate>
 			<a
 				href="/#blog"
-				class="group -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+				class="group -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
 				aria-label="Voltar para o blog"
 			>
 				<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
 				Knowledge Base
 			</a>
-			<span class="text-neutral-600">/</span>
-			<span class="font-medium text-white">{post.tags[0] || 'Article'}</span>
+			<span class="text-muted/60">/</span>
+			<span class="font-medium text-fg">{post.tags[0] || 'Article'}</span>
 		</nav>
 
 		<!-- Header -->
@@ -79,7 +79,7 @@
 				>
 					{post.title}
 				</h1>
-				<p class="max-w-2xl text-xl leading-relaxed text-balance text-neutral-400">
+				<p class="max-w-2xl text-xl leading-relaxed text-balance text-muted">
 					{post.excerpt}
 				</p>
 			</div>
@@ -87,7 +87,7 @@
 			<!-- Author / Team -->
 			<div class="flex items-center gap-3">
 				<div
-					class="flex items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 pr-4 text-sm font-medium text-white backdrop-blur-md"
+					class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/50 px-3 py-1.5 pr-4 text-sm font-medium text-fg backdrop-blur-md"
 				>
 					<IconShield class="size-4" />
 					<span>Daniel Gui</span>
@@ -96,7 +96,7 @@
 
 			<!-- Meta Info Row -->
 			<div
-				class="flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-white/10 py-4 font-mono text-sm text-neutral-400"
+				class="flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-border/10 py-4 font-mono text-sm text-muted"
 			>
 				<div class="flex items-center gap-2">
 					<IconClock class="size-4" />
@@ -105,12 +105,12 @@
 
 				<button
 					onclick={copyToClipboard}
-					class="-ml-2 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+					class="-ml-2 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
 					aria-label="Copiar link da página"
 				>
 					{#if copied}
-						<IconCheck class="size-4 text-green-400" />
-						<span class="text-green-400">Copied</span>
+						<IconCheck class="size-4 text-green-500" />
+						<span class="text-green-500">Copied</span>
 					{:else}
 						<IconCopy class="size-4" />
 						<span>Copy page</span>
@@ -118,7 +118,7 @@
 				</button>
 
 				<button
-					class="flex cursor-not-allowed items-center gap-2 rounded-md px-2 py-1 opacity-50 transition-colors hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+					class="flex cursor-not-allowed items-center gap-2 rounded-md px-2 py-1 opacity-50 transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
 				>
 					<IconSparkle class="size-4" />
 					<span>Ask AI about this page</span>
@@ -132,17 +132,18 @@
 
 		<!-- Content -->
 		<article
-			class="prose prose-lg mt-16 max-w-none prose-invert
-            prose-headings:font-sans prose-headings:font-bold prose-headings:tracking-tight
-            prose-p:leading-relaxed prose-p:text-neutral-300
-            prose-a:text-white prose-a:decoration-white/30 prose-a:underline-offset-4 hover:prose-a:decoration-white
-            prose-blockquote:border-l-white/20 prose-blockquote:text-neutral-400
-            prose-code:rounded-md prose-code:bg-white/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:before:content-none prose-code:after:content-none
-            prose-hr:border-white/10"
+			class="prose prose-lg mt-16 max-w-none dark:prose-invert
+            prose-headings:font-sans prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-black dark:prose-headings:text-white
+            prose-p:leading-relaxed prose-p:text-gray-800 dark:prose-p:text-neutral-300
+            prose-a:text-black prose-a:decoration-black/30
+            prose-a:underline-offset-4 hover:prose-a:decoration-black dark:prose-a:text-white dark:prose-a:decoration-white/30 dark:hover:prose-a:decoration-white prose-blockquote:border-l-black/20 prose-blockquote:text-gray-700
+            dark:prose-blockquote:border-l-white/20 dark:prose-blockquote:text-neutral-400 prose-code:rounded-md prose-code:bg-black/5
+            prose-code:px-1.5 prose-code:py-0.5 prose-code:text-gray-900 prose-code:before:content-none prose-code:after:content-none dark:prose-code:bg-white/10 dark:prose-code:text-neutral-200 prose-li:text-gray-800 dark:prose-li:text-neutral-300
+            prose-hr:border-black/10 dark:prose-hr:border-white/10"
 			data-animate
 		>
 			<!-- Simulated Content based on the old one but stripped of "Lorem Ipsum" if possible or just reused -->
-			<p class="lead mb-12 text-2xl font-medium text-white">
+			<p class="lead mb-12 text-2xl font-medium text-black dark:text-white">
 				{post.excerpt}
 			</p>
 
@@ -187,12 +188,12 @@
 		<div class="mt-12 flex justify-end" data-animate>
 			<button
 				onclick={scrollToTop}
-				class="group flex items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-neutral-400 transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:outline-none"
+				class="group flex items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
 				aria-label="Voltar ao topo"
 			>
 				Back to top
 				<span
-					class="grid size-6 place-items-center rounded-full border border-white/10 bg-white/5 transition-colors group-hover:border-white/20 group-hover:bg-white/10"
+					class="grid size-6 place-items-center rounded-full border border-border/10 bg-surface/50 transition-colors group-hover:border-border/20 group-hover:bg-surface"
 				>
 					<IconArrowUp class="size-3.5" />
 				</span>

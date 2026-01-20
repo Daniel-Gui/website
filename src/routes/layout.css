@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+@custom-variant dark (&:where(.dark, .dark *));
 /* Supports weights 100-900 */
 @import '@fontsource-variable/archivo';
 @import '@fontsource-variable/jetbrains-mono';
@@ -8,7 +9,7 @@
 @theme {
 	--font-sans: 'Archivo Variable', sans-serif;
 	--font-mono: 'JetBrains Mono Variable', monospace;
-	
+
 	--color-bg: rgb(var(--bg));
 	--color-fg: rgb(var(--fg));
 	--color-muted: rgb(var(--muted));
@@ -20,7 +21,7 @@
 	--radius-md: var(--radius-md);
 	--radius-lg: var(--radius-lg);
 	--radius-xl: var(--radius-xl);
-	
+
 	--shadow-1: var(--shadow-1);
 	--shadow-2: var(--shadow-2);
 }
@@ -152,7 +153,7 @@
 	.text-balance {
 		text-wrap: balance;
 	}
-	
+
 	.text-pretty {
 		text-wrap: pretty;
 	}
@@ -178,7 +179,10 @@
 		-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
 		box-shadow: var(--shadow-1);
 		cursor: pointer;
-		transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+		transition:
+			background 0.2s ease,
+			transform 0.1s ease,
+			box-shadow 0.2s ease;
 	}
 
 	.btn:hover {
@@ -239,7 +243,9 @@
 		border-radius: 9999px;
 		color: rgb(var(--muted));
 		line-height: 1;
-		transition: color 0.2s ease, background 0.2s ease;
+		transition:
+			color 0.2s ease,
+			background 0.2s ease;
 	}
 
 	.segmented-item:hover {

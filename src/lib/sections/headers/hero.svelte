@@ -436,11 +436,11 @@
 
 				<div class="mt-7 flex justify-center" bind:this={availabilityEl} data-hero-item>
 					<div
-						class="flex items-center gap-2 rounded-full border border-black/5 bg-white/40 px-4 py-2 shadow-sm backdrop-blur-md"
+						class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/40 px-4 py-2 shadow-sm backdrop-blur-md"
 					>
 						<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
 						></span>
-						<span class="font-mono text-xs font-medium tracking-wider text-neutral-700 uppercase"
+						<span class="font-mono text-xs font-medium tracking-wider text-muted uppercase"
 							>{availabilityText}</span
 						>
 					</div>

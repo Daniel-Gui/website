@@ -344,7 +344,7 @@
 							href={RESUME_PTBR}
 							download
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={(e) => {
@@ -371,7 +371,7 @@
 							}}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconFileArrowDown class="size-6" />
 							</span>
@@ -385,13 +385,13 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconLinkedin class="size-6" />
 							</span>
@@ -403,13 +403,13 @@
 							bind:this={cardEmailEl}
 							href={mailtoHref}
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconMail class="size-6" />
 							</span>
@@ -423,13 +423,13 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-black/20 hover:bg-white/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-black/10 bg-white/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconWhatsapp class="size-6" />
 							</span>
@@ -474,7 +474,7 @@
 	}
 
 	.navbar-top {
-		color: rgb(255 255 255 / 0.92);
+		color: rgb(var(--fg));
 	}
 
 	.navbar-top::before {
@@ -490,14 +490,14 @@
 	}
 
 	.navbar-top .btn {
-		background: rgb(255 255 255 / 0.16);
-		border-color: rgb(255 255 255 / 0.18);
-		color: rgb(255 255 255 / 0.92);
-		box-shadow: none;
+		background: rgb(var(--surface) / 0.7);
+		border-color: rgb(var(--border) / 0.2);
+		color: rgb(var(--fg));
+		box-shadow: var(--shadow-1);
 	}
 
 	.navbar-top .btn:hover {
-		background: rgb(255 255 255 / 0.22);
+		background: rgb(var(--surface) / 0.85);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

@@ -12,13 +12,13 @@
 
 <button
 	onclick={toggleMode}
-	class="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white/70 shadow-sm backdrop-blur-md transition-all hover:bg-white active:scale-95 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+	class="btn aspect-square size-11 p-0 transition-transform duration-200 ease-out active:scale-95"
 	aria-label="Alternar tema"
 >
 	{#if mounted}
 		<div class="relative size-4">
 			<span
-				class="absolute inset-0 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100"
+				class="absolute inset-0 scale-0 rotate-90 transition-all duration-300 dark:scale-100 dark:rotate-0"
 			>
 				<!-- Moon icon representation -->
 				<svg
@@ -36,7 +36,7 @@
 				</svg>
 			</span>
 			<span
-				class="absolute inset-0 rotate-0 scale-100 transition-all duration-300 dark:-rotate-90 dark:scale-0"
+				class="absolute inset-0 scale-100 rotate-0 transition-all duration-300 dark:scale-0 dark:-rotate-90"
 			>
 				<!-- Sun icon representation -->
 				<svg

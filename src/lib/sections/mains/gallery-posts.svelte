@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
+	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import { POSTS } from '$lib/data/posts';
 
@@ -129,7 +130,7 @@
 				data-posts-header
 			>
 				<a
-					href="/blog"
+					href={resolve('/blog', {})}
 					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
 				>
 					[VIEW_ALL_POSTS] <IconArrowUpRight class="size-3" />
@@ -139,7 +140,7 @@
 
 		<!-- Posts List -->
 		<div class="grid gap-6 md:grid-cols-2">
-			{#each POSTS as post}
+			{#each POSTS as post (post.id)}
 				<article
 					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-all duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
 					style="opacity: 0; transform: translateY(20px);"
@@ -185,7 +186,7 @@
 								style:view-transition-name={`blog-title-${post.slug}`}
 							>
 								<a
-									href={`/blog/${post.slug}`}
+									href={resolve(`/blog/${post.slug}`, {})}
 									class="before:absolute before:inset-0 focus:outline-none"
 								>
 									{post.title}
@@ -204,7 +205,7 @@
 		<!-- Mobile View All Link -->
 		<div class="mt-8 md:hidden" style="opacity: 0; transform: translateY(20px);" data-posts-header>
 			<a
-				href="/blog"
+				href={resolve('/blog', {})}
 				class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
 			>
 				[VIEW_ALL_POSTS] <IconArrowUpRight class="size-3" />

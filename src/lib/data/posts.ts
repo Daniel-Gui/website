@@ -1,3 +1,5 @@
+import type { BlogAuthorId } from './blog-authors';
+
 export type PostItem = {
 	id: string;
 	title: string;
@@ -7,6 +9,7 @@ export type PostItem = {
 	tags: string[];
 	slug: string;
 	coverImageBasename: string;
+	authorId: BlogAuthorId;
 };
 
 export const POSTS: PostItem[] = [
@@ -19,7 +22,8 @@ export const POSTS: PostItem[] = [
 		readTime: '5 min read',
 		tags: ['Performance', 'SvelteKit', 'Web Vitals'],
 		slug: 'otimizando-performance-sveltekit',
-		coverImageBasename: 'blog-cover-placeholder-01'
+		coverImageBasename: 'blog-cover-placeholder-01',
+		authorId: 'daniel'
 	},
 	{
 		id: '02',
@@ -30,7 +34,8 @@ export const POSTS: PostItem[] = [
 		readTime: '8 min read',
 		tags: ['CSS', 'Tailwind', 'Design Systems'],
 		slug: 'design-systems-tailwind-v4',
-		coverImageBasename: 'blog-cover-placeholder-02'
+		coverImageBasename: 'blog-cover-placeholder-02',
+		authorId: 'daniel'
 	},
 	{
 		id: '03',
@@ -41,7 +46,8 @@ export const POSTS: PostItem[] = [
 		readTime: '6 min read',
 		tags: ['A11y', 'Motion', 'UX'],
 		slug: 'micro-interacoes-acessibilidade',
-		coverImageBasename: 'blog-cover-placeholder-03'
+		coverImageBasename: 'blog-cover-placeholder-03',
+		authorId: 'daniel'
 	},
 	{
 		id: '04',
@@ -52,6 +58,7 @@ export const POSTS: PostItem[] = [
 		readTime: '10 min read',
 		tags: ['Backend', 'Serverless', 'Cloudflare'],
 		slug: 'arquitetura-serverless-cloudflare',
-		coverImageBasename: 'blog-cover-placeholder-01'
+		coverImageBasename: 'blog-cover-placeholder-01',
+		authorId: 'daniel'
 	}
 ];

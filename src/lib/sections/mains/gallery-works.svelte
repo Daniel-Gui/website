@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tick } from 'svelte';
+	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import { cn } from '$lib/utils';
 	import { WORKS } from '$lib/data/works';
 
 	let sectionEl = $state<HTMLElement | null>(null);
@@ -109,9 +109,9 @@
 
 		<!-- Grid -->
 		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-			{#each WORKS as work}
+			{#each WORKS as work (work.id)}
 				<a
-					href={`/work/${work.id}`}
+					href={resolve(`/work/${work.id}`, {})}
 					class="group relative flex flex-col gap-4"
 					style="opacity: 0; transform: translateY(40px);"
 					data-gallery-card
@@ -170,7 +170,7 @@
 						</p>
 
 						<div class="flex flex-wrap gap-2 pt-1">
-							{#each work.tags as tag}
+							{#each work.tags as tag (tag)}
 								<span
 									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2 py-1 font-mono text-[10px] tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
 								>

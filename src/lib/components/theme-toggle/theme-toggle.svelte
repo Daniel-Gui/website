@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { toggleMode, mode } from 'mode-watcher';
-	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
+	import { toggleMode } from 'mode-watcher';
 	import { onMount } from 'svelte';
 
 	let mounted = $state(false);

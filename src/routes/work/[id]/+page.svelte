@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import { cn } from '$lib/utils';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
-	let { work } = data;
+	let work = $derived(data.work);
 </script>
 
 <svelte:head>
@@ -36,7 +36,7 @@
 								// {work.year}
 							</span>
 							<a
-								href={work.link}
+								href={resolve(work.link ?? '#', {})}
 								target="_blank"
 								rel="noopener noreferrer"
 								class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
@@ -53,7 +53,7 @@
 					</div>
 
 					<div class="flex flex-wrap gap-2">
-						{#each work.tags as tag}
+						{#each work.tags as tag (tag)}
 							<span
 								class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2.5 py-1 font-mono text-xs tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
 							>
@@ -69,7 +69,7 @@
 				<div
 					class="scrollbar-hide ml-[calc(50%-50vw)] flex w-screen snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-8 lg:ml-0 lg:block lg:w-full lg:space-y-12 lg:overflow-visible lg:px-0 lg:pb-0"
 				>
-					{#each work.galleryImages as imageBasename, i}
+					{#each work.galleryImages as imageBasename, i (imageBasename)}
 						<div
 							class="w-[85vw] shrink-0 snap-center overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm lg:w-full dark:border-white/10 dark:bg-white/5"
 							style:view-transition-name={i === 0 ? `work-image-${work.id}` : undefined}
@@ -100,7 +100,7 @@
 									// {work.year}
 								</span>
 								<a
-									href={work.link}
+									href={resolve(work.link ?? '#', {})}
 									target="_blank"
 									rel="noopener noreferrer"
 									class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
@@ -117,7 +117,7 @@
 						</div>
 
 						<div class="flex flex-wrap gap-2">
-							{#each work.tags as tag}
+							{#each work.tags as tag (tag)}
 								<span
 									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2.5 py-1 font-mono text-xs tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
 								>
@@ -165,7 +165,7 @@
 					<!-- Navegação Voltar -->
 					<div class="border-t border-black/5 pt-8 dark:border-white/10">
 						<a
-							href="/#trabalhos"
+							href={resolve('/#trabalhos', {})}
 							class="group inline-flex items-center gap-2 font-mono text-sm transition-colors hover:text-blue-600"
 						>
 							← Back to Selected_Works

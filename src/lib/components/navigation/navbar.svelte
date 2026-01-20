@@ -467,8 +467,7 @@
 		transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
-	.navbar-shell > .navbar-brand,
-	.navbar-shell > button {
+	.navbar-shell > .navbar-brand {
 		position: relative;
 		z-index: 1;
 	}

@@ -2,16 +2,17 @@
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
 	import { animate, stagger } from 'motion';
+	import { resolve } from '$app/paths';
 	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
 	import IconClock from '$lib/components/icons/icon-clock.svelte';
 	import IconCopy from '$lib/components/icons/icon-copy.svelte';
 	import IconCheck from '$lib/components/icons/icon-check.svelte';
-	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
-	import IconShield from '$lib/components/icons/icon-shield.svelte';
 	import IconArrowUp from '$lib/components/icons/icon-arrow-up.svelte';
+	import { getBlogAuthor } from '$lib/data/blog-authors';
 
 	let { data }: { data: PageData } = $props();
 	let post = $derived(data.post);
+	let author = $derived(getBlogAuthor(post.authorId));
 
 	let copied = $state(false);
 	let pageUrl = $state('');
@@ -59,15 +60,15 @@
 		<!-- Breadcrumb & Navigation -->
 		<nav class="mb-12 flex items-center gap-4 text-sm text-muted" data-animate>
 			<a
-				href="/#blog"
+				href={resolve('/#blog', {})}
 				class="group -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
 				aria-label="Voltar para o blog"
 			>
 				<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
-				Knowledge Base
+				Base de conhecimento
 			</a>
 			<span class="text-muted/60">/</span>
-			<span class="font-medium text-fg">{post.tags[0] || 'Article'}</span>
+			<span class="font-medium text-fg">{post.tags[0] || 'Artigo'}</span>
 		</nav>
 
 		<!-- Header -->
@@ -89,8 +90,26 @@
 				<div
 					class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/50 px-3 py-1.5 pr-4 text-sm font-medium text-fg backdrop-blur-md"
 				>
-					<IconShield class="size-4" />
-					<span>Daniel Gui</span>
+					<picture
+						class="relative size-7 overflow-hidden rounded-full border border-border/10 bg-surface/70"
+					>
+						<source
+							srcset={`/images/blog-authors/${author.avatarBasename}.avif`}
+							type="image/avif"
+						/>
+						<source
+							srcset={`/images/blog-authors/${author.avatarBasename}.webp`}
+							type="image/webp"
+						/>
+						<img
+							src={`/images/blog-authors/${author.avatarBasename}.webp`}
+							alt={`Foto de ${author.name}`}
+							loading="lazy"
+							decoding="async"
+							class="h-full w-full object-cover"
+						/>
+					</picture>
+					<span>{author.name}</span>
 				</div>
 			</div>
 
@@ -110,22 +129,15 @@
 				>
 					{#if copied}
 						<IconCheck class="size-4 text-green-500" />
-						<span class="text-green-500">Copied</span>
+						<span class="text-green-500">Copiado</span>
 					{:else}
 						<IconCopy class="size-4" />
-						<span>Copy page</span>
+						<span>Copiar página</span>
 					{/if}
 				</button>
 
-				<button
-					class="flex cursor-not-allowed items-center gap-2 rounded-md px-2 py-1 opacity-50 transition-colors hover:bg-surface focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
-				>
-					<IconSparkle class="size-4" />
-					<span>Ask AI about this page</span>
-				</button>
-
 				<div class="ml-auto flex items-center gap-2 text-xs opacity-60">
-					Last updated {formatDate(post.date)}
+					Última atualização {formatDate(post.date)}
 				</div>
 			</div>
 		</header>
@@ -164,7 +176,7 @@
 				<footer>— Leonardo da Vinci</footer>
 			</blockquote>
 
-			<h3>Required action</h3>
+			<h3>Ação necessária</h3>
 			<p>
 				Para implementar as correções sugeridas, verifique as configurações do seu ambiente e
 				certifique-se de que todas as dependências estão atualizadas.
@@ -191,7 +203,7 @@
 				class="group flex items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
 				aria-label="Voltar ao topo"
 			>
-				Back to top
+				Voltar ao topo
 				<span
 					class="grid size-6 place-items-center rounded-full border border-border/10 bg-surface/50 transition-colors group-hover:border-border/20 group-hover:bg-surface"
 				>

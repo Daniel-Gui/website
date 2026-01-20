@@ -9,6 +9,7 @@
 	import IconCheck from '$lib/components/icons/icon-check.svelte';
 	import IconArrowUp from '$lib/components/icons/icon-arrow-up.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
+	import ContentRenderer from '$lib/components/content/ContentRenderer.svelte';
 
 	let { data }: { data: PageData } = $props();
 	let post = $derived(data.post);
@@ -143,58 +144,12 @@
 		</header>
 
 		<!-- Content -->
-		<article
-			class="prose prose-lg mt-16 max-w-none dark:prose-invert
-            prose-headings:font-sans prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-black dark:prose-headings:text-white
-            prose-p:leading-relaxed prose-p:text-gray-800 dark:prose-p:text-neutral-300
-            prose-a:text-black prose-a:decoration-black/30
-            prose-a:underline-offset-4 hover:prose-a:decoration-black dark:prose-a:text-white dark:prose-a:decoration-white/30 dark:hover:prose-a:decoration-white prose-blockquote:border-l-black/20 prose-blockquote:text-gray-700
-            dark:prose-blockquote:border-l-white/20 dark:prose-blockquote:text-neutral-400 prose-code:rounded-md prose-code:bg-black/5
-            prose-code:px-1.5 prose-code:py-0.5 prose-code:text-gray-900 prose-code:before:content-none prose-code:after:content-none dark:prose-code:bg-white/10 dark:prose-code:text-neutral-200 prose-li:text-gray-800 dark:prose-li:text-neutral-300
-            prose-hr:border-black/10 dark:prose-hr:border-white/10"
-			data-animate
-		>
-			<!-- Simulated Content based on the old one but stripped of "Lorem Ipsum" if possible or just reused -->
-			<p class="lead mb-12 text-2xl font-medium text-black dark:text-white">
-				{post.excerpt}
-			</p>
-
-			<p>
-				Este artigo explora as nuances de {post.title} e como isso impacta o desenvolvimento moderno.
-				Abaixo, detalhamos os principais desafios e soluções encontradas.
-			</p>
-
-			<h2>O Desafio</h2>
-			<p>
-				Ao lidar com sistemas complexos, frequentemente encontramos gargalos de performance que não
-				são óbvios à primeira vista. A necessidade de otimização deve ser balanceada com a
-				legibilidade e manutenção do código.
-			</p>
-
-			<blockquote>
-				"A simplicidade é o último grau de sofisticação."
-				<footer>— Leonardo da Vinci</footer>
-			</blockquote>
-
-			<h3>Ação necessária</h3>
-			<p>
-				Para implementar as correções sugeridas, verifique as configurações do seu ambiente e
-				certifique-se de que todas as dependências estão atualizadas.
-			</p>
-			<ul>
-				<li>Audite suas dependências regularmente.</li>
-				<li>Utilize ferramentas de análise estática.</li>
-				<li>Monitore as métricas de Core Web Vitals.</li>
-			</ul>
-
-			<hr class="my-12 border-dashed border-white/20" />
-
-			<h2>Conclusão</h2>
-			<p>
-				A evolução contínua das ferramentas de desenvolvimento web nos permite criar experiências
-				cada vez mais ricas e performáticas. Mantenha-se atualizado e sempre questione as "melhores
-				práticas" estabelecidas.
-			</p>
+		<article class="prose prose-lg mt-16 max-w-none dark:prose-invert" data-animate>
+			{#if post.content}
+				<ContentRenderer blocks={post.content} />
+			{:else}
+				<p class="text-muted">Conteúdo em construção...</p>
+			{/if}
 		</article>
 
 		<div class="mt-12 flex justify-end" data-animate>

@@ -57,7 +57,7 @@
 </svelte:head>
 
 <main class="min-h-dvh bg-bg text-fg selection:bg-fg/10 selection:text-fg">
-	<div class="container-page mx-auto max-w-4xl px-6 py-24 sm:py-32">
+	<div class="container-page mx-auto max-w-4xl py-24 sm:py-32 md:px-6">
 		<!-- Breadcrumb & Navigation -->
 		<nav class="mb-12 flex items-center gap-4 text-sm text-muted" data-animate>
 			<a
@@ -76,12 +76,12 @@
 		<header class="space-y-8" data-animate>
 			<div class="space-y-6">
 				<h1
-					class="font-sans text-5xl font-bold tracking-tight text-balance sm:text-6xl md:text-7xl lg:text-8xl"
+					class="font-sans text-4xl font-bold tracking-tight text-balance sm:text-5xl md:text-6xl lg:text-7xl"
 					style:view-transition-name={`blog-title-${post.slug}`}
 				>
 					{post.title}
 				</h1>
-				<p class="max-w-2xl text-xl leading-relaxed text-balance text-muted">
+				<p class="max-w-2xl text-lg leading-relaxed text-balance text-muted sm:text-xl">
 					{post.excerpt}
 				</p>
 			</div>

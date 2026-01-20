@@ -1,3 +1,5 @@
+import type { BlogAuthorId } from '$lib/data/blog-authors';
+
 export type ContentBlock =
 	| { type: 'paragraph'; data: { text: string } }
 	| { type: 'heading'; data: { level: 1 | 2 | 3 | 4 | 5 | 6; text: string; id?: string } }

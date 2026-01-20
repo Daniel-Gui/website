@@ -20,7 +20,7 @@
 	}
 </script>
 
-<div class="my-8 overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+<div class="not-prose my-8 overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
 	<div
 		class="flex items-center justify-between bg-black/5 px-4 py-2 text-xs text-gray-600 dark:bg-white/5 dark:text-neutral-400"
 	>

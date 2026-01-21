@@ -504,42 +504,6 @@
 		}
 	}
 
-	.hero-surface::before {
-		content: '';
-		position: absolute;
-		top: calc(-1 * var(--hero-bleed-top));
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: -1;
-		pointer-events: none;
-		background:
-			radial-gradient(
-				900px 420px at 22% 6%,
-				color-mix(in srgb, var(--hero-purple) 58%, transparent) 0%,
-				transparent 70%
-			),
-			radial-gradient(
-				900px 420px at 78% 10%,
-				color-mix(in srgb, var(--hero-blue) 52%, transparent) 0%,
-				transparent 72%
-			),
-			radial-gradient(
-				700px 360px at 50% 18%,
-				color-mix(in srgb, #000 26%, transparent) 0%,
-				transparent 76%
-			),
-			linear-gradient(
-				180deg,
-				var(--hero-top) 0%,
-				color-mix(in srgb, var(--hero-top) 65%, var(--hero-purple)) 18%,
-				color-mix(in srgb, var(--hero-purple) 70%, var(--hero-blue)) 50%,
-				color-mix(in srgb, var(--hero-blue) 60%, var(--hero-bottom)) 72%,
-				var(--hero-bottom) 90%,
-				var(--hero-bottom) 100%
-			);
-	}
-
 	.hero-surface h1 {
 		color: rgb(var(--fg));
 	}
@@ -779,6 +743,12 @@
 			transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
 			width 420ms cubic-bezier(0.16, 1, 0.3, 1),
 			opacity 240ms ease;
+	}
+
+	:global(html.dark) .hero-highlight {
+		background: rgb(255 255 255 / 0.1);
+		border: 1px solid rgb(255 255 255 / 0.05);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

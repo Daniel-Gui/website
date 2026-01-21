@@ -549,7 +549,7 @@
 		transition:
 			transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
 			box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
-			border-color 260ms cubic-bezier(0.16, 1, 0.3, 1);
+			border 260ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
 	.hero-showcase-media {
@@ -558,6 +558,14 @@
 		border-radius: 18px;
 		overflow: hidden;
 		display: block;
+		transition:
+			inset 260ms cubic-bezier(0.16, 1, 0.3, 1),
+			border-radius 260ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.hero-showcase-card:hover .hero-showcase-media {
+		inset: 0;
+		border-radius: 16px;
 	}
 
 	.hero-showcase-media img {
@@ -586,7 +594,7 @@
 
 	.hero-showcase-card:hover {
 		z-index: 3;
-		border-color: rgb(var(--fg) / 0.92);
+		border: 4px solid white;
 		box-shadow: var(--shadow-2);
 		transform: var(--card-transform) translateY(calc(var(--card-y) - 8px))
 			scale(calc(var(--card-scale) * 1.06));

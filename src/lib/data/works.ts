@@ -19,57 +19,19 @@ export const WORKS: WorkItem[] = [
 		id: '01',
 		title: 'Nexus Dashboard',
 		description:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+			'Uma plataforma de análise de dados em tempo real projetada para simplificar a visualização de métricas complexas e facilitar a tomada de decisão.',
 		tags: ['SvelteKit', 'Tailwind', 'D3.js'],
 		year: '2025',
 		link: '#',
 		imageBasename: 'cover-placeholder-01',
 		details: {
 			challenge:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+				'O principal desafio foi lidar com grandes volumes de dados em tempo real sem comprometer a performance da aplicação. A interface precisava ser intuitiva para usuários não-técnicos, mas poderosa o suficiente para analistas de dados.',
 			solution:
-				'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+				'Desenvolvemos uma arquitetura baseada em WebSockets para atualizações instantâneas e utilizamos D3.js para renderização eficiente de gráficos. A interface foi construída com componentes modulares e acessíveis.',
 			result:
-				'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.'
+				'O resultado foi uma redução de 40% no tempo de carregamento das métricas e um aumento significativo na satisfação dos usuários, que agora podem personalizar seus dashboards de acordo com suas necessidades.'
 		},
 		galleryImages: ['cover-placeholder-01', 'cover-placeholder-02', 'cover-placeholder-03']
-	},
-	{
-		id: '02',
-		title: 'Chronos UI',
-		description:
-			'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.',
-		tags: ['Design System', 'A11y', 'Storybook'],
-		year: '2024',
-		link: '#',
-		imageBasename: 'cover-placeholder-02',
-		details: {
-			challenge:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-			solution:
-				'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.',
-			result:
-				'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.'
-		},
-		galleryImages: ['cover-placeholder-02', 'cover-placeholder-03', 'cover-placeholder-01']
-	},
-	{
-		id: '03',
-		title: 'Vortex Finance',
-		description:
-			'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.',
-		tags: ['React', 'Web3', 'Motion'],
-		year: '2024',
-		link: '#',
-		imageBasename: 'cover-placeholder-03',
-		details: {
-			challenge:
-				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
-			solution:
-				'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident.',
-			result:
-				'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.'
-		},
-		galleryImages: ['cover-placeholder-03', 'cover-placeholder-01', 'cover-placeholder-02']
 	}
 ];

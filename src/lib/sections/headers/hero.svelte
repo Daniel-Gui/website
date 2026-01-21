@@ -4,6 +4,7 @@
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
 	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
+	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import { cn } from '$lib/utils';
 	import { lenisStore } from '$lib/stores/scroll';
 
@@ -41,6 +42,7 @@
 	let highlightEl = $state<HTMLDivElement | null>(null);
 	let emailEl = $state<HTMLAnchorElement | null>(null);
 	let whatsappEl = $state<HTMLAnchorElement | null>(null);
+	let blogEl = $state<HTMLAnchorElement | null>(null);
 	let worksEl = $state<HTMLAnchorElement | null>(null);
 	let activeEl = $state<HTMLAnchorElement | null>(null);
 	let headingEl = $state<HTMLHeadingElement | null>(null);
@@ -108,6 +110,15 @@
 			$lenisStore.scrollTo('#trabalhos', { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
 		} else {
 			document.querySelector('#trabalhos')?.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
+	const scrollToBlog = (e: MouseEvent) => {
+		e.preventDefault();
+		if ($lenisStore) {
+			$lenisStore.scrollTo('#blog', { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+		} else {
+			document.querySelector('#blog')?.scrollIntoView({ behavior: 'smooth' });
 		}
 	};
 
@@ -333,7 +344,7 @@
 					bind:this={headingEl}
 					data-hero-item
 				>
-					Olá, eu sou o <span class="font-serif text-blue-600 italic dark:text-blue-400">Dan</span>
+					Olá, eu sou o <span class="font-serif italic">Dan</span>
 				</h1>
 
 				<div
@@ -416,6 +427,20 @@
 								<IconWhatsapp class="size-[1.05rem]" />
 							</span>
 							WhatsApp
+						</a>
+
+						<a
+							bind:this={blogEl}
+							class="hero-item segmented-item"
+							href="#blog"
+							onpointerenter={onEnterItem}
+							onfocus={onEnterItem}
+							onclick={scrollToBlog}
+						>
+							<span class="hero-icon" aria-hidden="true">
+								<IconArrowUpRight class="size-[1.05rem]" />
+							</span>
+							Blog
 						</a>
 
 						<a
@@ -830,7 +855,6 @@
 		}
 
 		.hero-item-primary {
-			grid-column: 1 / -1;
 			background: rgb(var(--surface) / 0.92);
 			box-shadow: var(--shadow-2);
 		}

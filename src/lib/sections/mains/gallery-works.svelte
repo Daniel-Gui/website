@@ -86,7 +86,7 @@
 					style="opacity: 0; transform: translateY(20px);"
 					data-gallery-header
 				>
-					// Selected_Works
+					// Trabalhos_Selecionados
 				</h2>
 				<p
 					class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
@@ -102,7 +102,7 @@
 				data-gallery-header
 			>
 				<span class="font-mono text-xs text-muted">
-					[DISPLAYING: 01-0{WORKS.length}]
+					[EXIBINDO: 01-0{WORKS.length}]
 				</span>
 			</div>
 		</div>

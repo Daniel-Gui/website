@@ -114,7 +114,7 @@
 					style="opacity: 0; transform: translateY(20px);"
 					data-posts-header
 				>
-					// Insights_&_Thoughts
+					// Artigos_Recentes
 				</h2>
 				<p
 					class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
@@ -133,7 +133,7 @@
 					href={resolve('/blog', {})}
 					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
 				>
-					[VIEW_ALL_POSTS] <IconArrowUpRight class="size-3" />
+					[VER_TODOS] <IconArrowUpRight class="size-3" />
 				</a>
 			</div>
 		</div>
@@ -208,7 +208,7 @@
 				href={resolve('/blog', {})}
 				class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
 			>
-				[VIEW_ALL_POSTS] <IconArrowUpRight class="size-3" />
+				[VER_TODOS] <IconArrowUpRight class="size-3" />
 			</a>
 		</div>
 	</div>

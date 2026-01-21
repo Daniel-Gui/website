@@ -41,7 +41,7 @@
 								rel="noopener noreferrer"
 								class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
 							>
-								Live Preview <IconArrowUpRight class="size-3" />
+								Ver Projeto <IconArrowUpRight class="size-3" />
 							</a>
 						</div>
 						<h1
@@ -79,7 +79,7 @@
 								<source srcset="/images/works-covers/{imageBasename}.webp" type="image/webp" />
 								<img
 									src="/images/works-covers/{imageBasename}.webp"
-									alt={`${work.title} - View ${i + 1}`}
+									alt={`${work.title} - Imagem ${i + 1}`}
 									loading={i === 0 ? 'eager' : 'lazy'}
 									class="h-auto w-full object-cover"
 								/>
@@ -105,7 +105,7 @@
 									rel="noopener noreferrer"
 									class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
 								>
-									Live Preview <IconArrowUpRight class="size-3" />
+									Ver Projeto <IconArrowUpRight class="size-3" />
 								</a>
 							</div>
 							<h1
@@ -131,7 +131,7 @@
 					<div class="text-muted-foreground space-y-10">
 						<section class="space-y-3">
 							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-								[01] Overview
+								[01] Visão Geral
 							</h2>
 							<p class="leading-relaxed text-pretty">
 								{work.description}
@@ -140,7 +140,7 @@
 
 						<section class="space-y-3">
 							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-								[02] The Challenge
+								[02] O Desafio
 							</h2>
 							<p class="leading-relaxed text-pretty">
 								{work.details.challenge}
@@ -149,7 +149,7 @@
 
 						<section class="space-y-3">
 							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-								[03] Solution & Impact
+								[03] Solução & Impacto
 							</h2>
 							<div class="space-y-4">
 								<p class="leading-relaxed text-pretty">
@@ -168,7 +168,7 @@
 							href={resolve('/#trabalhos', {})}
 							class="group inline-flex items-center gap-2 font-mono text-sm transition-colors hover:text-blue-600"
 						>
-							← Back to Selected_Works
+							← Voltar para Trabalhos
 						</a>
 					</div>
 				</div>

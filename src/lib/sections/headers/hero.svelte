@@ -46,7 +46,8 @@
 	let worksEl = $state<HTMLAnchorElement | null>(null);
 	let activeEl = $state<HTMLAnchorElement | null>(null);
 	let headingEl = $state<HTMLHeadingElement | null>(null);
-	let leadEl = $state<HTMLParagraphElement | null>(null);
+	let leadTextEl = $state<HTMLParagraphElement | null>(null);
+	let badgeEl = $state<HTMLDivElement | null>(null);
 	let ctaWrapEl = $state<HTMLDivElement | null>(null);
 	let availabilityEl = $state<HTMLElement | null>(null);
 	let showcaseEl = $state<HTMLDivElement | null>(null);
@@ -155,7 +156,7 @@
 				? Array.from(showcaseEl.querySelectorAll<HTMLElement>('[data-showcase-card]'))
 				: [];
 
-			const items = [showcaseEl, headingEl, leadEl, ctaWrapEl, availabilityEl].filter(
+			const items = [showcaseEl, headingEl, leadTextEl, badgeEl, ctaWrapEl, availabilityEl].filter(
 				Boolean
 			) as HTMLElement[];
 
@@ -176,87 +177,125 @@
 				el.style.willChange = 'opacity, transform, filter';
 			}
 			if (headingEl) headingEl.style.filter = 'blur(12px)';
-			if (leadEl) leadEl.style.filter = 'blur(12px)';
+			if (leadTextEl) leadTextEl.style.filter = 'blur(12px)';
+			if (badgeEl) badgeEl.style.filter = 'blur(12px)';
 
 			await new Promise((r) => setTimeout(r, revealStartDelayMs));
 
+			const animations: Promise<unknown>[] = [];
+
 			if (showcaseCards.length) {
 				if (showcaseEl) {
-					await animate(
-						showcaseEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }
-					).finished;
+					animations.push(
+						animate(
+							showcaseEl,
+							{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+							{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+						).finished
+					);
 				}
 
-				for (const [index, el] of showcaseCards.entries()) {
+				showcaseCards.forEach((el, index) => {
 					const base =
 						getComputedStyle(el).getPropertyValue('--card-transform').trim() ||
 						'translate(-50%, -50%)';
 
-					if (index > 0) await new Promise((r) => setTimeout(r, showcaseRevealStaggerMs));
-
-					await animate(
-						el,
-						{
-							opacity: [0, 1],
-							transform: [
-								`${base} translateY(14px) scale(0.92)`,
-								`${base} translateY(-2px) scale(1.03)`,
-								`${base} translateY(0px) scale(1)`
-							],
-							filter: ['blur(14px)', 'blur(0px)']
-						} as unknown as Record<string, unknown>,
-						{ duration: showcaseRevealDurationMs / 1000, ease: [0.16, 1, 0.3, 1] }
-					).finished;
-				}
+					animations.push(
+						animate(
+							el,
+							{
+								opacity: [0, 1],
+								transform: [
+									`${base} translateY(14px) scale(0.92)`,
+									`${base} translateY(-2px) scale(1.03)`,
+									`${base} translateY(0px) scale(1)`
+								],
+								filter: ['blur(14px)', 'blur(0px)']
+							} as unknown as Record<string, unknown>,
+							{
+								duration: 0.7,
+								ease: [0.16, 1, 0.3, 1],
+								delay: index * 0.1
+							}
+						).finished
+					);
+				});
 			} else if (showcaseEl) {
-				await animate(
-					showcaseEl,
-					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-				).finished;
+				animations.push(
+					animate(
+						showcaseEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+					).finished
+				);
 			}
+
+			const contentDelay = 0.2;
+			const staggerDelay = 0.1;
 
 			if (headingEl) {
-				await animate(
-					headingEl,
-					{
-						opacity: [0, 1],
-						transform: ['translateY(14px)', 'translateY(0px)'],
-						filter: ['blur(12px)', 'blur(0px)']
-					} as unknown as Record<string, unknown>,
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-				).finished;
+				animations.push(
+					animate(
+						headingEl,
+						{
+							opacity: [0, 1],
+							transform: ['translateY(14px)', 'translateY(0px)'],
+							filter: ['blur(12px)', 'blur(0px)']
+						} as unknown as Record<string, unknown>,
+						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
+					).finished
+				);
 			}
 
-			if (leadEl) {
-				await animate(
-					leadEl,
-					{
-						opacity: [0, 1],
-						transform: ['translateY(14px)', 'translateY(0px)'],
-						filter: ['blur(12px)', 'blur(0px)']
-					} as unknown as Record<string, unknown>,
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.06 }
-				).finished;
+			if (leadTextEl) {
+				animations.push(
+					animate(
+						leadTextEl,
+						{
+							opacity: [0, 1],
+							transform: ['translateY(14px)', 'translateY(0px)'],
+							filter: ['blur(12px)', 'blur(0px)']
+						} as unknown as Record<string, unknown>,
+						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
+					).finished
+				);
+			}
+
+			if (badgeEl) {
+				animations.push(
+					animate(
+						badgeEl,
+						{
+							opacity: [0, 1],
+							transform: ['translateY(14px)', 'translateY(0px)'],
+							filter: ['blur(12px)', 'blur(0px)']
+						} as unknown as Record<string, unknown>,
+						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
+					).finished
+				);
 			}
 
 			if (ctaWrapEl) {
-				await animate(
-					ctaWrapEl,
-					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-				).finished;
+				animations.push(
+					animate(
+						ctaWrapEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
+					).finished
+				);
 			}
 
 			if (availabilityEl) {
-				await animate(
-					availabilityEl,
-					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-					{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.08 }
-				).finished;
+				animations.push(
+					animate(
+						availabilityEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
+					).finished
+				);
 			}
+
+			await Promise.all(animations);
 
 			heroRevealed = true;
 
@@ -347,12 +386,12 @@
 					Olá, eu sou o <span class="font-serif italic">Dan</span>
 				</h1>
 
-				<div
-					class="mx-auto mt-6 flex max-w-[62ch] flex-col items-center gap-4"
-					bind:this={leadEl}
-					data-hero-item
-				>
-					<p class="text-lg text-pretty text-muted sm:text-xl">
+				<div class="mx-auto mt-6 flex max-w-[62ch] flex-col items-center gap-4">
+					<p
+						class="text-lg text-pretty text-muted sm:text-xl"
+						bind:this={leadTextEl}
+						data-hero-item
+					>
 						Atuo como <span class="font-bold">Product Designer</span> e
 						<span class="font-bold">Desenvolvedor Frontend</span>, transformando problemas complexos
 						em experiências digitais simples, funcionais e relevantes. Atualmente espalhando beleza
@@ -362,6 +401,8 @@
 
 					<div
 						class="flex items-center gap-3 rounded-full border border-border/10 bg-surface/40 px-3 py-1.5 shadow-sm backdrop-blur-md"
+						bind:this={badgeEl}
+						data-hero-item
 					>
 						<span class="font-mono text-xs tracking-wider text-muted uppercase"
 							>Based in Belém, BR</span

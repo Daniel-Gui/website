@@ -39,7 +39,7 @@
 
 {#if !$introDone}
 	<Introduction
-		texts={['Olá, eu sou Daniel.', 'Frontend Developer', '&', 'UI/UX Designer']}
+		texts={['Hey!', 'Que bom te ver por aqui!']}
 		switchDelayMs={1000}
 		onFinished={() => introDone.set(true)}
 	/>

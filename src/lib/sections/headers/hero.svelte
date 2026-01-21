@@ -353,7 +353,11 @@
 					data-hero-item
 				>
 					<p class="text-lg text-pretty text-muted sm:text-xl">
-						Product Designer (UI/UX) e desenvolvedor Frontend.
+						Atuo como <span class="font-bold">Product Designer</span> e
+						<span class="font-bold">Desenvolvedor Frontend</span>, transformando problemas complexos
+						em experiências digitais simples, funcionais e relevantes. Atualmente espalhando beleza
+						no grupo
+						<span class="font-serif italic">Ei,Beleza?</span>.
 					</p>
 
 					<div
@@ -454,7 +458,7 @@
 							<span class="hero-icon" aria-hidden="true">
 								<IconSparkle class="size-[1.05rem]" />
 							</span>
-							Ver trabalhos
+							Trabalhos
 						</a>
 					</div>
 				</div>

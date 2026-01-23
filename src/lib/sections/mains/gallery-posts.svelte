@@ -121,7 +121,7 @@
 
 		<!-- Posts List -->
 		<div class="grid gap-6 md:grid-cols-2">
-			{#each POSTS as post (post.id)}
+			{#each POSTS.slice(0, 6) as post (post.id)}
 				<article
 					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-colors duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
 					style="opacity: 0; transform: translateY(40px);"

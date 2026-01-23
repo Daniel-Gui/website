@@ -2,7 +2,7 @@
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import { WORKS } from '$lib/data/works';
+	import { WORKS, TECH_ICONS } from '$lib/data/works';
 
 	let sectionEl = $state<HTMLElement | null>(null);
 	let revealed = $state(false);
@@ -171,9 +171,13 @@
 
 						<div class="flex flex-wrap gap-2 pt-1">
 							{#each work.tags as tag (tag)}
+								{@const Icon = TECH_ICONS[tag]}
 								<span
 									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2 py-1 font-mono text-[10px] tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
 								>
+									{#if Icon}
+										<Icon class="mr-1.5 size-3" />
+									{/if}
 									{tag}
 								</span>
 							{/each}

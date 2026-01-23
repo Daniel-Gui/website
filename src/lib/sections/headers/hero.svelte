@@ -190,7 +190,7 @@
 						animate(
 							showcaseEl,
 							{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-							{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+							{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }
 						).finished
 					);
 				}
@@ -213,9 +213,9 @@
 								filter: ['blur(14px)', 'blur(0px)']
 							} as unknown as Record<string, unknown>,
 							{
-								duration: 0.7,
+								duration: 1.2,
 								ease: [0.16, 1, 0.3, 1],
-								delay: index * 0.1
+								delay: index * 0.15
 							}
 						).finished
 					);
@@ -225,13 +225,13 @@
 					animate(
 						showcaseEl,
 						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }
 					).finished
 				);
 			}
 
 			const contentDelay = 0.2;
-			const staggerDelay = 0.1;
+			const staggerDelay = 0.15;
 
 			if (headingEl) {
 				animations.push(
@@ -242,7 +242,7 @@
 							transform: ['translateY(14px)', 'translateY(0px)'],
 							filter: ['blur(12px)', 'blur(0px)']
 						} as unknown as Record<string, unknown>,
-						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
 					).finished
 				);
 			}
@@ -256,7 +256,7 @@
 							transform: ['translateY(14px)', 'translateY(0px)'],
 							filter: ['blur(12px)', 'blur(0px)']
 						} as unknown as Record<string, unknown>,
-						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
 					).finished
 				);
 			}
@@ -270,7 +270,7 @@
 							transform: ['translateY(14px)', 'translateY(0px)'],
 							filter: ['blur(12px)', 'blur(0px)']
 						} as unknown as Record<string, unknown>,
-						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
 					).finished
 				);
 			}
@@ -280,7 +280,7 @@
 					animate(
 						ctaWrapEl,
 						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
 					).finished
 				);
 			}
@@ -290,7 +290,7 @@
 					animate(
 						availabilityEl,
 						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
 					).finished
 				);
 			}
@@ -405,7 +405,7 @@
 						data-hero-item
 					>
 						<span class="font-mono text-xs tracking-wider text-muted uppercase"
-							>Based in Belém, BR</span
+							>Belém, Pará, Brasil</span
 						>
 						<div class="h-3 w-px bg-border/20"></div>
 						<div class="hero-flags">

@@ -1,3 +1,31 @@
+import IconTailwindcss from '$lib/components/icons/icon-tailwindcss.svelte';
+import IconSvelte from '$lib/components/icons/icon-svelte.svelte';
+import IconReact from '$lib/components/icons/icon-react.svelte';
+import IconBun from '$lib/components/icons/icon-bun.svelte';
+import IconCloudflare from '$lib/components/icons/icon-cloudflare.svelte';
+import IconJavascript from '$lib/components/icons/icon-javascript.svelte';
+import IconTypescript from '$lib/components/icons/icon-typescript.svelte';
+
+type TechIconComponent =
+	| typeof IconSvelte
+	| typeof IconReact
+	| typeof IconBun
+	| typeof IconCloudflare
+	| typeof IconJavascript
+	| typeof IconTypescript
+	| typeof IconTailwindcss;
+
+export const TECH_ICONS: Record<string, TechIconComponent> = {
+	SvelteKit: IconSvelte,
+	Svelte: IconSvelte,
+	React: IconReact,
+	Bun: IconBun,
+	Cloudflare: IconCloudflare,
+	JavaScript: IconJavascript,
+	TypeScript: IconTypescript,
+	Tailwindcss: IconTailwindcss
+};
+
 export type WorkItem = {
 	id: string;
 	title: string;
@@ -20,7 +48,7 @@ export const WORKS: WorkItem[] = [
 		title: 'Nexus Dashboard',
 		description:
 			'Uma plataforma de análise de dados em tempo real projetada para simplificar a visualização de métricas complexas e facilitar a tomada de decisão.',
-		tags: ['SvelteKit', 'Tailwind', 'D3.js'],
+		tags: ['SvelteKit', 'Tailwindcss', 'D3.js'],
 		year: '2025',
 		link: '#',
 		imageBasename: 'cover-placeholder-01',

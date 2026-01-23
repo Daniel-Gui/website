@@ -59,25 +59,27 @@
 				window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
 			imageEl.style.opacity = '1';
-			imageEl.style.transform = prefersReducedMotion ? 'none' : 'scale(0.92)';
-			imageEl.style.willChange = prefersReducedMotion ? '' : 'transform';
+			imageEl.style.transform = 'none';
 
-			const imageRevealMs = prefersReducedMotion ? 0 : 900;
-			imageWrapEl.style.clipPath = 'inset(0% 0% 100% 0%)';
-			imageWrapEl.style.willChange = 'clip-path';
+			const imageRevealMs = prefersReducedMotion ? 0 : 1200;
 
 			if (!prefersReducedMotion) {
-				const wipeControls = animate(
+				imageWrapEl.style.opacity = '0';
+				imageWrapEl.style.transform = 'scale(0.8)';
+				imageWrapEl.style.filter = 'blur(10px)';
+				imageWrapEl.style.willChange = 'transform, opacity, filter';
+
+				const revealControls = animate(
 					imageWrapEl,
-					{ clipPath: 'inset(0% 0% 0% 0%)' },
-					{ duration: imageRevealMs / 1000, ease: [0.42, 0, 1, 1] }
+					{
+						opacity: [0, 1],
+						transform: ['scale(0.8)', 'scale(1)'],
+						filter: ['blur(10px)', 'blur(0px)']
+					},
+					{ duration: imageRevealMs / 1000, ease: [0.16, 1, 0.3, 1] }
 				);
-				const zoomControls = animate(
-					imageEl,
-					{ scale: 1 },
-					{ type: 'spring', stiffness: 260, damping: 18, delay: 0.12 }
-				);
-				controls.push(wipeControls, zoomControls);
+
+				controls.push(revealControls);
 
 				const waitFor = async (c: unknown, fallbackMs: number) => {
 					if (
@@ -96,12 +98,11 @@
 					await sleep(fallbackMs);
 				};
 
-				await Promise.all([
-					waitFor(wipeControls, imageRevealMs),
-					waitFor(zoomControls, imageRevealMs)
-				]);
+				await waitFor(revealControls, imageRevealMs);
 			} else {
-				imageWrapEl.style.clipPath = 'inset(0% 0% 0% 0%)';
+				imageWrapEl.style.opacity = '1';
+				imageWrapEl.style.transform = 'none';
+				imageWrapEl.style.filter = 'none';
 				await tick();
 			}
 

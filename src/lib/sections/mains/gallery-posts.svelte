@@ -4,8 +4,6 @@
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import { POSTS } from '$lib/data/posts';
 
-	import { introDone } from '$lib/stores/intro';
-
 	let sectionEl = $state<HTMLElement | null>(null);
 	let revealed = $state(false);
 
@@ -22,23 +20,6 @@
 		if (typeof window === 'undefined') return;
 		if (!sectionEl) return;
 		if (revealed) return;
-
-		// Se a intro já foi feita (navegação interna), revela instantaneamente sem animação
-		if ($introDone) {
-			revealed = true;
-			const headerItems = sectionEl!.querySelectorAll('[data-posts-header]');
-			const cards = sectionEl!.querySelectorAll('[data-post-card]');
-
-			headerItems.forEach((el) => {
-				(el as HTMLElement).style.opacity = '1';
-				(el as HTMLElement).style.transform = 'translateY(0px)';
-			});
-			cards.forEach((el) => {
-				(el as HTMLElement).style.opacity = '1';
-				(el as HTMLElement).style.transform = 'translateY(0px)';
-			});
-			return;
-		}
 
 		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
 		if (reduce) {
@@ -70,9 +51,9 @@
 							cards,
 							{
 								opacity: [0, 1],
-								transform: ['translateY(20px)', 'translateY(0px)']
+								transform: ['translateY(40px) scale(0.96)', 'translateY(0px) scale(1)']
 							},
-							{ duration: 0.6, delay: stagger(0.1, { startDelay: 0.2 }), ease: [0.16, 1, 0.3, 1] }
+							{ duration: 0.8, delay: (i) => 0.2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }
 						);
 					})();
 					observer.disconnect();
@@ -142,8 +123,8 @@
 		<div class="grid gap-6 md:grid-cols-2">
 			{#each POSTS as post (post.id)}
 				<article
-					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-all duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
-					style="opacity: 0; transform: translateY(20px);"
+					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-colors duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
+					style="opacity: 0; transform: translateY(40px);"
 					data-post-card
 				>
 					<!-- Cover Image (Visible) -->

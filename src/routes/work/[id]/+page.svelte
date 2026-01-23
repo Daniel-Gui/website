@@ -1,10 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
+	import IconArrowUp from '$lib/components/icons/icon-arrow-up.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 	let work = $derived(data.work);
+
+	function scrollToTop() {
+		if (typeof window === 'undefined') return;
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
 </script>
 
 <svelte:head>
@@ -163,13 +170,30 @@
 					</div>
 
 					<!-- Navegação Voltar -->
-					<div class="border-t border-black/5 pt-8 dark:border-white/10">
+					<div
+						class="flex justify-between gap-2 border-t border-black/5 pt-8 sm:items-center dark:border-white/10"
+					>
 						<a
 							href={resolve('/#trabalhos', {})}
-							class="group inline-flex items-center gap-2 font-mono text-sm transition-colors hover:text-blue-600"
+							class="group -ml-2 flex w-fit items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+							aria-label="Voltar para trabalhos"
 						>
-							← Voltar para Trabalhos
+							<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
+							Trabalhos selecionados
 						</a>
+
+						<button
+							onclick={scrollToTop}
+							class="group flex w-fit cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+							aria-label="Voltar ao topo"
+						>
+							Voltar ao topo
+							<span
+								class="grid size-6 place-items-center rounded-full border border-border/10 bg-surface/50 transition-colors group-hover:border-border/20 group-hover:bg-surface"
+							>
+								<IconArrowUp class="size-3.5" />
+							</span>
+						</button>
 					</div>
 				</div>
 			</div>

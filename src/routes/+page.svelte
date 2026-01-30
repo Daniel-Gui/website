@@ -1,8 +1,11 @@
 <script lang="ts">
 	import Hero from '$lib/sections/headers/hero.svelte';
+	import GalleryWorks from '$lib/sections/mains/gallery-works.svelte';
+	import GalleryPosts from '$lib/sections/mains/gallery-posts.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
-	import { page } from '$app/stores';
-	import { onMount } from 'svelte';
+	import { page } from '$app/state';
+	import { lenisStore } from '$lib/stores/scroll';
+	import type Lenis from 'lenis';
 
 	const title = 'Daniel Gui — Product Design (UI/UX) & Frontend Developer';
 	const description =
@@ -14,7 +17,7 @@
 	const noiseFocusY = '35%';
 	const noiseFalloff = '70%';
 
-	onMount(() => {
+	$effect(() => {
 		if (typeof window === 'undefined') return;
 
 		const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
@@ -22,17 +25,18 @@
 		if (reduce || coarse) return;
 
 		let rafId = 0;
-		let cancelled = false;
-		let lenis: { raf: (time: number) => void; destroy: () => void } | null = null;
+		let destroyed = false;
+		let lenis: Lenis | null = null;
 
 		void (async () => {
-			const { default: Lenis } = await import('lenis');
-			if (cancelled) return;
+			const { default: LenisImpl } = await import('lenis');
+			if (destroyed) return;
 
-			lenis = new Lenis({
+			lenis = new LenisImpl({
 				lerp: 0.12,
 				smoothWheel: true
 			});
+			lenisStore.set(lenis);
 
 			const raf = (time: number) => {
 				lenis?.raf(time);
@@ -42,7 +46,7 @@
 		})();
 
 		return () => {
-			cancelled = true;
+			destroyed = true;
 			if (rafId) window.cancelAnimationFrame(rafId);
 			lenis?.destroy();
 		};
@@ -54,20 +58,20 @@
 	<meta name="description" content={description} />
 	<meta name="robots" content="index,follow" />
 	<meta name="author" content="Daniel" />
-	<link rel="canonical" href={$page.url.origin + $page.url.pathname} />
+	<link rel="canonical" href={page.url.origin + page.url.pathname} />
 
 	<meta property="og:site_name" content={siteName} />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
-	<meta property="og:url" content={$page.url.origin + $page.url.pathname} />
-	<meta property="og:image" content={$page.url.origin + ogImage} />
+	<meta property="og:url" content={page.url.origin + page.url.pathname} />
+	<meta property="og:image" content={page.url.origin + ogImage} />
 	<meta property="og:locale" content="pt_BR" />
 
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
-	<meta name="twitter:image" content={$page.url.origin + ogImage} />
+	<meta name="twitter:image" content={page.url.origin + ogImage} />
 
 	<meta name="theme-color" content="#05010a" />
 </svelte:head>
@@ -79,6 +83,8 @@
 		aria-hidden="true"
 	></div>
 	<Hero />
+	<GalleryWorks />
+	<GalleryPosts />
 </main>
 
 <style>
@@ -86,7 +92,7 @@
 		position: fixed;
 		inset: 0;
 		pointer-events: none;
-		z-index: 100;
+		z-index: var(--z-overlay, 100);
 		opacity: var(--noise-opacity, 0.06);
 		mix-blend-mode: soft-light;
 		filter: contrast(115%) brightness(100%);

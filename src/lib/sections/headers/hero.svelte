@@ -4,6 +4,9 @@
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
 	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
+	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import { cn } from '$lib/utils';
+	import { lenisStore } from '$lib/stores/scroll';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -39,10 +42,12 @@
 	let highlightEl = $state<HTMLDivElement | null>(null);
 	let emailEl = $state<HTMLAnchorElement | null>(null);
 	let whatsappEl = $state<HTMLAnchorElement | null>(null);
+	let blogEl = $state<HTMLAnchorElement | null>(null);
 	let worksEl = $state<HTMLAnchorElement | null>(null);
 	let activeEl = $state<HTMLAnchorElement | null>(null);
 	let headingEl = $state<HTMLHeadingElement | null>(null);
-	let leadEl = $state<HTMLParagraphElement | null>(null);
+	let leadTextEl = $state<HTMLParagraphElement | null>(null);
+	let badgeEl = $state<HTMLDivElement | null>(null);
 	let ctaWrapEl = $state<HTMLDivElement | null>(null);
 	let availabilityEl = $state<HTMLElement | null>(null);
 	let showcaseEl = $state<HTMLDivElement | null>(null);
@@ -100,6 +105,24 @@
 		updateHighlight(activeEl);
 	};
 
+	const scrollToWorks = (e: MouseEvent) => {
+		e.preventDefault();
+		if ($lenisStore) {
+			$lenisStore.scrollTo('#trabalhos', { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+		} else {
+			document.querySelector('#trabalhos')?.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
+	const scrollToBlog = (e: MouseEvent) => {
+		e.preventDefault();
+		if ($lenisStore) {
+			$lenisStore.scrollTo('#blog', { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+		} else {
+			document.querySelector('#blog')?.scrollIntoView({ behavior: 'smooth' });
+		}
+	};
+
 	$effect(() => {
 		if (!ctaEl) return;
 		void (async () => {
@@ -133,7 +156,7 @@
 				? Array.from(showcaseEl.querySelectorAll<HTMLElement>('[data-showcase-card]'))
 				: [];
 
-			const items = [showcaseEl, headingEl, leadEl, ctaWrapEl, availabilityEl].filter(
+			const items = [showcaseEl, headingEl, leadTextEl, badgeEl, ctaWrapEl, availabilityEl].filter(
 				Boolean
 			) as HTMLElement[];
 
@@ -154,87 +177,125 @@
 				el.style.willChange = 'opacity, transform, filter';
 			}
 			if (headingEl) headingEl.style.filter = 'blur(12px)';
-			if (leadEl) leadEl.style.filter = 'blur(12px)';
+			if (leadTextEl) leadTextEl.style.filter = 'blur(12px)';
+			if (badgeEl) badgeEl.style.filter = 'blur(12px)';
 
 			await new Promise((r) => setTimeout(r, revealStartDelayMs));
 
+			const animations: Promise<unknown>[] = [];
+
 			if (showcaseCards.length) {
 				if (showcaseEl) {
-					await animate(
-						showcaseEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }
-					).finished;
+					animations.push(
+						animate(
+							showcaseEl,
+							{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+							{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }
+						).finished
+					);
 				}
 
-				for (const [index, el] of showcaseCards.entries()) {
+				showcaseCards.forEach((el, index) => {
 					const base =
 						getComputedStyle(el).getPropertyValue('--card-transform').trim() ||
 						'translate(-50%, -50%)';
 
-					if (index > 0) await new Promise((r) => setTimeout(r, showcaseRevealStaggerMs));
-
-					await animate(
-						el,
-						{
-							opacity: [0, 1],
-							transform: [
-								`${base} translateY(14px) scale(0.92)`,
-								`${base} translateY(-2px) scale(1.03)`,
-								`${base} translateY(0px) scale(1)`
-							],
-							filter: ['blur(14px)', 'blur(0px)']
-						} as unknown as Record<string, unknown>,
-						{ duration: showcaseRevealDurationMs / 1000, ease: [0.16, 1, 0.3, 1] }
-					).finished;
-				}
+					animations.push(
+						animate(
+							el,
+							{
+								opacity: [0, 1],
+								transform: [
+									`${base} translateY(14px) scale(0.92)`,
+									`${base} translateY(-2px) scale(1.03)`,
+									`${base} translateY(0px) scale(1)`
+								],
+								filter: ['blur(14px)', 'blur(0px)']
+							} as unknown as Record<string, unknown>,
+							{
+								duration: 1.2,
+								ease: [0.16, 1, 0.3, 1],
+								delay: index * 0.15
+							}
+						).finished
+					);
+				});
 			} else if (showcaseEl) {
-				await animate(
-					showcaseEl,
-					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-				).finished;
+				animations.push(
+					animate(
+						showcaseEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }
+					).finished
+				);
 			}
+
+			const contentDelay = 0.2;
+			const staggerDelay = 0.15;
 
 			if (headingEl) {
-				await animate(
-					headingEl,
-					{
-						opacity: [0, 1],
-						transform: ['translateY(14px)', 'translateY(0px)'],
-						filter: ['blur(12px)', 'blur(0px)']
-					} as unknown as Record<string, unknown>,
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-				).finished;
+				animations.push(
+					animate(
+						headingEl,
+						{
+							opacity: [0, 1],
+							transform: ['translateY(14px)', 'translateY(0px)'],
+							filter: ['blur(12px)', 'blur(0px)']
+						} as unknown as Record<string, unknown>,
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
+					).finished
+				);
 			}
 
-			if (leadEl) {
-				await animate(
-					leadEl,
-					{
-						opacity: [0, 1],
-						transform: ['translateY(14px)', 'translateY(0px)'],
-						filter: ['blur(12px)', 'blur(0px)']
-					} as unknown as Record<string, unknown>,
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay: 0.06 }
-				).finished;
+			if (leadTextEl) {
+				animations.push(
+					animate(
+						leadTextEl,
+						{
+							opacity: [0, 1],
+							transform: ['translateY(14px)', 'translateY(0px)'],
+							filter: ['blur(12px)', 'blur(0px)']
+						} as unknown as Record<string, unknown>,
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
+					).finished
+				);
+			}
+
+			if (badgeEl) {
+				animations.push(
+					animate(
+						badgeEl,
+						{
+							opacity: [0, 1],
+							transform: ['translateY(14px)', 'translateY(0px)'],
+							filter: ['blur(12px)', 'blur(0px)']
+						} as unknown as Record<string, unknown>,
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
+					).finished
+				);
 			}
 
 			if (ctaWrapEl) {
-				await animate(
-					ctaWrapEl,
-					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-					{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }
-				).finished;
+				animations.push(
+					animate(
+						ctaWrapEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
+					).finished
+				);
 			}
 
 			if (availabilityEl) {
-				await animate(
-					availabilityEl,
-					{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-					{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.08 }
-				).finished;
+				animations.push(
+					animate(
+						availabilityEl,
+						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
+						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
+					).finished
+				);
 			}
+
+			await Promise.all(animations);
 
 			heroRevealed = true;
 
@@ -257,8 +318,20 @@
 	});
 </script>
 
-<section class={`hero-surface ${heroRevealed ? '' : 'hero-reveal'}`}>
-	<div class="container-page pt-20 pb-20 sm:pt-24 sm:pb-24">
+<section class={cn('hero-surface', !heroRevealed && 'hero-reveal')}>
+	<!-- Decorative Grid Background -->
+	<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
+		<svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
+			<defs>
+				<pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1" />
+				</pattern>
+			</defs>
+			<rect width="100%" height="100%" fill="url(#hero-grid)" />
+		</svg>
+	</div>
+
+	<div class="container-page relative z-10 pt-20 pb-20 sm:pt-24 sm:pb-24">
 		<div class="relative">
 			<div class="mx-auto max-w-[880px] space-y-10 text-center">
 				<div class="hero-showcase-bleed">
@@ -306,22 +379,36 @@
 				</div>
 
 				<h1
-					class="text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
+					class="text-foreground text-5xl leading-[0.95] font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl"
 					bind:this={headingEl}
 					data-hero-item
 				>
 					Olá, eu sou o <span class="font-serif italic">Dan</span>
 				</h1>
 
-				<p
-					class="text-muted mx-auto mt-5 max-w-[62ch] text-lg text-pretty sm:text-xl"
-					bind:this={leadEl}
-					data-hero-item
-				>
-					Product Designer (UI/UX) e desenvolvedor Frontend. <br />
-					<span class="hero-location">
-						Based in Belém, Brasil.
-						<span class="hero-flags">
+				<div class="mx-auto mt-6 flex max-w-[62ch] flex-col items-center gap-4">
+					<p
+						class="text-lg text-pretty text-muted sm:text-xl"
+						bind:this={leadTextEl}
+						data-hero-item
+					>
+						Atuo como <span class="font-bold">Product Designer</span> e
+						<span class="font-bold">Desenvolvedor Frontend</span>, transformando problemas complexos
+						em experiências digitais simples, funcionais e relevantes. Atualmente espalhando beleza
+						no grupo
+						<span class="font-serif italic">Ei,Beleza?</span>.
+					</p>
+
+					<div
+						class="flex items-center gap-3 rounded-full border border-border/10 bg-surface/40 px-3 py-1.5 shadow-sm backdrop-blur-md"
+						bind:this={badgeEl}
+						data-hero-item
+					>
+						<span class="font-mono text-xs tracking-wider text-muted uppercase"
+							>Belém, Pará, Brasil</span
+						>
+						<div class="h-3 w-px bg-border/20"></div>
+						<div class="hero-flags">
 							<span class="hero-flag">
 								<img
 									src="/flags/flag-belem.svg"
@@ -346,9 +433,9 @@
 									decoding="async"
 								/>
 							</span>
-						</span>
-					</span>
-				</p>
+						</div>
+					</div>
+				</div>
 
 				<div class="mt-10 flex justify-center" bind:this={ctaWrapEl} data-hero-item>
 					<div
@@ -367,7 +454,7 @@
 							onfocus={onEnterItem}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconMail class="h-[1.05rem] w-[1.05rem]" />
+								<IconMail class="size-[1.05rem]" />
 							</span>
 							Email
 						</a>
@@ -382,9 +469,23 @@
 							onfocus={onEnterItem}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconWhatsapp class="h-[1.05rem] w-[1.05rem]" />
+								<IconWhatsapp class="size-[1.05rem]" />
 							</span>
 							WhatsApp
+						</a>
+
+						<a
+							bind:this={blogEl}
+							class="hero-item segmented-item"
+							href="#blog"
+							onpointerenter={onEnterItem}
+							onfocus={onEnterItem}
+							onclick={scrollToBlog}
+						>
+							<span class="hero-icon" aria-hidden="true">
+								<IconArrowUpRight class="size-[1.05rem]" />
+							</span>
+							Blog
 						</a>
 
 						<a
@@ -393,19 +494,26 @@
 							href="#trabalhos"
 							onpointerenter={onEnterItem}
 							onfocus={onEnterItem}
+							onclick={scrollToWorks}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconSparkle class="h-[1.05rem] w-[1.05rem]" />
+								<IconSparkle class="size-[1.05rem]" />
 							</span>
-							Ver trabalhos
+							Trabalhos
 						</a>
 					</div>
 				</div>
 
-				<div class="hero-availability text-muted mt-7" bind:this={availabilityEl} data-hero-item>
-					<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
-					></span>
-					<span class="hero-availability-text">{availabilityText}</span>
+				<div class="mt-7 flex justify-center" bind:this={availabilityEl} data-hero-item>
+					<div
+						class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/40 px-4 py-2 shadow-sm backdrop-blur-md"
+					>
+						<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
+						></span>
+						<span class="font-mono text-xs font-medium tracking-wider text-muted uppercase"
+							>{availabilityText}</span
+						>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -419,14 +527,20 @@
 	}
 
 	.hero-surface {
-		--hero-top: #05010a;
-		--hero-purple: #5b21b6;
-		--hero-blue: #2563eb;
+		--hero-top: rgb(255 255 255);
+		--hero-purple: rgba(91, 33, 182, 0.1);
+		--hero-blue: rgba(37, 99, 235, 0.1);
 		--hero-bottom: rgb(var(--bg));
 		--hero-bleed-top: 120px;
 		position: relative;
 		isolation: isolate;
 		overflow-x: clip;
+	}
+
+	:global(html.dark) .hero-surface {
+		--hero-top: #05010a;
+		--hero-purple: #5b21b6;
+		--hero-blue: #2563eb;
 	}
 
 	@supports not (overflow: clip) {
@@ -435,48 +549,12 @@
 		}
 	}
 
-	.hero-surface::before {
-		content: '';
-		position: absolute;
-		top: calc(-1 * var(--hero-bleed-top));
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: -1;
-		pointer-events: none;
-		background:
-			radial-gradient(
-				900px 420px at 22% 6%,
-				color-mix(in srgb, var(--hero-purple) 58%, transparent) 0%,
-				transparent 70%
-			),
-			radial-gradient(
-				900px 420px at 78% 10%,
-				color-mix(in srgb, var(--hero-blue) 52%, transparent) 0%,
-				transparent 72%
-			),
-			radial-gradient(
-				700px 360px at 50% 18%,
-				color-mix(in srgb, #000 26%, transparent) 0%,
-				transparent 76%
-			),
-			linear-gradient(
-				180deg,
-				var(--hero-top) 0%,
-				color-mix(in srgb, var(--hero-top) 65%, var(--hero-purple)) 18%,
-				color-mix(in srgb, var(--hero-purple) 70%, var(--hero-blue)) 50%,
-				color-mix(in srgb, var(--hero-blue) 60%, var(--hero-bottom)) 72%,
-				var(--hero-bottom) 90%,
-				var(--hero-bottom) 100%
-			);
-	}
-
 	.hero-surface h1 {
-		color: rgb(255 255 255 / 0.92);
+		color: rgb(var(--fg));
 	}
 
 	.hero-surface p.text-muted {
-		color: rgb(255 255 255 / 0.72);
+		color: rgb(var(--muted));
 	}
 
 	.hero-showcase {
@@ -508,20 +586,31 @@
 		width: 220px;
 		height: 200px;
 		transform: var(--card-transform) translateY(var(--card-y)) scale(var(--card-scale));
-		border-radius: 26px;
-		border: 3px solid rgba(255, 255, 255, 0.14);
+		border-radius: 20px;
+		border: 1px solid rgb(var(--border) / 0.1);
+		background: rgb(var(--surface) / 0.05);
 		box-shadow: var(--shadow-2);
 		overflow: hidden;
 		transition:
 			transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
 			box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
-			border-color 260ms cubic-bezier(0.16, 1, 0.3, 1);
+			border 260ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
 	.hero-showcase-media {
 		position: absolute;
-		inset: 0;
+		inset: 2px;
+		border-radius: 18px;
+		overflow: hidden;
 		display: block;
+		transition:
+			inset 260ms cubic-bezier(0.16, 1, 0.3, 1),
+			border-radius 260ms cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.hero-showcase-card:hover .hero-showcase-media {
+		inset: 0;
+		border-radius: 16px;
 	}
 
 	.hero-showcase-media img {
@@ -550,7 +639,7 @@
 
 	.hero-showcase-card:hover {
 		z-index: 3;
-		border-color: rgba(255, 255, 255, 0.92);
+		border: 4px solid white;
 		box-shadow: var(--shadow-2);
 		transform: var(--card-transform) translateY(calc(var(--card-y) - 8px))
 			scale(calc(var(--card-scale) * 1.06));
@@ -709,6 +798,12 @@
 			opacity 240ms ease;
 	}
 
+	:global(html.dark) .hero-highlight {
+		background: rgb(255 255 255 / 0.1);
+		border: 1px solid rgb(255 255 255 / 0.05);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+	}
+
 	@media (prefers-reduced-motion: reduce) {
 		.hero-highlight,
 		.hero-item {
@@ -783,7 +878,6 @@
 		}
 
 		.hero-item-primary {
-			grid-column: 1 / -1;
 			background: rgb(var(--surface) / 0.92);
 			box-shadow: var(--shadow-2);
 		}

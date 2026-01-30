@@ -7,8 +7,24 @@
 	import Introduction from '$lib/components/introduction/introduction.svelte';
 	import Navbar from '$lib/components/navigation/navbar.svelte';
 	import { introDone } from '$lib/stores/intro';
+	import { onNavigate } from '$app/navigation';
+	import { ModeWatcher } from 'mode-watcher';
 
 	let { children } = $props();
+
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return;
+
+		// Impede que a intro apareça novamente ao navegar
+		introDone.set(true);
+
+		return new Promise((resolve) => {
+			document.startViewTransition(async () => {
+				resolve();
+				await navigation.complete;
+			});
+		});
+	});
 </script>
 
 <svelte:head>
@@ -16,13 +32,14 @@
 	<link rel="icon" type="image/webp" href={favicon2} sizes="32x32" />
 	<link rel="icon" type="image/webp" href={favicon3} sizes="48x48" />
 </svelte:head>
+<ModeWatcher />
 <Cursor color="#fff" />
 <Navbar />
 {@render children()}
 
 {#if !$introDone}
 	<Introduction
-		texts={['Olá, eu sou Daniel.', 'Frontend Developer', '&', 'UI/UX Designer']}
+		texts={['Hey!', 'Que bom te ver por aqui!']}
 		switchDelayMs={1000}
 		onFinished={() => introDone.set(true)}
 	/>

@@ -59,25 +59,27 @@
 				window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
 			imageEl.style.opacity = '1';
-			imageEl.style.transform = prefersReducedMotion ? 'none' : 'scale(0.92)';
-			imageEl.style.willChange = prefersReducedMotion ? '' : 'transform';
+			imageEl.style.transform = 'none';
 
-			const imageRevealMs = prefersReducedMotion ? 0 : 900;
-			imageWrapEl.style.clipPath = 'inset(0% 0% 100% 0%)';
-			imageWrapEl.style.willChange = 'clip-path';
+			const imageRevealMs = prefersReducedMotion ? 0 : 1200;
 
 			if (!prefersReducedMotion) {
-				const wipeControls = animate(
+				imageWrapEl.style.opacity = '0';
+				imageWrapEl.style.transform = 'scale(0.8)';
+				imageWrapEl.style.filter = 'blur(10px)';
+				imageWrapEl.style.willChange = 'transform, opacity, filter';
+
+				const revealControls = animate(
 					imageWrapEl,
-					{ clipPath: 'inset(0% 0% 0% 0%)' },
-					{ duration: imageRevealMs / 1000, ease: [0.42, 0, 1, 1] }
+					{
+						opacity: [0, 1],
+						transform: ['scale(0.8)', 'scale(1)'],
+						filter: ['blur(10px)', 'blur(0px)']
+					},
+					{ duration: imageRevealMs / 1000, ease: [0.16, 1, 0.3, 1] }
 				);
-				const zoomControls = animate(
-					imageEl,
-					{ scale: 1 },
-					{ type: 'spring', stiffness: 260, damping: 18, delay: 0.12 }
-				);
-				controls.push(wipeControls, zoomControls);
+
+				controls.push(revealControls);
 
 				const waitFor = async (c: unknown, fallbackMs: number) => {
 					if (
@@ -96,12 +98,11 @@
 					await sleep(fallbackMs);
 				};
 
-				await Promise.all([
-					waitFor(wipeControls, imageRevealMs),
-					waitFor(zoomControls, imageRevealMs)
-				]);
+				await waitFor(revealControls, imageRevealMs);
 			} else {
-				imageWrapEl.style.clipPath = 'inset(0% 0% 0% 0%)';
+				imageWrapEl.style.opacity = '1';
+				imageWrapEl.style.transform = 'none';
+				imageWrapEl.style.filter = 'none';
 				await tick();
 			}
 
@@ -119,13 +120,26 @@
 
 				textEl.style.opacity = '0';
 				textEl.style.transform = 'translateY(10px)';
+				textEl.style.filter = 'blur(10px)';
 
-				controls.push(animate(textEl, { opacity: 1, y: 0 }, { duration: 0.35, ease: 'easeOut' }));
+				controls.push(
+					animate(
+						textEl,
+						{ opacity: 1, transform: 'translateY(0px)', filter: 'blur(0px)' },
+						{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }
+					)
+				);
 				await sleep(switchDelayMs);
 				if (cancelled) return;
 
-				controls.push(animate(textEl, { opacity: 0, y: -10 }, { duration: 0.25, ease: 'easeIn' }));
-				await sleep(250);
+				controls.push(
+					animate(
+						textEl,
+						{ opacity: 0, transform: 'translateY(-10px)', filter: 'blur(10px)' },
+						{ duration: 0.45, ease: [0.7, 0, 0.84, 0] }
+					)
+				);
+				await sleep(350);
 				if (cancelled) return;
 			}
 
@@ -142,7 +156,7 @@
 					: animate(
 							overlayEl,
 							{ clipPath: 'inset(100% 0% 0% 0%)' },
-							{ duration: revealDuration, ease: [0.42, 0, 1, 1] }
+							{ duration: revealDuration, ease: [0.8, 0, 0.1, 1] }
 						)
 			);
 			await sleep(revealDurationMs);
@@ -164,13 +178,13 @@
 {#if isVisible}
 	<div
 		bind:this={overlayEl}
-		class="fixed inset-0 z-50 grid place-items-center bg-black text-white"
+		class="fixed inset-0 z-[var(--z-max)] grid place-items-center bg-black text-white"
 		aria-hidden="true"
 	>
 		<div class="relative grid place-items-center">
 			<div
 				bind:this={imageWrapEl}
-				class="relative aspect-square w-[min(72vw,420px)] overflow-hidden"
+				class="relative aspect-square w-[min(72vw,420px)] overflow-hidden rounded-full border border-white/10"
 			>
 				<picture class="absolute inset-0 block h-full w-full">
 					<source

@@ -104,9 +104,12 @@
 				style="opacity: 0; transform: translateY(20px);"
 				data-gallery-header
 			>
-				<span class="font-mono text-xs text-muted">
-					[EXIBINDO: 01-0{works.length}]
-				</span>
+				<a
+					href={resolve('/work', {})}
+					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
+				>
+					[VER_TODOS] <IconArrowUpRight class="size-3" />
+				</a>
 			</div>
 		</div>
 

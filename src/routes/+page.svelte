@@ -4,7 +4,7 @@
 	import GalleryPosts from '$lib/sections/mains/gallery-posts.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
 	import { page } from '$app/state';
-	import { lenisStore } from '$lib/stores/scroll';
+	import { lenis } from '$lib/utils/lenis.svelte';
 	import type Lenis from 'lenis';
 	import type { PageData } from './$types';
 
@@ -29,30 +29,24 @@
 		if (reduce || coarse) return;
 
 		let rafId = 0;
-		let destroyed = false;
-		let lenis: Lenis | null = null;
+		let instance: Lenis | null = null;
 
 		void (async () => {
 			const { default: LenisImpl } = await import('lenis');
-			if (destroyed) return;
-
-			lenis = new LenisImpl({
-				lerp: 0.12,
-				smoothWheel: true
-			});
-			lenisStore.set(lenis);
+			instance = new LenisImpl({ lerp: 0.12, smoothWheel: true });
+			lenis.set(instance);
 
 			const raf = (time: number) => {
-				lenis?.raf(time);
+				instance?.raf(time);
 				rafId = window.requestAnimationFrame(raf);
 			};
 			rafId = window.requestAnimationFrame(raf);
 		})();
 
 		return () => {
-			destroyed = true;
 			if (rafId) window.cancelAnimationFrame(rafId);
-			lenis?.destroy();
+			instance?.destroy();
+			lenis.set(null);
 		};
 	});
 </script>

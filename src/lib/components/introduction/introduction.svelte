@@ -35,6 +35,13 @@
 	$effect(() => {
 		if (!isVisible) return;
 		if (!texts?.length) return;
+		// Check refs synchronously so $effect tracks them as dependencies
+		if (!overlayEl || !imageWrapEl || !imageEl) return;
+
+		// Capture refs for TypeScript narrowing inside async function
+		const overlay = overlayEl;
+		const imageWrap = imageWrapEl;
+		const image = imageEl;
 
 		let cancelled = false;
 		const controls: Array<{ stop?: () => void }> = [];
@@ -45,32 +52,31 @@
 		};
 
 		const run = async () => {
-			if (!overlayEl || !imageWrapEl || !imageEl) return;
 			const { animate } = await import('motion');
 
 			stopAll();
 			showText = false;
 
-			overlayEl.style.opacity = '1';
-			overlayEl.style.transform = 'translateY(0)';
+			overlay.style.opacity = '1';
+			overlay.style.transform = 'translateY(0)';
 
 			const prefersReducedMotion =
 				typeof window !== 'undefined' &&
 				window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches === true;
 
-			imageEl.style.opacity = '1';
-			imageEl.style.transform = 'none';
+			image.style.opacity = '1';
+			image.style.transform = 'none';
 
 			const imageRevealMs = prefersReducedMotion ? 0 : 1200;
 
 			if (!prefersReducedMotion) {
-				imageWrapEl.style.opacity = '0';
-				imageWrapEl.style.transform = 'scale(0.8)';
-				imageWrapEl.style.filter = 'blur(10px)';
-				imageWrapEl.style.willChange = 'transform, opacity, filter';
+				imageWrap.style.opacity = '0';
+				imageWrap.style.transform = 'scale(0.8)';
+				imageWrap.style.filter = 'blur(10px)';
+				imageWrap.style.willChange = 'transform, opacity, filter';
 
 				const revealControls = animate(
-					imageWrapEl,
+					imageWrap,
 					{
 						opacity: [0, 1],
 						transform: ['scale(0.8)', 'scale(1)'],
@@ -100,9 +106,9 @@
 
 				await waitFor(revealControls, imageRevealMs);
 			} else {
-				imageWrapEl.style.opacity = '1';
-				imageWrapEl.style.transform = 'none';
-				imageWrapEl.style.filter = 'none';
+				imageWrap.style.opacity = '1';
+				imageWrap.style.transform = 'none';
+				imageWrap.style.filter = 'none';
 				await tick();
 			}
 
@@ -146,15 +152,15 @@
 			const revealDuration = Math.max(0.1, revealDurationMs / 1000);
 
 			if (!prefersReducedMotion) {
-				overlayEl.style.clipPath = 'inset(0% 0% 0% 0%)';
-				overlayEl.style.willChange = 'clip-path';
+				overlay.style.clipPath = 'inset(0% 0% 0% 0%)';
+				overlay.style.willChange = 'clip-path';
 			}
 
 			controls.push(
 				prefersReducedMotion
-					? animate(overlayEl, { opacity: 0 }, { duration: revealDuration, ease: 'easeInOut' })
+					? animate(overlay, { opacity: 0 }, { duration: revealDuration, ease: 'easeInOut' })
 					: animate(
-							overlayEl,
+							overlay,
 							{ clipPath: 'inset(100% 0% 0% 0%)' },
 							{ duration: revealDuration, ease: [0.8, 0, 0.1, 1] }
 						)
@@ -178,7 +184,7 @@
 {#if isVisible}
 	<div
 		bind:this={overlayEl}
-		class="fixed inset-0 z-[var(--z-max)] grid place-items-center bg-black text-white"
+		class="fixed inset-0 z-(--z-max) grid place-items-center bg-black text-white"
 		aria-hidden="true"
 	>
 		<div class="relative grid place-items-center">

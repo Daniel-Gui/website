@@ -63,6 +63,7 @@ _Exemplo de imagem com legenda: Setup minimalista para desenvolvimento_
 O destaque do nosso sistema é a renderização de código com **Shiki**, suportando temas claro e escuro automaticamente.
 
 ### TypeScript
+
 ```typescript:lib/utils/math.ts
 /**
  * Calculates the factorial of a number.
@@ -78,6 +79,7 @@ console.log(factorial(5)); // Output: 120
 ```
 
 ### Svelte Component
+
 ```svelte:components/Button.svelte
 <script lang="ts">
   interface Props {
@@ -102,6 +104,7 @@ console.log(factorial(5)); // Output: 120
 ```
 
 ### CSS / Styles
+
 ```css:styles/main.css
 .container {
   display: grid;

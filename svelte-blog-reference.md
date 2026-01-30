@@ -4,20 +4,20 @@ Published Apr 28, 2023
 
 ## Table of Contents
 
-* [Project Setup](#project-setup)
-* [Layout And Styles](#layout-and-styles)
-* [Setting Up Mdsvex](#setting-up-mdsvex)
-* [Posts API Endpoint](#posts-api-endpoint)
-* [Rendering The Posts](#rendering-the-posts)
-* [Rendering A Single Post](#rendering-a-single-post)
-* [Syntax Highlighting](#syntax-highlighting)
-* [Using Components Inside Markdown](#using-components-inside-markdown)
-* [Using Markdown Plugins](#using-markdown-plugins)
-* [Light And Dark Mode Toggle](#light-and-dark-mode-toggle)
-* [Page Transitions](#page-transitions)
-* [RSS Feed](#rss-feed)
-* [Custom Error Page](#custom-error-page)
-* [Deployment](#deployment)
+- [Project Setup](#project-setup)
+- [Layout And Styles](#layout-and-styles)
+- [Setting Up Mdsvex](#setting-up-mdsvex)
+- [Posts API Endpoint](#posts-api-endpoint)
+- [Rendering The Posts](#rendering-the-posts)
+- [Rendering A Single Post](#rendering-a-single-post)
+- [Syntax Highlighting](#syntax-highlighting)
+- [Using Components Inside Markdown](#using-components-inside-markdown)
+- [Using Markdown Plugins](#using-markdown-plugins)
+- [Light And Dark Mode Toggle](#light-and-dark-mode-toggle)
+- [Page Transitions](#page-transitions)
+- [RSS Feed](#rss-feed)
+- [Custom Error Page](#custom-error-page)
+- [Deployment](#deployment)
 
 ## Project Setup
 
@@ -74,9 +74,9 @@ npm run dev
 
 Here’s what I’m going to use:
 
-* [Open Props](https://open-props.style/) for styling using CSS variables instead of utility classes like Tailwind
-* [Lucide](https://lucide.dev/) for icons
-* **Atkinson Hyperlegible** for text and **JetBrains Mono** for the code
+- [Open Props](https://open-props.style/) for styling using CSS variables instead of utility classes like Tailwind
+- [Lucide](https://lucide.dev/) for icons
+- **Atkinson Hyperlegible** for text and **JetBrains Mono** for the code
 
 terminalCopy
 
@@ -431,7 +431,7 @@ Let’s add some posts in `/src/posts`:
 
 src/posts/first-post.mdCopy
 
-```
+````
 ---
 title: First post
 description: First post.
@@ -450,20 +450,25 @@ Hey friends! 👋
 function greet(name: string) {
 	console.log(`Hey ${name}! 👋`)
 }
-```
+````
+
 ```
 
 src/posts/second-post.mdCopy
 
 ```
+
 ---
+
 title: Second
 description: Second post.
 date: '2023-4-16'
 categories:
-  - sveltekit
-  - svelte
-published: true
+
+- sveltekit
+- svelte
+  published: true
+
 ---
 
 ## Svelte
@@ -471,6 +476,7 @@ published: true
 Media inside the **static** folder is served from `/`.
 
 ![Svelte](favicon.png)
+
 ```
 
 ## Posts API Endpoint
@@ -480,36 +486,39 @@ Let’s create an endpoint for the posts in `routes/api/posts/+server.ts` so it 
 src/routes/api/posts/+server.tsCopy
 
 ```
+
 import { json } from '@sveltejs/kit'
 import type { Post } from '$lib/types'
 
 async function getPosts() {
-	let posts: Post[] = []
+let posts: Post[] = []
 
-	const paths = import.meta.glob('/src/posts/*.md', { eager: true })
+    const paths = import.meta.glob('/src/posts/*.md', { eager: true })
 
-	for (const path in paths) {
-		const file = paths[path]
-		const slug = path.split('/').at(-1)?.replace('.md', '')
+    for (const path in paths) {
+    	const file = paths[path]
+    	const slug = path.split('/').at(-1)?.replace('.md', '')
 
-		if (file && typeof file === 'object' && 'metadata' in file && slug) {
-			const metadata = file.metadata as Omit<Post, 'slug'>
-			const post = { ...metadata, slug } satisfies Post
-			post.published && posts.push(post)
-		}
-	}
+    	if (file && typeof file === 'object' && 'metadata' in file && slug) {
+    		const metadata = file.metadata as Omit<Post, 'slug'>
+    		const post = { ...metadata, slug } satisfies Post
+    		post.published && posts.push(post)
+    	}
+    }
 
-	posts = posts.sort((first, second) =>
+    posts = posts.sort((first, second) =>
     new Date(second.date).getTime() - new Date(first.date).getTime()
-	)
+    )
 
-	return posts
+    return posts
+
 }
 
 export async function GET() {
-	const posts = await getPosts()
-	return json(posts)
+const posts = await getPosts()
+return json(posts)
 }
+
 ```
 
 Here’s the breakdown:
@@ -526,16 +535,18 @@ If you’re using TypeScript, here are the types:
 src/lib/types.tsCopy
 
 ```
+
 export type Categories = 'sveltekit' | 'svelte'
 
 export type Post = {
-	title: string
-	slug: string
-	description: string
-	date: string
-	categories: Categories[]
-	published: boolean
+title: string
+slug: string
+description: string
+date: string
+categories: Categories[]
+published: boolean
 }
+
 ```
 
 You can navigate to <http://localhost:5173/api/posts> to see the JSON response:
@@ -555,13 +566,15 @@ Time to use the posts API you just created to fetch and server-side render the p
 src/routes/+page.server.tsCopy
 
 ```
+
 import type { Post } from '$lib/types'
 
 export async function load({ fetch }) {
-	const response = await fetch('/api/posts')
-	const posts: Post[] = await response.json()
-	return { posts }
+const response = await fetch('/api/posts')
+const posts: Post[] = await response.json()
+return { posts }
 }
+
 ```
 
 > 🐿️ The `fetch` function from `load` has superpowers like being able to resolve the relative URL `/api/posts` which would not work using regular `fetch`.
@@ -571,6 +584,7 @@ You can now get the data and render the posts:
 src/routes/+page.svelteCopy
 
 ```
+
 <script lang="ts">
 	import { formatDate } from '$lib/utils'
 	import * as config from '$lib/config'
@@ -579,7 +593,7 @@ src/routes/+page.svelteCopy
 </script>
 
 <svelte:head>
-	<title>{config.title}</title>
+<title>{config.title}</title>
 </svelte:head>
 
 <section>
@@ -622,6 +636,7 @@ src/routes/+page.svelteCopy
 		}
 	}
 </style>
+
 ```
 
 Here’s the function used to format the date:
@@ -629,14 +644,16 @@ Here’s the function used to format the date:
 src/lib/utils.tsCopy
 
 ```
+
 type DateStyle = Intl.DateTimeFormatOptions['dateStyle']
 
 export function formatDate(date: string, dateStyle: DateStyle = 'medium', locales = 'en') {
-	// Safari is mad about dashes in the date
-	const dateToFormat = new Date(date.replaceAll('-', '/'))
-	const dateFormatter = new Intl.DateTimeFormat(locales, { dateStyle })
-	return dateFormatter.format(dateToFormat)
+// Safari is mad about dashes in the date
+const dateToFormat = new Date(date.replaceAll('-', '/'))
+const dateFormatter = new Intl.DateTimeFormat(locales, { dateStyle })
+return dateFormatter.format(dateToFormat)
 }
+
 ```
 
 Let’s take a look at the result:
@@ -654,20 +671,23 @@ Let’s use a dynamic import for the post and get the **content** and **metadata
 src/routes/[slug]/+page.tsCopy
 
 ```
+
 import { error } from '@sveltejs/kit'
 
 export async function load({ params }) {
-	try {
-		const post = await import(`../../posts/${params.slug}.md`)
+try {
+const post = await import(`../../posts/${params.slug}.md`)
 
-		return {
-			content: post.default,
-			meta: post.metadata
-		}
-	} catch (e) {
-		error(404, `Could not find ${params.slug}`)
-	}
+    	return {
+    		content: post.default,
+    		meta: post.metadata
+    	}
+    } catch (e) {
+    	error(404, `Could not find ${params.slug}`)
+    }
+
 }
+
 ```
 
 This lets us render `data.content` as a Svelte component:
@@ -675,6 +695,7 @@ This lets us render `data.content` as a Svelte component:
 src/routes/[slug]/+page.svelteCopy
 
 ```
+
 <script lang="ts">
 	import { formatDate } from '$lib/utils'
 
@@ -682,9 +703,9 @@ src/routes/[slug]/+page.svelteCopy
 </script>
 
 <svelte:head>
-	<title>{data.meta.title}</title>
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content={data.meta.title} />
+<title>{data.meta.title}</title>
+<meta property="og:type" content="article" />
+<meta property="og:title" content={data.meta.title} />
 </svelte:head>
 
 <article>
@@ -693,15 +714,16 @@ src/routes/[slug]/+page.svelteCopy
 		<p>Published at {formatDate(data.meta.date)}</p>
 	</hgroup>
 
-	<div class="tags">
-		{#each data.meta.categories as category}
-			<span class="surface-4">&num;{category}</span>
-		{/each}
-	</div>
+    <div class="tags">
+    	{#each data.meta.categories as category}
+    		<span class="surface-4">&num;{category}</span>
+    	{/each}
+    </div>
 
-	<div class="prose">
-		<data.content />
-	</div>
+    <div class="prose">
+    	<data.content />
+    </div>
+
 </article>
 
 <style>
@@ -730,6 +752,7 @@ src/routes/[slug]/+page.svelteCopy
 		}
 	}
 </style>
+
 ```
 
 Let’s add some global styles for the post inside `app.css` since we don’t have control over the markup:
@@ -737,42 +760,45 @@ Let’s add some global styles for the post inside `app.css` since we don’t ha
 src/app.cssCopy
 
 ```
-/* ... */
+
+/_ ... _/
 
 .prose {
-	p {
-		:not(:is(h2, h3, h4, h5, h6) + p) {
-			margin-top: var(--size-7);
-		}
-
-		/* ignore paragraph tag around images */
-		&:has(img) {
-			display: contents;
-		}
-	}
-
-	:is(h2, h3, h4, h5, h6) {
-		margin-top: var(--size-8);
-		margin-bottom: var(--size-3);
-	}
-
-	:is(ul, ol) {
-		list-style-type: '🔥';
-		padding-left: var(--size-5);
-	}
-
-	:is(ul, ol) li {
-		margin-block: var(--size-2);
-		padding-inline-start: var(--size-2);
-	}
-
-	pre {
-		max-inline-size: 100%;
-		padding: var(--size-3);
-		border-radius: 8px;
-		tab-size: 2;
-	}
+p {
+:not(:is(h2, h3, h4, h5, h6) + p) {
+margin-top: var(--size-7);
 }
+
+    	/* ignore paragraph tag around images */
+    	&:has(img) {
+    		display: contents;
+    	}
+    }
+
+    :is(h2, h3, h4, h5, h6) {
+    	margin-top: var(--size-8);
+    	margin-bottom: var(--size-3);
+    }
+
+    :is(ul, ol) {
+    	list-style-type: '🔥';
+    	padding-left: var(--size-5);
+    }
+
+    :is(ul, ol) li {
+    	margin-block: var(--size-2);
+    	padding-inline-start: var(--size-2);
+    }
+
+    pre {
+    	max-inline-size: 100%;
+    	padding: var(--size-3);
+    	border-radius: 8px;
+    	tab-size: 2;
+    }
+
+}
+
 ```
 
 Everything looks great:
@@ -790,7 +816,9 @@ Let’s install Shiki:
 terminalCopy
 
 ```
+
 npm i shiki
+
 ```
 
 Create a custom Shiki highlighter:
@@ -798,27 +826,29 @@ Create a custom Shiki highlighter:
 svelte.config.jsCopy
 
 ```
+
 // ...
 import { mdsvex, escapeSvelte } from 'mdsvex'
 import { createHighlighter } from 'shiki'
 
-/** @type {import('mdsvex').MdsvexOptions} */
+/\*_ @type {import('mdsvex').MdsvexOptions} _/
 const mdsvexOptions = {
-	extensions: ['.md'],
-	highlight: {
-		highlighter: async (code, lang = 'text') => {
-			const highlighter = await createHighlighter({
-				themes: ['poimandres'],
-				langs: ['javascript', 'typescript']
-			})
-			await highlighter.loadLanguage('javascript', 'typescript')
-			const html = escapeSvelte(highlighter.codeToHtml(code, { lang, theme: 'poimandres' }))
-			return `{@html \`${html}\` }`
-		}
-	},
+extensions: ['.md'],
+highlight: {
+highlighter: async (code, lang = 'text') => {
+const highlighter = await createHighlighter({
+themes: ['poimandres'],
+langs: ['javascript', 'typescript']
+})
+await highlighter.loadLanguage('javascript', 'typescript')
+const html = escapeSvelte(highlighter.codeToHtml(code, { lang, theme: 'poimandres' }))
+return `{@html \`${html}\` }`
+}
+},
 }
 
 // ...
+
 ```
 
 Here’s the breakdown:
@@ -837,6 +867,7 @@ You can use Svelte components inside Markdown from interactive data visualizatio
 src/posts/counter.svelteCopy
 
 ```
+
 <script lang="ts">
 	let count = $state(0)
 
@@ -936,8 +967,8 @@ You can use [rehype](https://github.com/rehypejs/rehype) plugins to transform HT
 
 Using these plugins it’s very simple to extend the functionality of your Markdown blog:
 
-* `rehype-slug` is used to add slugs to headings like `<h2 id="section">` and link to a section of your post like `example.com/post#section`
-* `remark-toc` is used to generate a table of contents based on the headings
+- `rehype-slug` is used to add slugs to headings like `<h2 id="section">` and link to a section of your post like `example.com/post#section`
+- `remark-toc` is used to generate a table of contents based on the headings
 
 Install the Markdown plugins:
 
@@ -1327,13 +1358,13 @@ link below and pressing the pencil icon inside GitHub to edit it.
 
 Follow
 
-* [Newsletter](/newsletter)
-* [YouTube](https://www.youtube.com/%40joyofcodedev)
-* [Twitter](https://x.com/joyofcodedev)
-* [Bluesky](https://bsky.app/profile/joyofcode.xyz)
-* [RSS](/rss.xml)
+- [Newsletter](/newsletter)
+- [YouTube](https://www.youtube.com/%40joyofcodedev)
+- [Twitter](https://x.com/joyofcodedev)
+- [Bluesky](https://bsky.app/profile/joyofcode.xyz)
+- [RSS](/rss.xml)
 
 Other
 
-* [About](/about)
-* [Uses](https://github.com/mattcroat/uses)
+- [About](/about)
+- [Uses](https://github.com/mattcroat/uses)

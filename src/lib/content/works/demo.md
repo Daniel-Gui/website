@@ -19,8 +19,6 @@ galleryImages:
   - cover-placeholder-02
 ---
 
-
-
 ## [01] O Desafio
 
 Precisávamos criar um sistema de conteúdo flexível que pudesse ser reutilizado tanto em posts de blog quanto em páginas de trabalhos.
@@ -63,7 +61,7 @@ function renderContent(blocks: ContentBlock[]): void {
 ```svelte:Component.svelte
 <script lang="ts">
   let count = $state(0);
-  
+
   function increment() {
     count++;
   }
@@ -87,11 +85,11 @@ O sistema final oferece:
 
 ### Métricas de Sucesso
 
-| Métrica | Antes | Depois |
-|---------|-------|--------|
-| Tempo de carregamento | 2.5s | 0.8s |
-| Bundle size | 150kb | 45kb |
-| Lighthouse Score | 75 | 98 |
+| Métrica               | Antes | Depois |
+| --------------------- | ----- | ------ |
+| Tempo de carregamento | 2.5s  | 0.8s   |
+| Bundle size           | 150kb | 45kb   |
+| Lighthouse Score      | 75    | 98     |
 
 > Este sistema de componentes transformou a forma como criamos conteúdo. Agora podemos focar no que realmente importa: a mensagem.
 > — Product Owner

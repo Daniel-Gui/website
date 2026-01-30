@@ -102,7 +102,9 @@ export function remarkCodeToComponent() {
 			value: `<script>import ContentCode from '$lib/components/content/ContentCode.svelte';</script>`
 		};
 
-		const yamlParamsIndex = tree.children.findIndex((node) => node.type === 'yaml' || node.type === 'toml');
+		const yamlParamsIndex = tree.children.findIndex(
+			(node) => node.type === 'yaml' || node.type === 'toml'
+		);
 		if (yamlParamsIndex !== -1) {
 			tree.children.splice(yamlParamsIndex + 1, 0, scriptNode);
 		} else {

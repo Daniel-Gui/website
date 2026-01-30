@@ -6,16 +6,16 @@ import type Lenis from 'lenis';
  * Replaces legacy Svelte 4 writable store.
  */
 class LenisState {
-    current = $state<Lenis | null>(null);
+	current = $state<Lenis | null>(null);
 
-    set(instance: Lenis | null) {
-        this.current = instance;
-    }
+	set(instance: Lenis | null) {
+		this.current = instance;
+	}
 
-    destroy() {
-        this.current?.destroy();
-        this.current = null;
-    }
+	destroy() {
+		this.current?.destroy();
+		this.current = null;
+	}
 }
 
 export const lenis = new LenisState();

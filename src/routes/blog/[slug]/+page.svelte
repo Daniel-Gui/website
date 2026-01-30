@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { onMount } from 'svelte';
-	import { animate, stagger } from 'motion';
 	import { resolve } from '$app/paths';
+	import { browser } from '$app/environment';
 	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
 	import IconClock from '$lib/components/icons/icon-clock.svelte';
 	import IconCopy from '$lib/components/icons/icon-copy.svelte';
@@ -18,7 +17,7 @@
 	let pageUrl = $state('');
 
 	function formatDate(dateString: string) {
-		if (typeof window === 'undefined') return dateString;
+		if (!browser) return dateString;
 		return new Intl.DateTimeFormat('pt-BR', {
 			day: 'numeric',
 			month: 'long',
@@ -34,19 +33,27 @@
 	}
 
 	function scrollToTop() {
-		if (typeof window === 'undefined') return;
+		if (!browser) return;
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
-	onMount(() => {
+	$effect(() => {
+		if (!browser) return;
+
 		pageUrl = window.location.href;
 
-		const elements = document.querySelectorAll('[data-animate]');
-		animate(
-			elements,
-			{ opacity: [0, 1], y: [20, 0] },
-			{ delay: stagger(0.1), duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-		);
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReducedMotion) return;
+
+		void (async () => {
+			const { animate, stagger } = await import('motion');
+			const elements = document.querySelectorAll('[data-animate]');
+			animate(
+				elements,
+				{ opacity: [0, 1], y: [20, 0] },
+				{ delay: stagger(0.1), duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+			);
+		})();
 	});
 </script>
 

@@ -10,8 +10,8 @@ export async function getPosts() {
 		const slug = path.split('/').at(-1)?.replace('.md', '');
 
 		if (file && typeof file === 'object' && 'metadata' in file && slug) {
-			const metadata = file.metadata as any;
-			const post = { ...metadata, slug, id: slug } as unknown as PostItem;
+			const metadata = file.metadata as Record<string, unknown>;
+			const post = { ...metadata, slug } as PostItem;
 			posts.push(post);
 		}
 	}
@@ -29,14 +29,11 @@ export async function getWorks() {
 		const id = path.split('/').at(-1)?.replace('.md', '');
 
 		if (file && typeof file === 'object' && 'metadata' in file && id) {
-			// WorkItem expects 'id' in the object, so we spread metadata and add id.
-			// Note: We might need to adjust WorkItem type if strict validation is needed
-			const metadata = file.metadata as any;
-			const work = { ...metadata, id } as unknown as WorkItem;
+			const metadata = file.metadata as Record<string, unknown>;
+			const work = { ...metadata, id } as WorkItem;
 			works.push(work);
 		}
 	}
 
-	// Sort logic for works if needed, for now maybe by id or explicit order field (not yet in type)
 	return works.sort((a, b) => b.id.localeCompare(a.id));
 }

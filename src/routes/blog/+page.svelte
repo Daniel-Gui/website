@@ -94,12 +94,11 @@
 			{#each posts as post (post.slug)}
 				<article
 					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-colors duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
-					style="opacity: 0; transform: translateY(40px);"
 					data-blog-card
 				>
 					<!-- Cover Image -->
 					<div
-						class="relative aspect-[2/1] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5"
+						class="relative aspect-2/1 w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5"
 						style:view-transition-name={`blog-cover-${post.slug}`}
 					>
 						<picture class="absolute inset-0 h-full w-full">

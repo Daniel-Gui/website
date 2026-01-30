@@ -1,4 +1,34 @@
 import visit from 'unist-util-visit';
+import { createHighlighter } from 'shiki';
+
+// Cache the highlighter to avoid recreating it for each file
+let highlighterPromise = null;
+
+async function getHighlighter() {
+	if (!highlighterPromise) {
+		highlighterPromise = createHighlighter({
+			themes: ['github-dark', 'github-light'],
+			langs: [
+				'javascript',
+				'typescript',
+				'svelte',
+				'html',
+				'css',
+				'json',
+				'bash',
+				'shell',
+				'markdown',
+				'tsx',
+				'jsx',
+				'python',
+				'sql',
+				'yaml',
+				'diff'
+			]
+		});
+	}
+	return highlighterPromise;
+}
 
 function escapeSvelte(str) {
 	return str
@@ -10,21 +40,23 @@ function escapeSvelte(str) {
 }
 
 export function remarkCodeToComponent() {
-	return (tree) => {
-		let hasCodeBlock = false;
+	return async (tree) => {
+		const codeNodes = [];
 
+		// Collect all code blocks
 		visit(tree, 'code', (node) => {
-			hasCodeBlock = true;
+			codeNodes.push(node);
+		});
+
+		if (codeNodes.length === 0) return;
+
+		// Get highlighter once for all code blocks
+		const highlighter = await getHighlighter();
+
+		for (const node of codeNodes) {
 			const code = node.value;
 			const lang = node.lang || 'text';
 			const meta = node.meta || '';
-
-			// Extract filename from meta if present (e.g., ```js:example.js)
-			// mdsvex/remark often passes the "js:example.js" as lang if not parsed,
-			// or meta. Let's handle simple cases manually or rely on standard parsing.
-			// Usually: lang="js" meta="title=example.js" or similar.
-			// But user wants "filename".
-			// Let's assume standard behavior: lang might contain colon.
 
 			let language = lang;
 			let filename = undefined;
@@ -34,29 +66,49 @@ export function remarkCodeToComponent() {
 				language = parts[0];
 				filename = parts.slice(1).join(':');
 			} else if (meta) {
-				// Naive check for filename in meta
 				filename = meta;
 			}
 
+			// Check if language is supported, fallback to 'text' if not
+			const supportedLang = highlighter.getLoadedLanguages().includes(language) ? language : 'text';
+
+			// Generate highlighted HTML at build time
+			const highlightedHtml = highlighter.codeToHtml(code, {
+				lang: supportedLang,
+				themes: {
+					light: 'github-light',
+					dark: 'github-dark'
+				}
+			});
+
 			const escapedCode = escapeSvelte(code);
+			const escapedHtml = escapeSvelte(highlightedHtml);
 
 			// Transform node to HTML (Svelte Component)
 			node.type = 'html';
 			node.value = `
 				<ContentCode data={{
 					code: \`${escapedCode}\`,
+					highlightedHtml: \`${escapedHtml}\`,
 					language: '${language}',
 					filename: ${filename ? `'${filename}'` : 'undefined'}
 				}} />
 			`;
-		});
+		}
 
-		if (hasCodeBlock) {
-			// Inject import at the top
-			tree.children.unshift({
-				type: 'html',
-				value: `<script>import ContentCode from '$lib/components/content/ContentCode.svelte';</script>`
-			});
+		// Inject import
+		const scriptNode = {
+			type: 'html',
+			value: `<script>import ContentCode from '$lib/components/content/ContentCode.svelte';</script>`
+		};
+
+		const yamlParamsIndex = tree.children.findIndex(
+			(node) => node.type === 'yaml' || node.type === 'toml'
+		);
+		if (yamlParamsIndex !== -1) {
+			tree.children.splice(yamlParamsIndex + 1, 0, scriptNode);
+		} else {
+			tree.children.unshift(scriptNode);
 		}
 	};
 }

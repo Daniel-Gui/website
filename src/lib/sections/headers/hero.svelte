@@ -6,7 +6,7 @@
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import { cn } from '$lib/utils';
-	import { lenisStore } from '$lib/stores/scroll';
+	import { lenis } from '$lib/utils/lenis.svelte';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -107,8 +107,11 @@
 
 	const scrollToWorks = (e: MouseEvent) => {
 		e.preventDefault();
-		if ($lenisStore) {
-			$lenisStore.scrollTo('#trabalhos', { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+		if (lenis.current) {
+			lenis.current.scrollTo('#trabalhos', {
+				duration: 1.2,
+				easing: (t: number) => 1 - Math.pow(1 - t, 3)
+			});
 		} else {
 			document.querySelector('#trabalhos')?.scrollIntoView({ behavior: 'smooth' });
 		}
@@ -116,8 +119,11 @@
 
 	const scrollToBlog = (e: MouseEvent) => {
 		e.preventDefault();
-		if ($lenisStore) {
-			$lenisStore.scrollTo('#blog', { duration: 1.2, easing: (t) => 1 - Math.pow(1 - t, 3) });
+		if (lenis.current) {
+			lenis.current.scrollTo('#blog', {
+				duration: 1.2,
+				easing: (t: number) => 1 - Math.pow(1 - t, 3)
+			});
 		} else {
 			document.querySelector('#blog')?.scrollIntoView({ behavior: 'smooth' });
 		}

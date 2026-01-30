@@ -9,15 +9,15 @@ import IconCloudflare from '$lib/components/icons/icon-cloudflare.svelte';
 import IconShopify from '$lib/components/icons/icon-shopify.svelte';
 
 export const TECH_ICONS = {
-    'Svelte': IconSvelte,
-    'SvelteKit': IconSvelte,
-    'Tailwindcss': IconTailwindcss,
-    'React': IconReact,
-    'React Native': IconReact,
-    'Next.js': IconReact,
-    'TypeScript': IconTypescript,
-    'JavaScript': IconJavascript,
-    'Bun': IconBun,
-    'Cloudflare': IconCloudflare,
-    'Shopify': IconShopify
+	Svelte: IconSvelte,
+	SvelteKit: IconSvelte,
+	Tailwindcss: IconTailwindcss,
+	React: IconReact,
+	'React Native': IconReact,
+	'Next.js': IconReact,
+	TypeScript: IconTypescript,
+	JavaScript: IconJavascript,
+	Bun: IconBun,
+	Cloudflare: IconCloudflare,
+	Shopify: IconShopify
 };

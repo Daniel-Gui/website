@@ -11,14 +11,14 @@ coverImageBasename: blog-cover-placeholder-01
 authorId: daniel
 ---
 
-Este é um parágrafo introdutório para demonstrar a renderização de texto padrão. O sistema suporta **negrito**, *itálico* e links inline através de HTML seguro.
+Este é um parágrafo introdutório para demonstrar a renderização de texto padrão. O sistema suporta **negrito**, _itálico_ e links inline através de HTML seguro.
 
 ## Estrutura e Listas
 
 Abaixo, apresentamos os diferentes tipos de listas suportados pelo sistema:
 
 - Item de lista não ordenada 1
-- Item de lista não ordenada 2 com *texto formatado*
+- Item de lista não ordenada 2 com _texto formatado_
 - Item de lista não ordenada 3
 
 1. Primeiro passo importante
@@ -42,26 +42,26 @@ Parágrafos podem ser usados para separar seções e fornecer contexto adicional
 ## Imagens e Código
 
 ![Imagem local renderizada via tag picture com suporte a AVIF/WebP](/images/blog-covers/blog-cover-placeholder-02.webp)
-*Imagem local renderizada via tag `<picture>` com suporte a AVIF/WebP*
+_Imagem local renderizada via tag `<picture>` com suporte a AVIF/WebP_
 
 ![Imagem carregada de uma URL externa (Unsplash)](https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop)
-*Imagem carregada de uma URL externa (Unsplash)*
+_Imagem carregada de uma URL externa (Unsplash)_
 
 Para desenvolvedores, é essencial poder compartilhar trechos de código com syntax highlighting adequado:
 
 ```typescript
 interface User {
-  id: number;
-  name: string;
-  role: 'admin' | 'user';
+	id: number;
+	name: string;
+	role: 'admin' | 'user';
 }
 
 function getUser(id: number): User {
-  return {
-    id,
-    name: 'John Doe',
-    role: 'user'
-  };
+	return {
+		id,
+		name: 'John Doe',
+		role: 'user'
+	};
 }
 ```
 

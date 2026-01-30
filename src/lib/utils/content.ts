@@ -1,42 +1,42 @@
 import type { PostItem, WorkItem } from '../types/schemas';
 
 export async function getPosts() {
-    const posts: PostItem[] = [];
+	const posts: PostItem[] = [];
 
-    const paths = import.meta.glob('/src/lib/content/posts/*.md', { eager: true });
+	const paths = import.meta.glob('/src/lib/content/posts/*.md', { eager: true });
 
-    for (const path in paths) {
-        const file = paths[path];
-        const slug = path.split('/').at(-1)?.replace('.md', '');
+	for (const path in paths) {
+		const file = paths[path];
+		const slug = path.split('/').at(-1)?.replace('.md', '');
 
-        if (file && typeof file === 'object' && 'metadata' in file && slug) {
-            const metadata = file.metadata as any;
-            const post = { ...metadata, slug, id: slug } as unknown as PostItem;
-            posts.push(post);
-        }
-    }
+		if (file && typeof file === 'object' && 'metadata' in file && slug) {
+			const metadata = file.metadata as any;
+			const post = { ...metadata, slug, id: slug } as unknown as PostItem;
+			posts.push(post);
+		}
+	}
 
-    return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+	return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export async function getWorks() {
-    const works: WorkItem[] = [];
+	const works: WorkItem[] = [];
 
-    const paths = import.meta.glob('/src/lib/content/works/*.md', { eager: true });
+	const paths = import.meta.glob('/src/lib/content/works/*.md', { eager: true });
 
-    for (const path in paths) {
-        const file = paths[path];
-        const id = path.split('/').at(-1)?.replace('.md', '');
+	for (const path in paths) {
+		const file = paths[path];
+		const id = path.split('/').at(-1)?.replace('.md', '');
 
-        if (file && typeof file === 'object' && 'metadata' in file && id) {
-            // WorkItem expects 'id' in the object, so we spread metadata and add id.
-            // Note: We might need to adjust WorkItem type if strict validation is needed
-            const metadata = file.metadata as any;
-            const work = { ...metadata, id } as unknown as WorkItem;
-            works.push(work);
-        }
-    }
+		if (file && typeof file === 'object' && 'metadata' in file && id) {
+			// WorkItem expects 'id' in the object, so we spread metadata and add id.
+			// Note: We might need to adjust WorkItem type if strict validation is needed
+			const metadata = file.metadata as any;
+			const work = { ...metadata, id } as unknown as WorkItem;
+			works.push(work);
+		}
+	}
 
-    // Sort logic for works if needed, for now maybe by id or explicit order field (not yet in type)
-    return works.sort((a, b) => b.id.localeCompare(a.id));
+	// Sort logic for works if needed, for now maybe by id or explicit order field (not yet in type)
+	return works.sort((a, b) => b.id.localeCompare(a.id));
 }

@@ -17,15 +17,18 @@ Bem-vindo à demonstração completa de funcionalidades. Este post serve como um
 
 O texto é a base da web. Aqui demonstramos as variações de formatação suportadas.
 
-Parágrafos padrão possuem espaçamento confortável para leitura. Podemos usar **negrito para ênfase forte**, *itálico para ênfase sutil*, e `código inline` para termos técnicos. Links como [este link para a home](/) são estilizados automaticamente.
+Parágrafos padrão possuem espaçamento confortável para leitura. Podemos usar **negrito para ênfase forte**, _itálico para ênfase sutil_, e `código inline` para termos técnicos. Links como [este link para a home](/) são estilizados automaticamente.
 
 ### Títulos
 
 A hierarquia de títulos é fundamental para SEO e acessibilidade.
 
 # Título H1 (Geralmente usado apenas no título do post)
+
 ## Título H2 - Seção Principal
+
 ### Título H3 - Sub-seção
+
 #### Título H4 - Tópico Específico
 
 ---
@@ -33,14 +36,18 @@ A hierarquia de títulos é fundamental para SEO e acessibilidade.
 ## Listas
 
 ### Lista não ordenada
+
 Uma lista simples para itens sem ordem específica:
+
 - Design System
 - Componentes React/Svelte
 - Acessibilidade Web
 - Performance
 
 ### Lista ordenada
+
 Quando a sequência importa:
+
 1. Configuração do ambiente
 2. Instalação das dependências
 3. Desenvolvimento das features
@@ -65,31 +72,33 @@ Também podemos ter citações aninhadas ou com múltiplos parágrafos, dependen
 Para desenvolvedores, a exibição de código é crucial. Utilizamos syntax highlighting para diversas linguagens.
 
 ### TypeScript
+
 ```typescript
 interface BlogPost {
-  title: string;
-  slug: string;
-  date: Date;
-  published: boolean;
+	title: string;
+	slug: string;
+	date: Date;
+	published: boolean;
 }
 
 function getPost(slug: string): BlogPost | undefined {
-  // Lógica de busca
-  return undefined;
+	// Lógica de busca
+	return undefined;
 }
 ```
 
 ### CSS / SCSS
+
 ```css
 .card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
+	background: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+	transform: translateY(-5px);
 }
 ```
 
@@ -100,18 +109,18 @@ function getPost(slug: string): BlogPost | undefined {
 Imagens enriquecem o conteúdo. Abaixo, uma demonstração de imagens com legendas (via itálico logo abaixo, padrão comum em MD).
 
 ![Um workspace minimalista com laptop](https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80)
-*Legenda: Um ambiente de trabalho limpo e organizado aumenta a produtividade.*
+_Legenda: Um ambiente de trabalho limpo e organizado aumenta a produtividade._
 
 ---
 
 ## Tabelas (Se suportado pelo plugin GFM)
 
-| Recurso | Suporte | Prioridade |
-| :--- | :---: | :---: |
-| Markdown Padrão | ✅ | Alta |
-| Syntax Highlight | ✅ | Alta |
-| Tabelas | ⚠️ | Média |
-| Embeds de Vídeo | ❌ | Baixa |
+| Recurso          | Suporte | Prioridade |
+| :--------------- | :-----: | :--------: |
+| Markdown Padrão  |   ✅    |    Alta    |
+| Syntax Highlight |   ✅    |    Alta    |
+| Tabelas          |   ⚠️    |   Média    |
+| Embeds de Vídeo  |   ❌    |   Baixa    |
 
 ---
 

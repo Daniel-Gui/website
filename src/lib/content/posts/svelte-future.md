@@ -19,15 +19,15 @@ Runes são a nova forma de reatividade no Svelte. Eles substituem o modelo anter
 
 ```svelte
 <script>
-  let count = $state(0);
+	let count = $state(0);
 
-  function increment() {
-    count += 1;
-  }
+	function increment() {
+		count += 1;
+	}
 </script>
 
 <button onclick={increment}>
-  Clicks: {count}
+	Clicks: {count}
 </button>
 ```
 

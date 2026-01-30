@@ -19,22 +19,12 @@
 <figure class="my-10">
 	<div class="overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
 		{#if isExternal || hasExtension}
-			<img
-				src={data.src}
-				alt={data.alt}
-				loading="lazy"
-				class="w-full object-cover"
-			/>
+			<img src={data.src} alt={data.alt} loading="lazy" class="w-full object-cover" />
 		{:else}
 			<picture>
 				<source srcset="{data.src}.avif" type="image/avif" />
 				<source srcset="{data.src}.webp" type="image/webp" />
-				<img
-					src="{data.src}.webp"
-					alt={data.alt}
-					loading="lazy"
-					class="w-full object-cover"
-				/>
+				<img src="{data.src}.webp" alt={data.alt} loading="lazy" class="w-full object-cover" />
 			</picture>
 		{/if}
 	</div>

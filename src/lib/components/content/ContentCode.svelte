@@ -5,6 +5,7 @@
 	type Props = {
 		data: {
 			code: string;
+			highlightedHtml?: string;
 			language?: string;
 			filename?: string;
 		};
@@ -21,14 +22,15 @@
 </script>
 
 <div
-	class="not-prose my-8 overflow-hidden rounded-xl border border-white/10 bg-[#171717] shadow-2xl"
+	class="not-prose my-8 overflow-hidden rounded-xl border border-black/10 bg-[#f8f8f8] shadow-lg dark:border-white/10 dark:bg-[#171717] dark:shadow-2xl"
 >
 	<div
-		class="flex items-center justify-between border-b border-white/5 bg-white/5 px-4 py-3 text-xs text-neutral-400"
+		class="flex items-center justify-between border-b border-black/5 bg-black/5 px-4 py-3 text-xs text-neutral-500 dark:border-white/5 dark:bg-white/5 dark:text-neutral-400"
 	>
 		<div class="flex items-center gap-3">
 			{#if data.filename}
-				<span class="font-mono text-sm text-neutral-200">{data.filename}</span>
+				<span class="font-mono text-sm text-neutral-700 dark:text-neutral-200">{data.filename}</span
+				>
 			{/if}
 			{#if data.language}
 				<span class="tracking-wider uppercase opacity-50">{data.language}</span>
@@ -36,7 +38,7 @@
 		</div>
 		<button
 			onclick={copyCode}
-			class="flex items-center gap-1.5 transition-colors hover:text-white"
+			class="flex items-center gap-1.5 transition-colors hover:text-neutral-900 dark:hover:text-white"
 			aria-label="Copiar código"
 		>
 			{#if copied}
@@ -48,7 +50,40 @@
 			{/if}
 		</button>
 	</div>
-	<div class="overflow-x-auto p-5">
-		<pre class="font-mono text-sm leading-relaxed text-neutral-300"><code>{data.code}</code></pre>
+	<div class="shiki-container overflow-x-auto p-5">
+		{#if data.highlightedHtml}
+			<!-- Pre-highlighted HTML from Shiki (build time) -->
+			{@html data.highlightedHtml}
+		{:else}
+			<!-- Fallback: plain code -->
+			<pre class="font-mono text-sm leading-relaxed text-neutral-300"><code>{data.code}</code></pre>
+		{/if}
 	</div>
 </div>
+
+<style>
+	/* Shiki styling - always use container background */
+	.shiki-container :global(pre.shiki) {
+		background: transparent !important;
+		margin: 0;
+		padding: 0;
+	}
+
+	.shiki-container :global(.shiki code) {
+		font-family: 'JetBrains Mono', ui-monospace, monospace;
+		font-size: 0.875rem;
+		line-height: 1.6;
+	}
+
+	/* Force transparent background on all spans */
+	.shiki-container :global(.shiki span) {
+		background-color: transparent !important;
+	}
+
+	/* Dark mode: use --shiki-dark color variables */
+	:global(html.dark) .shiki-container :global(.shiki span) {
+		color: var(--shiki-dark) !important;
+	}
+
+	/* Light mode: uses the inline color attribute (light theme is the default in Shiki output) */
+</style>

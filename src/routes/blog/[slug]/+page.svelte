@@ -9,7 +9,6 @@
 	import IconCheck from '$lib/components/icons/icon-check.svelte';
 	import IconArrowUp from '$lib/components/icons/icon-arrow-up.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
-	import ContentRenderer from '$lib/components/content/ContentRenderer.svelte';
 
 	let { data }: { data: PageData } = $props();
 	let post = $derived(data.post);
@@ -145,11 +144,7 @@
 
 		<!-- Content -->
 		<article class="prose prose-lg mt-16 max-w-none dark:prose-invert" data-animate>
-			{#if post.content}
-				<ContentRenderer blocks={post.content} />
-			{:else}
-				<p class="text-muted">Conteúdo em construção...</p>
-			{/if}
+			<data.content />
 		</article>
 
 		<div class="mt-12 flex justify-end" data-animate>

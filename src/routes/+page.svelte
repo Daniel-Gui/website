@@ -6,6 +6,10 @@
 	import { page } from '$app/state';
 	import { lenisStore } from '$lib/stores/scroll';
 	import type Lenis from 'lenis';
+	import type { PageData } from './$types';
+
+	let { data }: { data: PageData } = $props();
+	let { works, posts } = $derived(data);
 
 	const title = 'Daniel Gui — Product Design (UI/UX) & Frontend Developer';
 	const description =
@@ -83,8 +87,8 @@
 		aria-hidden="true"
 	></div>
 	<Hero />
-	<GalleryWorks />
-	<GalleryPosts />
+	<GalleryWorks {works} />
+	<GalleryPosts {posts} />
 </main>
 
 <style>

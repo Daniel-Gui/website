@@ -1,4 +1,3 @@
-
 <script lang="ts">
 	import type { PageData } from './$types';
 	import { resolve } from '$app/paths';
@@ -63,7 +62,11 @@
 <main class="min-h-dvh bg-bg text-fg selection:bg-fg/10 selection:text-fg">
 	<div class="container-page mx-auto max-w-5xl py-24 sm:py-32 md:px-6" bind:this={containerEl}>
 		<!-- Breadcrumb -->
-		<nav class="mb-12 flex items-center gap-4 text-sm text-muted" data-blog-header style="opacity: 0">
+		<nav
+			class="mb-12 flex items-center gap-4 text-sm text-muted"
+			data-blog-header
+			style="opacity: 0"
+		>
 			<a
 				href={resolve('/', {})}
 				class="group -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
@@ -88,7 +91,7 @@
 
 		<!-- Posts Grid -->
 		<div class="grid gap-6 md:grid-cols-2">
-			{#each posts as post (post.id)}
+			{#each posts as post (post.slug)}
 				<article
 					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-colors duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
 					style="opacity: 0; transform: translateY(40px);"

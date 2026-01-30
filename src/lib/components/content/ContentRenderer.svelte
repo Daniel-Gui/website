@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ContentBlock } from '$lib/types/content';
+	import type { ContentBlock } from '../../types/schemas';
 	import ContentParagraph from './ContentParagraph.svelte';
 	import ContentHeading from './ContentHeading.svelte';
 	import ContentList from './ContentList.svelte';

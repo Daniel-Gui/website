@@ -2,7 +2,12 @@
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import { POSTS } from '$lib/data/posts';
+	import type { PostItem } from '../../types/schemas';
+
+	let { posts }: { posts: PostItem[] } = $props();
+	$effect(() => {
+		console.log('GalleryPosts - Received:', posts?.length);
+	});
 
 	let sectionEl = $state<HTMLElement | null>(null);
 	let revealed = $state(false);
@@ -90,26 +95,14 @@
 		<!-- Header -->
 		<div class="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
 			<div class="max-w-2xl space-y-4">
-				<h2
-					class="font-mono text-sm tracking-widest text-blue-600 uppercase"
-					style="opacity: 0; transform: translateY(20px);"
-					data-posts-header
-				>
+				<h2 class="font-mono text-sm tracking-widest text-blue-600 uppercase" data-posts-header>
 					// Artigos_Recentes
 				</h2>
-				<p
-					class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
-					style="opacity: 0; transform: translateY(20px);"
-					data-posts-header
-				>
+				<p class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl" data-posts-header>
 					Explorando tecnologia, <br /> design e engenharia.
 				</p>
 			</div>
-			<div
-				class="hidden md:block"
-				style="opacity: 0; transform: translateY(20px);"
-				data-posts-header
-			>
+			<div class="hidden md:block" data-posts-header>
 				<a
 					href={resolve('/blog', {})}
 					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
@@ -121,15 +114,14 @@
 
 		<!-- Posts List -->
 		<div class="grid gap-6 md:grid-cols-2">
-			{#each POSTS.slice(0, 6) as post (post.id)}
+			{#each posts.slice(0, 6) as post (post.id)}
 				<article
 					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-colors duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
-					style="opacity: 0; transform: translateY(40px);"
 					data-post-card
 				>
 					<!-- Cover Image (Visible) -->
 					<div
-						class="relative aspect-[2/1] w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5"
+						class="relative aspect-2/1 w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5"
 						style:view-transition-name={`blog-cover-${post.slug}`}
 					>
 						<picture class="absolute inset-0 h-full w-full">
@@ -184,7 +176,7 @@
 		</div>
 
 		<!-- Mobile View All Link -->
-		<div class="mt-8 md:hidden" style="opacity: 0; transform: translateY(20px);" data-posts-header>
+		<div class="mt-8 md:hidden" data-posts-header>
 			<a
 				href={resolve('/blog', {})}
 				class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"

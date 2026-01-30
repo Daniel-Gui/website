@@ -2,7 +2,10 @@
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import { WORKS, TECH_ICONS } from '$lib/data/works';
+	import { TECH_ICONS } from '$lib/utils/icons';
+	import type { WorkItem } from '../../types/schemas';
+
+	let { works }: { works: WorkItem[] } = $props();
 
 	let sectionEl = $state<HTMLElement | null>(null);
 	let revealed = $state(false);
@@ -102,14 +105,14 @@
 				data-gallery-header
 			>
 				<span class="font-mono text-xs text-muted">
-					[EXIBINDO: 01-0{WORKS.length}]
+					[EXIBINDO: 01-0{works.length}]
 				</span>
 			</div>
 		</div>
 
 		<!-- Grid -->
 		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
-			{#each WORKS as work (work.id)}
+			{#each works as work (work.id)}
 				<a
 					href={resolve(`/work/${work.id}`, {})}
 					class="group relative flex flex-col gap-4"
@@ -118,7 +121,7 @@
 				>
 					<!-- Card Visual -->
 					<div
-						class="relative aspect-[4/3] overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
+						class="relative aspect-4/3 overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
 						style:view-transition-name="work-image-{work.id}"
 					>
 						<!-- Image -->
@@ -137,7 +140,7 @@
 
 						<!-- Overlay Gradient -->
 						<div
-							class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+							class="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 						></div>
 
 						<!-- Corner Accents (Technical) -->
@@ -171,7 +174,7 @@
 
 						<div class="flex flex-wrap gap-2 pt-1">
 							{#each work.tags as tag (tag)}
-								{@const Icon = TECH_ICONS[tag]}
+								{@const Icon = (TECH_ICONS as any)[tag]}
 								<span
 									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2 py-1 font-mono text-[10px] tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
 								>

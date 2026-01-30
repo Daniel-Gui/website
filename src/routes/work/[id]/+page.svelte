@@ -4,9 +4,12 @@
 	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
 	import IconArrowUp from '$lib/components/icons/icon-arrow-up.svelte';
 	import type { PageData } from './$types';
+	import type { Component } from 'svelte';
+	import type { WorkItem } from '$lib/types/schemas';
 
-	let { data }: { data: PageData } = $props();
+	let { data }: { data: PageData & { Content: Component; work: WorkItem } } = $props();
 	let work = $derived(data.work);
+	let Content = $derived(data.Content);
 
 	function scrollToTop() {
 		if (typeof window === 'undefined') return;
@@ -42,14 +45,16 @@
 							<span class="font-mono text-sm tracking-widest text-blue-600 uppercase">
 								// {work.year}
 							</span>
-							<a
-								href={resolve(work.link ?? '#', {})}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
-							>
-								Ver Projeto <IconArrowUpRight class="size-3" />
-							</a>
+							{#if work.link}
+								<a
+									href={resolve(work.link, {})}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
+								>
+									Ver Projeto <IconArrowUpRight class="size-3" />
+								</a>
+							{/if}
 						</div>
 						<h1
 							class="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
@@ -76,7 +81,7 @@
 				<div
 					class="scrollbar-hide ml-[calc(50%-50vw)] flex w-screen snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-8 lg:ml-0 lg:block lg:w-full lg:space-y-12 lg:overflow-visible lg:px-0 lg:pb-0"
 				>
-					{#each work.galleryImages as imageBasename, i (imageBasename)}
+					{#each work.galleryImages as imageBasename, i (`${imageBasename}-${i}`)}
 						<div
 							class="w-[85vw] shrink-0 snap-center overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm lg:w-full dark:border-white/10 dark:bg-white/5"
 							style:view-transition-name={i === 0 ? `work-image-${work.id}` : undefined}
@@ -97,8 +102,8 @@
 			</div>
 
 			<!-- Direita: Informações (Sticky - Desktop / Abaixo - Mobile) -->
-			<div class="mt-12 lg:mt-0 lg:w-[420px] lg:shrink-0">
-				<div class="sticky top-32 space-y-12">
+			<div class="mt-12 lg:mt-0 lg:w-[480px] lg:shrink-0">
+				<div class="lg:sticky lg:top-32 lg:space-y-12">
 					<!-- Header do Projeto (Desktop Only) -->
 					<header class="hidden space-y-6 lg:block">
 						<div class="space-y-2">
@@ -106,14 +111,16 @@
 								<span class="font-mono text-sm tracking-widest text-blue-600 uppercase">
 									// {work.year}
 								</span>
-								<a
-									href={resolve(work.link ?? '#', {})}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
-								>
-									Ver Projeto <IconArrowUpRight class="size-3" />
-								</a>
+								{#if work.link}
+									<a
+										href={resolve(work.link, {})}
+										target="_blank"
+										rel="noopener noreferrer"
+										class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
+									>
+										Ver Projeto <IconArrowUpRight class="size-3" />
+									</a>
+								{/if}
 							</div>
 							<h1
 								class="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
@@ -134,39 +141,9 @@
 						</div>
 					</header>
 
-					<!-- Conteúdo Detalhado -->
-					<div class="text-muted-foreground space-y-10">
-						<section class="space-y-3">
-							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-								[01] Visão Geral
-							</h2>
-							<p class="leading-relaxed text-pretty">
-								{work.description}
-							</p>
-						</section>
-
-						<section class="space-y-3">
-							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-								[02] O Desafio
-							</h2>
-							<p class="leading-relaxed text-pretty">
-								{work.details.challenge}
-							</p>
-						</section>
-
-						<section class="space-y-3">
-							<h2 class="text-foreground font-mono text-xs font-semibold tracking-widest uppercase">
-								[03] Solução & Impacto
-							</h2>
-							<div class="space-y-4">
-								<p class="leading-relaxed text-pretty">
-									{work.details.solution}
-								</p>
-								<p class="leading-relaxed text-pretty">
-									{work.details.result}
-								</p>
-							</div>
-						</section>
+					<!-- Conteúdo do Markdown -->
+					<div class="prose max-w-none prose-neutral dark:prose-invert">
+						<Content />
 					</div>
 
 					<!-- Navegação Voltar -->

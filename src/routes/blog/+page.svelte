@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import { tick } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
@@ -146,6 +147,14 @@
 							<p class="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
 								{post.excerpt}
 							</p>
+
+							{#if post.tags.length > 0}
+								<div class="flex flex-wrap gap-2 pt-1">
+									{#each post.tags as tag (tag)}
+										<TechBadge {tag} />
+									{/each}
+								</div>
+							{/if}
 						</div>
 					</div>
 				</article>

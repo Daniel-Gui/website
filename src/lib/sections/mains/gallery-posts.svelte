@@ -2,6 +2,7 @@
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import type { PostItem } from '../../types/schemas';
 
 	let { posts }: { posts: PostItem[] } = $props();
@@ -95,6 +96,7 @@
 	});
 </script>
 
+```
 <section
 	bind:this={sectionEl}
 	id="blog"
@@ -188,6 +190,14 @@
 							<p class="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
 								{post.excerpt}
 							</p>
+
+							{#if post.tags.length > 0}
+								<div class="flex flex-wrap gap-2 pt-1">
+									{#each post.tags as tag (tag)}
+										<TechBadge {tag} />
+									{/each}
+								</div>
+							{/if}
 						</div>
 					</div>
 				</article>

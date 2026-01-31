@@ -6,6 +6,7 @@
 	import IconCheck from '$lib/components/icons/icon-check.svelte';
 	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import BackToTop from '$lib/components/ui/BackToTop.svelte';
+	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
 
 	let { data }: { data: PageData } = $props();
@@ -80,7 +81,7 @@
 			</div>
 
 			<!-- Author / Team -->
-			<div class="flex items-center gap-3">
+			<div class="flex flex-wrap items-center gap-3">
 				<div
 					class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/50 px-3 py-1.5 pr-4 text-sm font-medium text-fg backdrop-blur-md"
 				>
@@ -107,7 +108,15 @@
 				</div>
 			</div>
 
-			<!-- Meta Info Row -->
+			{#if post.tags.length > 0}
+				<div class="flex flex-wrap gap-2">
+					{#each post.tags as tag (tag)}
+						<TechBadge {tag} />
+					{/each}
+				</div>
+			{/if}
+
+			<!-- Meta Info Row - funcionalidades -->
 			<div
 				class="flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-border/10 py-4 font-mono text-sm text-muted"
 			>
@@ -130,7 +139,7 @@
 					{/if}
 				</button>
 
-				<div class="ml-auto flex items-center gap-2 text-xs opacity-60">
+				<div class=" gap-2 text-xs opacity-60">
 					Última atualização {formatDate(post.date)}
 				</div>
 			</div>

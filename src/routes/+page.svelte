@@ -17,10 +17,6 @@
 	const siteName = 'Daniel Gui';
 	const ogImage = ogImageAsset;
 
-	const noiseOpacity = 0.9;
-	const noiseFocusY = '35%';
-	const noiseFalloff = '70%';
-
 	$effect(() => {
 		if (typeof window === 'undefined') return;
 
@@ -75,44 +71,7 @@
 </svelte:head>
 
 <main>
-	<div
-		class="noise"
-		style={`--noise-opacity:${noiseOpacity}; --noise-focus-y:${noiseFocusY}; --noise-falloff:${noiseFalloff};`}
-		aria-hidden="true"
-	></div>
 	<Hero />
 	<GalleryWorks {works} />
 	<GalleryPosts {posts} />
 </main>
-
-<style>
-	.noise {
-		position: fixed;
-		inset: 0;
-		pointer-events: none;
-		z-index: var(--z-overlay, 100);
-		opacity: var(--noise-opacity, 0.06);
-		mix-blend-mode: soft-light;
-		filter: contrast(115%) brightness(100%);
-		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-		background-repeat: repeat;
-		-webkit-mask-image: radial-gradient(
-			120% 70% at 50% var(--noise-focus-y, 35%),
-			rgba(0, 0, 0, 1) 0%,
-			rgba(0, 0, 0, 1) var(--noise-falloff, 70%),
-			rgba(0, 0, 0, 0) 100%
-		);
-		mask-image: radial-gradient(
-			120% 70% at 50% var(--noise-focus-y, 35%),
-			rgba(0, 0, 0, 1) 0%,
-			rgba(0, 0, 0, 1) var(--noise-falloff, 70%),
-			rgba(0, 0, 0, 0) 100%
-		);
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.noise {
-			display: none;
-		}
-	}
-</style>

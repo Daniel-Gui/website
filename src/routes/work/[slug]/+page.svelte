@@ -19,18 +19,6 @@
 </svelte:head>
 
 <main class="relative min-h-dvh pt-24 pb-12 sm:pt-32">
-	<!-- Decorative Grid Background -->
-	<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
-		<svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-			<defs>
-				<pattern id="work-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1" />
-				</pattern>
-			</defs>
-			<rect width="100%" height="100%" fill="url(#work-grid)" />
-		</svg>
-	</div>
-
 	<div class="container-page relative z-10">
 		<div class="flex flex-col lg:flex-row lg:gap-16">
 			<!-- Header Mobile (Aparece primeiro em telas pequenas) -->

@@ -1,12 +1,11 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { resolve } from '$app/paths';
 	import { browser } from '$app/environment';
-	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
 	import IconClock from '$lib/components/icons/icon-clock.svelte';
 	import IconCopy from '$lib/components/icons/icon-copy.svelte';
 	import IconCheck from '$lib/components/icons/icon-check.svelte';
-	import IconArrowUp from '$lib/components/icons/icon-arrow-up.svelte';
+	import BackLink from '$lib/components/ui/BackLink.svelte';
+	import BackToTop from '$lib/components/ui/BackToTop.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
 
 	let { data }: { data: PageData } = $props();
@@ -30,11 +29,6 @@
 		navigator.clipboard.writeText(pageUrl);
 		copied = true;
 		setTimeout(() => (copied = false), 2000);
-	}
-
-	function scrollToTop() {
-		if (!browser) return;
-		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
 	$effect(() => {
@@ -66,14 +60,7 @@
 	<div class="container-page mx-auto max-w-4xl py-24 sm:py-32 md:px-6">
 		<!-- Breadcrumb & Navigation -->
 		<nav class="mb-12 flex items-center gap-4 text-sm text-muted" data-animate>
-			<a
-				href={resolve('/#blog', {})}
-				class="group -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
-				aria-label="Voltar para o blog"
-			>
-				<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
-				Base de conhecimento
-			</a>
+			<BackLink href="/#blog" label="Base de conhecimento" />
 			<span class="text-muted/60">/</span>
 			<span class="font-medium text-fg">{post.tags[0] || 'Artigo'}</span>
 		</nav>
@@ -131,7 +118,7 @@
 
 				<button
 					onclick={copyToClipboard}
-					class="-ml-2 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+					class="focus-visible:ring-focus -ml-2 flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
 					aria-label="Copiar link da página"
 				>
 					{#if copied}
@@ -155,18 +142,7 @@
 		</article>
 
 		<div class="mt-12 flex justify-end" data-animate>
-			<button
-				onclick={scrollToTop}
-				class="group flex items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
-				aria-label="Voltar ao topo"
-			>
-				Voltar ao topo
-				<span
-					class="grid size-6 place-items-center rounded-full border border-border/10 bg-surface/50 transition-colors group-hover:border-border/20 group-hover:bg-surface"
-				>
-					<IconArrowUp class="size-3.5" />
-				</span>
-			</button>
+			<BackToTop />
 		</div>
 	</div>
 </main>

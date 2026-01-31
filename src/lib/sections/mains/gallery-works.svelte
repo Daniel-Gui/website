@@ -2,7 +2,7 @@
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import { TECH_ICONS } from '$lib/utils/icons';
+	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import type { WorkItem } from '../../types/schemas';
 
 	let { works }: { works: WorkItem[] } = $props();
@@ -175,13 +175,7 @@
 
 						<div class="flex flex-wrap gap-2 pt-1">
 							{#each work.tags as tag (tag)}
-								{@const Icon = (TECH_ICONS as any)[tag]}
-								<span class="tag">
-									{#if Icon}
-										<Icon class="mr-1.5 size-3" />
-									{/if}
-									{tag}
-								</span>
+								<TechBadge {tag} />
 							{/each}
 						</div>
 					</div>

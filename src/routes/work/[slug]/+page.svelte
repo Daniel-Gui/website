@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
-	import IconArrowUp from '$lib/components/icons/icon-arrow-up.svelte';
+	import TechBadge from '$lib/components/ui/TechBadge.svelte';
+	import BackLink from '$lib/components/ui/BackLink.svelte';
+	import BackToTop from '$lib/components/ui/BackToTop.svelte';
 	import type { PageData } from './$types';
 	import type { Component } from 'svelte';
 	import type { WorkItem } from '$lib/types/schemas';
@@ -10,11 +11,6 @@
 	let { data }: { data: PageData & { Content: Component; work: WorkItem } } = $props();
 	let work = $derived(data.work);
 	let Content = $derived(data.Content);
-
-	function scrollToTop() {
-		if (typeof window === 'undefined') return;
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	}
 </script>
 
 <svelte:head>
@@ -66,9 +62,7 @@
 
 					<div class="flex flex-wrap gap-2">
 						{#each work.tags as tag (tag)}
-							<span class="tag px-2.5 py-1 text-xs">
-								{tag}
-							</span>
+							<TechBadge {tag} class="px-2.5 py-1 text-xs" />
 						{/each}
 					</div>
 				</header>
@@ -130,9 +124,7 @@
 
 						<div class="flex flex-wrap gap-2">
 							{#each work.tags as tag (tag)}
-								<span class="tag px-2.5 py-1 text-xs">
-									{tag}
-								</span>
+								<TechBadge {tag} class="px-2.5 py-1 text-xs" />
 							{/each}
 						</div>
 					</header>
@@ -144,27 +136,8 @@
 
 					<!-- Navegação Voltar -->
 					<div class="divider flex justify-between gap-2 border-t pt-8 sm:items-center">
-						<a
-							href={resolve('/#trabalhos', {})}
-							class="group focus-visible:ring-focus -ml-2 flex w-fit items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
-							aria-label="Voltar para trabalhos"
-						>
-							<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
-							Trabalhos selecionados
-						</a>
-
-						<button
-							onclick={scrollToTop}
-							class="group focus-visible:ring-focus flex w-fit cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
-							aria-label="Voltar ao topo"
-						>
-							Voltar ao topo
-							<span
-								class="grid size-6 place-items-center rounded-full border border-border/10 bg-surface/50 transition-colors group-hover:border-border/20 group-hover:bg-surface"
-							>
-								<IconArrowUp class="size-3.5" />
-							</span>
-						</button>
+						<BackLink href="/#trabalhos" label="Trabalhos selecionados" />
+						<BackToTop />
 					</div>
 				</div>
 			</div>

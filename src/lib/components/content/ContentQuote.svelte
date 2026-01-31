@@ -10,7 +10,7 @@
 </script>
 
 <blockquote
-	class="my-8 border-l-4 border-black/20 pl-6 text-xl text-gray-700 italic dark:border-white/20 dark:text-neutral-300"
+	class="border-strong my-8 border-l-4 pl-6 text-xl text-gray-700 italic dark:text-neutral-300"
 >
 	<p>"{data.text}"</p>
 	{#if data.author}

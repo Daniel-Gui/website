@@ -110,7 +110,7 @@
 		position: fixed;
 		left: 0;
 		top: 0;
-		z-index: 9999;
+		z-index: 2147483647;
 		pointer-events: none;
 		width: var(--cursor-size);
 		height: var(--cursor-size);

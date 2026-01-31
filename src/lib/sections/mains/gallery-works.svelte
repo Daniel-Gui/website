@@ -2,7 +2,7 @@
 	import { tick } from 'svelte';
 	import { resolve } from '$app/paths';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
-	import { TECH_ICONS } from '$lib/utils/icons';
+	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import type { WorkItem } from '../../types/schemas';
 
 	let { works }: { works: WorkItem[] } = $props();
@@ -30,25 +30,46 @@
 						revealed = true;
 						await tick();
 
-						const headerItems = sectionEl!.querySelectorAll('[data-gallery-header]');
-						const cards = sectionEl!.querySelectorAll('[data-gallery-card]');
+						const headerItems = sectionEl!.querySelectorAll<HTMLElement>('[data-gallery-header]');
+						const cards = sectionEl!.querySelectorAll<HTMLElement>('[data-gallery-card]');
 
-						// Animate Header
-						animate(
+						// Animate Header - timing rápido para não atrasar cards
+						const headerAnim = animate(
 							headerItems,
-							{ opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0px)'] },
-							{ duration: 0.6, delay: stagger(0.1), ease: [0.16, 1, 0.3, 1] }
+							{ opacity: [0, 1], transform: ['translateY(16px)', 'translateY(0px)'] },
+							{ duration: 0.5, delay: stagger(0.08), ease: [0.16, 1, 0.3, 1] }
 						);
 
-						// Animate Cards
-						animate(
+						// Set will-change before animation
+						for (const card of cards) {
+							card.style.willChange = 'opacity, transform';
+						}
+
+						// Animate Cards - overshoot para follow-through
+						const cardAnim = animate(
 							cards,
 							{
 								opacity: [0, 1],
-								transform: ['translateY(40px) scale(0.96)', 'translateY(0px) scale(1)']
+								transform: [
+									'translateY(24px) scale(0.97)',
+									'translateY(-2px) scale(1.01)',
+									'translateY(0px) scale(1)'
+								]
 							},
-							{ duration: 0.8, delay: (i) => 0.2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }
+							{ duration: 0.65, delay: stagger(0.1, { startDelay: 0.15 }), ease: [0.16, 1, 0.3, 1] }
 						);
+
+						// Clean up all inline styles after animation
+						await Promise.all([headerAnim.finished, cardAnim.finished]);
+						for (const el of headerItems) {
+							el.style.opacity = '';
+							el.style.transform = '';
+						}
+						for (const card of cards) {
+							card.style.opacity = '';
+							card.style.transform = '';
+							card.style.willChange = '';
+						}
 					})();
 					observer.disconnect();
 				}
@@ -68,45 +89,29 @@
 	class="relative overflow-hidden py-24 sm:py-32"
 	aria-label="Trabalhos selecionados"
 >
-	<!-- Decorative Grid Background -->
-	<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
-		<svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-			<defs>
-				<pattern id="gallery-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1" />
-				</pattern>
-			</defs>
-			<rect width="100%" height="100%" fill="url(#gallery-grid)" />
-		</svg>
-	</div>
-
 	<div class="container-page relative z-10">
 		<!-- Header -->
 		<div class="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
 			<div class="max-w-2xl space-y-4">
 				<h2
-					class="font-mono text-sm tracking-widest text-blue-600 uppercase"
-					style="opacity: 0; transform: translateY(20px);"
+					class="font-mono text-sm tracking-widest text-accent uppercase"
+					class:gallery-hidden={!revealed}
 					data-gallery-header
 				>
 					// Trabalhos_Selecionados
 				</h2>
 				<p
 					class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
-					style="opacity: 0; transform: translateY(20px);"
+					class:gallery-hidden={!revealed}
 					data-gallery-header
 				>
 					Arquitetura de interfaces <br /> & sistemas complexos.
 				</p>
 			</div>
-			<div
-				class="hidden md:block"
-				style="opacity: 0; transform: translateY(20px);"
-				data-gallery-header
-			>
+			<div class="hidden md:block" class:gallery-hidden={!revealed} data-gallery-header>
 				<a
 					href={resolve('/work', {})}
-					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
+					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-accent"
 				>
 					[VER_TODOS] <IconArrowUpRight class="size-3" />
 				</a>
@@ -119,12 +124,12 @@
 				<a
 					href={resolve(`/work/${work.slug}`, {})}
 					class="group relative flex flex-col gap-4"
-					style="opacity: 0; transform: translateY(40px);"
+					class:gallery-hidden={!revealed}
 					data-gallery-card
 				>
 					<!-- Card Visual -->
 					<div
-						class="relative aspect-4/3 overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
+						class="media-container relative aspect-4/3"
 						style:view-transition-name="work-image-{work.slug}"
 					>
 						<!-- Image -->
@@ -156,9 +161,7 @@
 
 					<!-- Card Info -->
 					<div class="space-y-3">
-						<div
-							class="flex items-center justify-between border-b border-black/5 pb-3 dark:border-white/10"
-						>
+						<div class="divider-subtle flex items-center justify-between border-b pb-3">
 							<div class="flex items-center gap-3">
 								<span class="font-mono text-xs text-muted">/{work.slug}</span>
 								<h3
@@ -177,15 +180,7 @@
 
 						<div class="flex flex-wrap gap-2 pt-1">
 							{#each work.tags as tag (tag)}
-								{@const Icon = (TECH_ICONS as any)[tag]}
-								<span
-									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2 py-1 font-mono text-[10px] tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
-								>
-									{#if Icon}
-										<Icon class="mr-1.5 size-3" />
-									{/if}
-									{tag}
-								</span>
+								<TechBadge {tag} />
 							{/each}
 						</div>
 					</div>
@@ -194,3 +189,14 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.gallery-hidden {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+
+	a.gallery-hidden {
+		transform: translateY(24px);
+	}
+</style>

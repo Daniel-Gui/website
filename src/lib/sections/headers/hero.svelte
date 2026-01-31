@@ -2,9 +2,9 @@
 	import { tick } from 'svelte';
 	import { introDone } from '$lib/stores/intro';
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
-	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
+	import IconDocFolder from '$lib/components/icons/icon-doc-folder.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
-	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import IconFile from '$lib/components/icons/icon-file.svelte';
 	import { cn } from '$lib/utils';
 	import { lenis } from '$lib/utils/lenis.svelte';
 
@@ -155,7 +155,7 @@
 		}
 
 		void (async () => {
-			const { animate } = await import('motion');
+			const { animate, stagger } = await import('motion');
 			await tick();
 
 			const showcaseCards = showcaseEl
@@ -168,7 +168,7 @@
 
 			for (const el of items) {
 				el.style.opacity = '0';
-				el.style.transform = 'translateY(14px)';
+				el.style.transform = 'translateY(12px)';
 				el.style.filter = '';
 				el.style.willChange = 'opacity, transform';
 			}
@@ -178,13 +178,11 @@
 					'translate(-50%, -50%)';
 				el.style.transition = 'none';
 				el.style.opacity = '0';
-				el.style.transform = `${base} translateY(14px) scale(0.92)`;
-				el.style.filter = 'blur(14px)';
-				el.style.willChange = 'opacity, transform, filter';
+				el.style.transform = `${base} translateY(12px) scale(0.94)`;
+				el.style.willChange = 'opacity, transform';
 			}
-			if (headingEl) headingEl.style.filter = 'blur(12px)';
-			if (leadTextEl) leadTextEl.style.filter = 'blur(12px)';
-			if (badgeEl) badgeEl.style.filter = 'blur(12px)';
+			if (headingEl) headingEl.style.filter = 'blur(5px)';
+			if (leadTextEl) leadTextEl.style.filter = 'blur(5px)';
 
 			await new Promise((r) => setTimeout(r, revealStartDelayMs));
 
@@ -195,8 +193,8 @@
 					animations.push(
 						animate(
 							showcaseEl,
-							{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-							{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }
+							{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+							{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }
 						).finished
 					);
 				}
@@ -212,16 +210,15 @@
 							{
 								opacity: [0, 1],
 								transform: [
-									`${base} translateY(14px) scale(0.92)`,
-									`${base} translateY(-2px) scale(1.03)`,
+									`${base} translateY(12px) scale(0.94)`,
+									`${base} translateY(-2px) scale(1.02)`,
 									`${base} translateY(0px) scale(1)`
-								],
-								filter: ['blur(14px)', 'blur(0px)']
+								]
 							} as unknown as Record<string, unknown>,
 							{
-								duration: 1.2,
+								duration: 0.85,
 								ease: [0.16, 1, 0.3, 1],
-								delay: index * 0.15
+								delay: stagger(0.1)(index, showcaseCards.length)
 							}
 						).finished
 					);
@@ -230,14 +227,14 @@
 				animations.push(
 					animate(
 						showcaseEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }
 					).finished
 				);
 			}
 
-			const contentDelay = 0.2;
-			const staggerDelay = 0.15;
+			const contentDelay = 0.15;
+			const staggerDelay = 0.1;
 
 			if (headingEl) {
 				animations.push(
@@ -245,10 +242,10 @@
 						headingEl,
 						{
 							opacity: [0, 1],
-							transform: ['translateY(14px)', 'translateY(0px)'],
-							filter: ['blur(12px)', 'blur(0px)']
+							transform: ['translateY(12px)', 'translateY(0px)'],
+							filter: ['blur(5px)', 'blur(0px)']
 						} as unknown as Record<string, unknown>,
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
 					).finished
 				);
 			}
@@ -259,10 +256,10 @@
 						leadTextEl,
 						{
 							opacity: [0, 1],
-							transform: ['translateY(14px)', 'translateY(0px)'],
-							filter: ['blur(12px)', 'blur(0px)']
+							transform: ['translateY(12px)', 'translateY(0px)'],
+							filter: ['blur(5px)', 'blur(0px)']
 						} as unknown as Record<string, unknown>,
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
 					).finished
 				);
 			}
@@ -271,12 +268,8 @@
 				animations.push(
 					animate(
 						badgeEl,
-						{
-							opacity: [0, 1],
-							transform: ['translateY(14px)', 'translateY(0px)'],
-							filter: ['blur(12px)', 'blur(0px)']
-						} as unknown as Record<string, unknown>,
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
 					).finished
 				);
 			}
@@ -285,8 +278,8 @@
 				animations.push(
 					animate(
 						ctaWrapEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
 					).finished
 				);
 			}
@@ -295,8 +288,8 @@
 				animations.push(
 					animate(
 						availabilityEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
 					).finished
 				);
 			}
@@ -325,18 +318,6 @@
 </script>
 
 <section class={cn('hero-surface', !heroRevealed && 'hero-reveal')}>
-	<!-- Decorative Grid Background -->
-	<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
-		<svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-			<defs>
-				<pattern id="hero-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-					<path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1" />
-				</pattern>
-			</defs>
-			<rect width="100%" height="100%" fill="url(#hero-grid)" />
-		</svg>
-	</div>
-
 	<div class="container-page relative z-10 pt-20 pb-20 sm:pt-24 sm:pb-24">
 		<div class="relative">
 			<div class="mx-auto max-w-[880px] space-y-10 text-center">
@@ -405,15 +386,11 @@
 						<span class="font-serif italic">Ei,Beleza?</span>.
 					</p>
 
-					<div
-						class="flex items-center gap-3 rounded-full border border-border/10 bg-surface/40 px-3 py-1.5 shadow-sm backdrop-blur-md"
-						bind:this={badgeEl}
-						data-hero-item
-					>
+					<div class="chip flex items-center gap-3" bind:this={badgeEl} data-hero-item>
 						<span class="font-mono text-xs tracking-wider text-muted uppercase"
 							>Belém, Pará, Brasil</span
 						>
-						<div class="h-3 w-px bg-border/20"></div>
+						<div class="bg-subtle h-3 w-px"></div>
 						<div class="hero-flags">
 							<span class="hero-flag">
 								<img
@@ -489,7 +466,7 @@
 							onclick={scrollToBlog}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconArrowUpRight class="size-[1.05rem]" />
+								<IconFile class="size-[1.05rem]" />
 							</span>
 							Blog
 						</a>
@@ -503,7 +480,7 @@
 							onclick={scrollToWorks}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconSparkle class="size-[1.05rem]" />
+								<IconDocFolder class="size-[1.05rem]" />
 							</span>
 							Trabalhos
 						</a>
@@ -511,9 +488,7 @@
 				</div>
 
 				<div class="mt-7 flex justify-center" bind:this={availabilityEl} data-hero-item>
-					<div
-						class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/40 px-4 py-2 shadow-sm backdrop-blur-md"
-					>
+					<div class="chip flex items-center gap-2">
 						<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
 						></span>
 						<span class="font-mono text-xs font-medium tracking-wider text-muted uppercase"
@@ -529,7 +504,7 @@
 <style>
 	.hero-reveal [data-hero-item] {
 		opacity: 0;
-		transform: translateY(14px);
+		transform: translateY(12px);
 	}
 
 	.hero-surface {
@@ -720,19 +695,19 @@
 		width: 10px;
 		height: 10px;
 		border-radius: 9999px;
-		background: #22c55e;
-		box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.16);
+		background: rgb(var(--success));
+		box-shadow: 0 0 0 6px rgb(var(--success) / 0.16);
 		animation: hero-dot-pulse 1.4s ease-in-out infinite;
 	}
 
 	.hero-availability-dot[data-status='busy'] {
-		background: #f59e0b;
-		box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.16);
+		background: rgb(var(--warning));
+		box-shadow: 0 0 0 6px rgb(var(--warning) / 0.16);
 	}
 
 	.hero-availability-dot[data-status='unavailable'] {
-		background: #ef4444;
-		box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.16);
+		background: rgb(var(--error));
+		box-shadow: 0 0 0 6px rgb(var(--error) / 0.16);
 	}
 
 	@keyframes hero-dot-pulse {

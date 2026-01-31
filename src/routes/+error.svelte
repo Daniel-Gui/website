@@ -24,13 +24,7 @@
 
 <main class="grid min-h-[80vh] place-items-center px-6 py-24 sm:py-32 lg:px-8">
 	<div class="text-center" bind:this={containerEl}>
-		<p
-			class="font-mono text-base font-semibold text-blue-600 dark:text-blue-400"
-			data-animate
-			style="opacity: 0"
-		>
-			404
-		</p>
+		<p class="text-accent font-mono text-base font-semibold" data-animate style="opacity: 0">404</p>
 		<h1
 			class="text-foreground mt-4 text-3xl font-bold tracking-tight sm:text-5xl"
 			data-animate

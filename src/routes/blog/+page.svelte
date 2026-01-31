@@ -3,6 +3,7 @@
 	import { resolve } from '$app/paths';
 	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import { tick } from 'svelte';
 
 	let { data }: { data: PageData } = $props();
@@ -69,7 +70,7 @@
 		>
 			<a
 				href={resolve('/', {})}
-				class="group -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+				class="group focus-visible:ring-focus -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
 				aria-label="Voltar para home"
 			>
 				<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
@@ -93,12 +94,12 @@
 		<div class="grid gap-6 md:grid-cols-2">
 			{#each posts as post (post.slug)}
 				<article
-					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-colors duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
+					class="card-interactive group relative flex flex-col gap-6 p-4 sm:p-5"
 					data-blog-card
 				>
 					<!-- Cover Image -->
 					<div
-						class="relative aspect-2/1 w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5"
+						class="bg-subtle relative aspect-2/1 w-full overflow-hidden rounded-lg"
 						style:view-transition-name={`blog-cover-${post.slug}`}
 					>
 						<picture class="absolute inset-0 h-full w-full">
@@ -132,7 +133,7 @@
 							</div>
 
 							<h3
-								class="text-lg font-semibold tracking-tight text-balance transition-colors group-hover:text-blue-600 sm:text-xl"
+								class="text-lg font-semibold tracking-tight text-balance transition-colors group-hover:text-accent sm:text-xl"
 								style:view-transition-name={`blog-title-${post.slug}`}
 							>
 								<a
@@ -146,6 +147,14 @@
 							<p class="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
 								{post.excerpt}
 							</p>
+
+							{#if post.tags.length > 0}
+								<div class="flex flex-wrap gap-2 pt-1">
+									{#each post.tags as tag (tag)}
+										<TechBadge {tag} />
+									{/each}
+								</div>
+							{/if}
 						</div>
 					</div>
 				</article>

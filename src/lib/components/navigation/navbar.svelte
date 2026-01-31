@@ -4,7 +4,7 @@
 	import { tick } from 'svelte';
 	import { introDone } from '$lib/stores/intro';
 	import IconClose from '$lib/components/icons/icon-close.svelte';
-	import IconFileArrowDown from '$lib/components/icons/icon-file-arrow-down.svelte';
+	import IconFile from '$lib/components/icons/icon-file.svelte';
 	import IconLinkedin from '$lib/components/icons/icon-linkedin.svelte';
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
 	import IconMenu from '$lib/components/icons/icon-menu.svelte';
@@ -371,7 +371,7 @@
 							<span
 								class="border-subtle shadow-subtle group-hover:border-default group-hover:shadow-elevated grid size-12 place-items-center rounded-full border bg-surface/80 transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
-								<IconFileArrowDown class="size-6" />
+								<IconFile class="size-6" />
 							</span>
 							<span class="text-sm font-medium">Baixar currículo</span>
 							<span class="tag">PDF</span>

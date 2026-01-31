@@ -16,7 +16,9 @@ export async function getPosts() {
 		}
 	}
 
-	return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+	return posts
+		.filter((post) => post.published === true)
+		.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export async function getWorks() {
@@ -35,5 +37,7 @@ export async function getWorks() {
 		}
 	}
 
-	return works.sort((a, b) => b.slug.localeCompare(a.slug));
+	return works
+		.filter((work) => work.published === true)
+		.sort((a, b) => b.slug.localeCompare(a.slug));
 }

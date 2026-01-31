@@ -1,5 +1,6 @@
 ---
 title: Demo Components
+published: true
 description: Este projeto demonstra todos os componentes de conteúdo disponíveis para works e blog posts, incluindo código, imagens, listas e citações.
 tags:
   - SvelteKit

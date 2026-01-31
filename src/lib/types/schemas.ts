@@ -2,6 +2,7 @@ import type { BlogAuthorId } from '../data/blog-authors';
 
 export type PostItem = {
 	title: string;
+	published: boolean;
 	excerpt: string;
 	date: string; // ISO 8601 format: YYYY-MM-DD
 	readTime: string;
@@ -15,6 +16,7 @@ export type PostItem = {
 
 export type WorkItem = {
 	slug: string;
+	published: boolean;
 	title: string;
 	description: string;
 	year: string;

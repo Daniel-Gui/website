@@ -42,7 +42,7 @@
 				<header class="space-y-6">
 					<div class="space-y-2">
 						<div class="flex items-center justify-between">
-							<span class="font-mono text-sm tracking-widest text-blue-600 uppercase">
+							<span class="font-mono text-sm tracking-widest text-accent uppercase">
 								// {work.year}
 							</span>
 							{#if work.link}
@@ -50,7 +50,7 @@
 									href={resolve(work.link, {})}
 									target="_blank"
 									rel="noopener noreferrer"
-									class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
+									class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-accent"
 								>
 									Ver Projeto <IconArrowUpRight class="size-3" />
 								</a>
@@ -66,9 +66,7 @@
 
 					<div class="flex flex-wrap gap-2">
 						{#each work.tags as tag (tag)}
-							<span
-								class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2.5 py-1 font-mono text-xs tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
-							>
+							<span class="tag px-2.5 py-1 text-xs">
 								{tag}
 							</span>
 						{/each}
@@ -83,7 +81,7 @@
 				>
 					{#each work.galleryImages as imageBasename, i (`${imageBasename}-${i}`)}
 						<div
-							class="w-[85vw] shrink-0 snap-center overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm lg:w-full dark:border-white/10 dark:bg-white/5"
+							class="media-container w-[85vw] shrink-0 snap-center lg:w-full"
 							style:view-transition-name={i === 0 ? `work-image-${work.slug}` : undefined}
 						>
 							<picture class="block w-full">
@@ -108,7 +106,7 @@
 					<header class="hidden space-y-6 lg:block">
 						<div class="space-y-2">
 							<div class="flex items-center justify-between">
-								<span class="font-mono text-sm tracking-widest text-blue-600 uppercase">
+								<span class="font-mono text-sm tracking-widest text-accent uppercase">
 									// {work.year}
 								</span>
 								{#if work.link}
@@ -116,7 +114,7 @@
 										href={resolve(work.link, {})}
 										target="_blank"
 										rel="noopener noreferrer"
-										class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-blue-600"
+										class="flex items-center gap-2 font-mono text-xs font-medium uppercase transition-colors hover:text-accent"
 									>
 										Ver Projeto <IconArrowUpRight class="size-3" />
 									</a>
@@ -132,9 +130,7 @@
 
 						<div class="flex flex-wrap gap-2">
 							{#each work.tags as tag (tag)}
-								<span
-									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2.5 py-1 font-mono text-xs tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
-								>
+								<span class="tag px-2.5 py-1 text-xs">
 									{tag}
 								</span>
 							{/each}
@@ -147,12 +143,10 @@
 					</div>
 
 					<!-- Navegação Voltar -->
-					<div
-						class="flex justify-between gap-2 border-t border-black/5 pt-8 sm:items-center dark:border-white/10"
-					>
+					<div class="divider flex justify-between gap-2 border-t pt-8 sm:items-center">
 						<a
 							href={resolve('/#trabalhos', {})}
-							class="group -ml-2 flex w-fit items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+							class="group focus-visible:ring-focus -ml-2 flex w-fit items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
 							aria-label="Voltar para trabalhos"
 						>
 							<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
@@ -161,7 +155,7 @@
 
 						<button
 							onclick={scrollToTop}
-							class="group flex w-fit cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+							class="group focus-visible:ring-focus flex w-fit cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm font-medium text-muted transition-colors hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
 							aria-label="Voltar ao topo"
 						>
 							Voltar ao topo

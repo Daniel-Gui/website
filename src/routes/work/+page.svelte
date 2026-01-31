@@ -20,7 +20,7 @@
 		<nav class="mb-12 flex items-center gap-4 text-sm text-muted">
 			<a
 				href={resolve('/', {})}
-				class="group -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+				class="group focus-visible:ring-focus -ml-2 flex items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
 				aria-label="Voltar para home"
 			>
 				<IconArrowLeft class="size-4 transition-transform group-hover:-translate-x-1" />
@@ -46,7 +46,7 @@
 				<a href={resolve(`/work/${work.slug}`, {})} class="group relative flex flex-col gap-4">
 					<!-- Card Visual -->
 					<div
-						class="relative aspect-4/3 overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
+						class="media-container relative aspect-4/3"
 						style:view-transition-name="work-image-{work.slug}"
 					>
 						<!-- Image -->
@@ -78,9 +78,7 @@
 
 					<!-- Card Info -->
 					<div class="space-y-3">
-						<div
-							class="flex items-center justify-between border-b border-black/5 pb-3 dark:border-white/10"
-						>
+						<div class="divider-subtle flex items-center justify-between border-b pb-3">
 							<div class="flex items-center gap-3">
 								<span class="font-mono text-xs text-muted">/{work.slug}</span>
 								<h3
@@ -100,9 +98,7 @@
 						<div class="flex flex-wrap gap-2 pt-1">
 							{#each work.tags as tag (tag)}
 								{@const Icon = (TECH_ICONS as any)[tag]}
-								<span
-									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2 py-1 font-mono text-[10px] tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
-								>
+								<span class="tag">
 									{#if Icon}
 										<Icon class="mr-1.5 size-3" />
 									{/if}

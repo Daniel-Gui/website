@@ -73,7 +73,7 @@
 <section
 	bind:this={sectionEl}
 	id="blog"
-	class="relative overflow-hidden border-t border-black/5 py-24 sm:py-32 dark:border-white/5"
+	class="divider-subtle relative overflow-hidden border-t py-24 sm:py-32"
 	aria-label="Artigos recentes"
 >
 	<!-- Decorative Grid Background (Opacidade reduzida para diferenciar da seção works) -->
@@ -92,7 +92,7 @@
 		<!-- Header -->
 		<div class="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
 			<div class="max-w-2xl space-y-4">
-				<h2 class="font-mono text-sm tracking-widest text-blue-600 uppercase" data-posts-header>
+				<h2 class="font-mono text-sm tracking-widest text-accent uppercase" data-posts-header>
 					// Artigos_Recentes
 				</h2>
 				<p class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl" data-posts-header>
@@ -102,7 +102,7 @@
 			<div class="hidden md:block" data-posts-header>
 				<a
 					href={resolve('/blog', {})}
-					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
+					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-accent"
 				>
 					[VER_TODOS] <IconArrowUpRight class="size-3" />
 				</a>
@@ -113,12 +113,12 @@
 		<div class="grid gap-6 md:grid-cols-2">
 			{#each posts.slice(0, 6) as post (post.slug)}
 				<article
-					class="group relative flex flex-col gap-6 overflow-hidden rounded-xl border border-black/5 bg-black/[0.02] p-4 transition-colors duration-300 hover:border-black/10 hover:bg-black/[0.04] hover:shadow-sm sm:p-5 dark:border-white/5 dark:bg-white/[0.02] dark:hover:border-white/10 dark:hover:bg-white/[0.04]"
+					class="card-interactive group relative flex flex-col gap-6 p-4 sm:p-5"
 					data-post-card
 				>
 					<!-- Cover Image (Visible) -->
 					<div
-						class="relative aspect-2/1 w-full overflow-hidden rounded-lg bg-black/5 dark:bg-white/5"
+						class="bg-subtle relative aspect-2/1 w-full overflow-hidden rounded-lg"
 						style:view-transition-name={`blog-cover-${post.slug}`}
 					>
 						<picture class="absolute inset-0 h-full w-full">
@@ -152,7 +152,7 @@
 							</div>
 
 							<h3
-								class="text-lg font-semibold tracking-tight text-balance transition-colors group-hover:text-blue-600 sm:text-xl"
+								class="text-lg font-semibold tracking-tight text-balance transition-colors group-hover:text-accent sm:text-xl"
 								style:view-transition-name={`blog-title-${post.slug}`}
 							>
 								<a
@@ -176,7 +176,7 @@
 		<div class="mt-8 md:hidden" data-posts-header>
 			<a
 				href={resolve('/blog', {})}
-				class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
+				class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-accent"
 			>
 				[VER_TODOS] <IconArrowUpRight class="size-3" />
 			</a>

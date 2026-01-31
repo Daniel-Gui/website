@@ -22,10 +22,10 @@
 </script>
 
 <div
-	class="not-prose my-8 overflow-hidden rounded-xl border border-black/10 bg-[#f8f8f8] shadow-lg dark:border-white/10 dark:bg-[#171717] dark:shadow-2xl"
+	class="not-prose border-default my-8 overflow-hidden rounded-xl border bg-[#f8f8f8] shadow-lg dark:bg-[#171717] dark:shadow-2xl"
 >
 	<div
-		class="flex items-center justify-between border-b border-black/5 bg-black/5 px-4 py-3 text-xs text-neutral-500 dark:border-white/5 dark:bg-white/5 dark:text-neutral-400"
+		class="border-subtle bg-subtle flex items-center justify-between border-b px-4 py-3 text-xs text-neutral-500 dark:text-neutral-400"
 	>
 		<div class="flex items-center gap-3">
 			{#if data.filename}

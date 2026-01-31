@@ -17,7 +17,7 @@
 </script>
 
 <figure class="my-10">
-	<div class="overflow-hidden rounded-lg bg-black/5 dark:bg-white/5">
+	<div class="bg-subtle overflow-hidden rounded-lg">
 		{#if isExternal || hasExtension}
 			<img src={data.src} alt={data.alt} loading="lazy" class="w-full object-cover" />
 		{:else}

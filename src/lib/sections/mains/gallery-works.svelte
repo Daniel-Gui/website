@@ -85,7 +85,7 @@
 		<div class="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
 			<div class="max-w-2xl space-y-4">
 				<h2
-					class="font-mono text-sm tracking-widest text-blue-600 uppercase"
+					class="font-mono text-sm tracking-widest text-accent uppercase"
 					style="opacity: 0; transform: translateY(20px);"
 					data-gallery-header
 				>
@@ -106,7 +106,7 @@
 			>
 				<a
 					href={resolve('/work', {})}
-					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-blue-600"
+					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-accent"
 				>
 					[VER_TODOS] <IconArrowUpRight class="size-3" />
 				</a>
@@ -124,7 +124,7 @@
 				>
 					<!-- Card Visual -->
 					<div
-						class="relative aspect-4/3 overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
+						class="media-container relative aspect-4/3"
 						style:view-transition-name="work-image-{work.slug}"
 					>
 						<!-- Image -->
@@ -156,9 +156,7 @@
 
 					<!-- Card Info -->
 					<div class="space-y-3">
-						<div
-							class="flex items-center justify-between border-b border-black/5 pb-3 dark:border-white/10"
-						>
+						<div class="divider-subtle flex items-center justify-between border-b pb-3">
 							<div class="flex items-center gap-3">
 								<span class="font-mono text-xs text-muted">/{work.slug}</span>
 								<h3
@@ -178,9 +176,7 @@
 						<div class="flex flex-wrap gap-2 pt-1">
 							{#each work.tags as tag (tag)}
 								{@const Icon = (TECH_ICONS as any)[tag]}
-								<span
-									class="inline-flex items-center rounded-md border border-black/5 bg-black/5 px-2 py-1 font-mono text-[10px] tracking-wide text-muted uppercase dark:border-white/10 dark:bg-white/5"
-								>
+								<span class="tag">
 									{#if Icon}
 										<Icon class="mr-1.5 size-3" />
 									{/if}

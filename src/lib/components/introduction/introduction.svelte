@@ -71,16 +71,14 @@
 
 			if (!prefersReducedMotion) {
 				imageWrap.style.opacity = '0';
-				imageWrap.style.transform = 'scale(0.8)';
-				imageWrap.style.filter = 'blur(10px)';
-				imageWrap.style.willChange = 'transform, opacity, filter';
+				imageWrap.style.transform = 'scale(0.92)';
+				imageWrap.style.willChange = 'transform, opacity';
 
 				const revealControls = animate(
 					imageWrap,
 					{
 						opacity: [0, 1],
-						transform: ['scale(0.8)', 'scale(1)'],
-						filter: ['blur(10px)', 'blur(0px)']
+						transform: ['scale(0.92)', 'scale(1.02)', 'scale(1)']
 					},
 					{ duration: imageRevealMs / 1000, ease: [0.16, 1, 0.3, 1] }
 				);
@@ -125,14 +123,14 @@
 				if (!textEl) continue;
 
 				textEl.style.opacity = '0';
-				textEl.style.transform = 'translateY(10px)';
-				textEl.style.filter = 'blur(10px)';
+				textEl.style.transform = 'translateY(8px)';
+				textEl.style.filter = 'blur(4px)';
 
 				controls.push(
 					animate(
 						textEl,
 						{ opacity: 1, transform: 'translateY(0px)', filter: 'blur(0px)' },
-						{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }
+						{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }
 					)
 				);
 				await sleep(switchDelayMs);
@@ -141,11 +139,11 @@
 				controls.push(
 					animate(
 						textEl,
-						{ opacity: 0, transform: 'translateY(-10px)', filter: 'blur(10px)' },
-						{ duration: 0.45, ease: [0.7, 0, 0.84, 0] }
+						{ opacity: 0, transform: 'translateY(-8px)', filter: 'blur(4px)' },
+						{ duration: 0.35, ease: [0.7, 0, 0.84, 0] }
 					)
 				);
-				await sleep(350);
+				await sleep(280);
 				if (cancelled) return;
 			}
 

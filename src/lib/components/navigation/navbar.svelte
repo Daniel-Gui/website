@@ -59,17 +59,17 @@
 		if (!panelEl) return;
 		if (typeof window === 'undefined') return;
 
-		const { animate } = await import('motion');
+		const { animate, stagger } = await import('motion');
 
 		panelEl.style.opacity = '0';
-		panelEl.style.transform = 'translateY(-10px) scale(0.985)';
+		panelEl.style.transform = 'translateY(-8px) scale(0.98)';
 		panelEl.style.transition = 'none';
 		panelEl.style.willChange = 'opacity, transform';
 
 		const cards = getCards();
 		for (const el of cards) {
 			el.style.opacity = '0';
-			el.style.transform = 'translateY(12px) scale(0.985)';
+			el.style.transform = 'translateY(10px) scale(0.98)';
 			el.style.transition = 'none';
 			el.style.willChange = 'opacity, transform';
 		}
@@ -81,9 +81,9 @@
 			panelEl,
 			{
 				opacity: [0, 1],
-				transform: ['translateY(-10px) scale(0.985)', 'translateY(0px) scale(1)']
+				transform: ['translateY(-8px) scale(0.98)', 'translateY(0px) scale(1)']
 			},
-			{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }
+			{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }
 		);
 
 		const cardAnims = cards.map((el, index) => {
@@ -91,9 +91,17 @@
 				el,
 				{
 					opacity: [0, 1],
-					transform: ['translateY(12px) scale(0.985)', 'translateY(0px) scale(1)']
+					transform: [
+						'translateY(10px) scale(0.98)',
+						'translateY(-2px) scale(1.01)',
+						'translateY(0px) scale(1)'
+					]
 				},
-				{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.18 + index * 0.12 }
+				{
+					duration: 0.42,
+					ease: [0.16, 1, 0.3, 1],
+					delay: stagger(0.08, { startDelay: 0.12 })(index, cards.length)
+				}
 			);
 		});
 
@@ -136,9 +144,9 @@
 				el,
 				{
 					opacity: [1, 0],
-					transform: ['translateY(0px) scale(1)', 'translateY(10px) scale(0.985)']
+					transform: ['translateY(0px) scale(1)', 'translateY(8px) scale(0.98)']
 				},
-				{ duration: 0.22, ease: [0.7, 0, 0.84, 0], delay: index * 0.05 }
+				{ duration: 0.18, ease: [0.7, 0, 0.84, 0], delay: index * 0.04 }
 			)
 		);
 
@@ -146,9 +154,9 @@
 			panelEl,
 			{
 				opacity: [1, 0],
-				transform: ['translateY(0px) scale(1)', 'translateY(-10px) scale(0.985)']
+				transform: ['translateY(0px) scale(1)', 'translateY(-6px) scale(0.98)']
 			},
-			{ duration: 0.24, ease: [0.7, 0, 0.84, 0] }
+			{ duration: 0.2, ease: [0.7, 0, 0.84, 0] }
 		);
 
 		await Promise.all([panelAnim.finished, ...cardAnims.map((a) => a.finished)]);

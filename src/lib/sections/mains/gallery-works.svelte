@@ -30,25 +30,46 @@
 						revealed = true;
 						await tick();
 
-						const headerItems = sectionEl!.querySelectorAll('[data-gallery-header]');
-						const cards = sectionEl!.querySelectorAll('[data-gallery-card]');
+						const headerItems = sectionEl!.querySelectorAll<HTMLElement>('[data-gallery-header]');
+						const cards = sectionEl!.querySelectorAll<HTMLElement>('[data-gallery-card]');
 
-						// Animate Header
-						animate(
+						// Animate Header - timing rápido para não atrasar cards
+						const headerAnim = animate(
 							headerItems,
-							{ opacity: [0, 1], transform: ['translateY(20px)', 'translateY(0px)'] },
-							{ duration: 0.6, delay: stagger(0.1), ease: [0.16, 1, 0.3, 1] }
+							{ opacity: [0, 1], transform: ['translateY(16px)', 'translateY(0px)'] },
+							{ duration: 0.5, delay: stagger(0.08), ease: [0.16, 1, 0.3, 1] }
 						);
 
-						// Animate Cards
-						animate(
+						// Set will-change before animation
+						for (const card of cards) {
+							card.style.willChange = 'opacity, transform';
+						}
+
+						// Animate Cards - overshoot para follow-through
+						const cardAnim = animate(
 							cards,
 							{
 								opacity: [0, 1],
-								transform: ['translateY(40px) scale(0.96)', 'translateY(0px) scale(1)']
+								transform: [
+									'translateY(24px) scale(0.97)',
+									'translateY(-2px) scale(1.01)',
+									'translateY(0px) scale(1)'
+								]
 							},
-							{ duration: 0.8, delay: (i) => 0.2 + i * 0.15, ease: [0.16, 1, 0.3, 1] }
+							{ duration: 0.65, delay: stagger(0.1, { startDelay: 0.15 }), ease: [0.16, 1, 0.3, 1] }
 						);
+
+						// Clean up all inline styles after animation
+						await Promise.all([headerAnim.finished, cardAnim.finished]);
+						for (const el of headerItems) {
+							el.style.opacity = '';
+							el.style.transform = '';
+						}
+						for (const card of cards) {
+							card.style.opacity = '';
+							card.style.transform = '';
+							card.style.willChange = '';
+						}
 					})();
 					observer.disconnect();
 				}
@@ -86,24 +107,20 @@
 			<div class="max-w-2xl space-y-4">
 				<h2
 					class="font-mono text-sm tracking-widest text-accent uppercase"
-					style="opacity: 0; transform: translateY(20px);"
+					class:gallery-hidden={!revealed}
 					data-gallery-header
 				>
 					// Trabalhos_Selecionados
 				</h2>
 				<p
 					class="text-3xl font-semibold tracking-tight text-balance sm:text-4xl"
-					style="opacity: 0; transform: translateY(20px);"
+					class:gallery-hidden={!revealed}
 					data-gallery-header
 				>
 					Arquitetura de interfaces <br /> & sistemas complexos.
 				</p>
 			</div>
-			<div
-				class="hidden md:block"
-				style="opacity: 0; transform: translateY(20px);"
-				data-gallery-header
-			>
+			<div class="hidden md:block" class:gallery-hidden={!revealed} data-gallery-header>
 				<a
 					href={resolve('/work', {})}
 					class="group inline-flex items-center gap-2 font-mono text-xs transition-colors hover:text-accent"
@@ -119,7 +136,7 @@
 				<a
 					href={resolve(`/work/${work.slug}`, {})}
 					class="group relative flex flex-col gap-4"
-					style="opacity: 0; transform: translateY(40px);"
+					class:gallery-hidden={!revealed}
 					data-gallery-card
 				>
 					<!-- Card Visual -->
@@ -184,3 +201,14 @@
 		</div>
 	</div>
 </section>
+
+<style>
+	.gallery-hidden {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+
+	a.gallery-hidden {
+		transform: translateY(24px);
+	}
+</style>

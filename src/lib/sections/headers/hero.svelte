@@ -155,7 +155,7 @@
 		}
 
 		void (async () => {
-			const { animate } = await import('motion');
+			const { animate, stagger } = await import('motion');
 			await tick();
 
 			const showcaseCards = showcaseEl
@@ -168,7 +168,7 @@
 
 			for (const el of items) {
 				el.style.opacity = '0';
-				el.style.transform = 'translateY(14px)';
+				el.style.transform = 'translateY(12px)';
 				el.style.filter = '';
 				el.style.willChange = 'opacity, transform';
 			}
@@ -178,13 +178,11 @@
 					'translate(-50%, -50%)';
 				el.style.transition = 'none';
 				el.style.opacity = '0';
-				el.style.transform = `${base} translateY(14px) scale(0.92)`;
-				el.style.filter = 'blur(14px)';
-				el.style.willChange = 'opacity, transform, filter';
+				el.style.transform = `${base} translateY(12px) scale(0.94)`;
+				el.style.willChange = 'opacity, transform';
 			}
-			if (headingEl) headingEl.style.filter = 'blur(12px)';
-			if (leadTextEl) leadTextEl.style.filter = 'blur(12px)';
-			if (badgeEl) badgeEl.style.filter = 'blur(12px)';
+			if (headingEl) headingEl.style.filter = 'blur(5px)';
+			if (leadTextEl) leadTextEl.style.filter = 'blur(5px)';
 
 			await new Promise((r) => setTimeout(r, revealStartDelayMs));
 
@@ -195,8 +193,8 @@
 					animations.push(
 						animate(
 							showcaseEl,
-							{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-							{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }
+							{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+							{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }
 						).finished
 					);
 				}
@@ -212,16 +210,15 @@
 							{
 								opacity: [0, 1],
 								transform: [
-									`${base} translateY(14px) scale(0.92)`,
-									`${base} translateY(-2px) scale(1.03)`,
+									`${base} translateY(12px) scale(0.94)`,
+									`${base} translateY(-2px) scale(1.02)`,
 									`${base} translateY(0px) scale(1)`
-								],
-								filter: ['blur(14px)', 'blur(0px)']
+								]
 							} as unknown as Record<string, unknown>,
 							{
-								duration: 1.2,
+								duration: 0.85,
 								ease: [0.16, 1, 0.3, 1],
-								delay: index * 0.15
+								delay: stagger(0.1)(index, showcaseCards.length)
 							}
 						).finished
 					);
@@ -230,14 +227,14 @@
 				animations.push(
 					animate(
 						showcaseEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }
 					).finished
 				);
 			}
 
-			const contentDelay = 0.2;
-			const staggerDelay = 0.15;
+			const contentDelay = 0.15;
+			const staggerDelay = 0.1;
 
 			if (headingEl) {
 				animations.push(
@@ -245,10 +242,10 @@
 						headingEl,
 						{
 							opacity: [0, 1],
-							transform: ['translateY(14px)', 'translateY(0px)'],
-							filter: ['blur(12px)', 'blur(0px)']
+							transform: ['translateY(12px)', 'translateY(0px)'],
+							filter: ['blur(5px)', 'blur(0px)']
 						} as unknown as Record<string, unknown>,
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay }
 					).finished
 				);
 			}
@@ -259,10 +256,10 @@
 						leadTextEl,
 						{
 							opacity: [0, 1],
-							transform: ['translateY(14px)', 'translateY(0px)'],
-							filter: ['blur(12px)', 'blur(0px)']
+							transform: ['translateY(12px)', 'translateY(0px)'],
+							filter: ['blur(5px)', 'blur(0px)']
 						} as unknown as Record<string, unknown>,
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay }
 					).finished
 				);
 			}
@@ -271,12 +268,8 @@
 				animations.push(
 					animate(
 						badgeEl,
-						{
-							opacity: [0, 1],
-							transform: ['translateY(14px)', 'translateY(0px)'],
-							filter: ['blur(12px)', 'blur(0px)']
-						} as unknown as Record<string, unknown>,
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 2 }
 					).finished
 				);
 			}
@@ -285,8 +278,8 @@
 				animations.push(
 					animate(
 						ctaWrapEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 3 }
 					).finished
 				);
 			}
@@ -295,8 +288,8 @@
 				animations.push(
 					animate(
 						availabilityEl,
-						{ opacity: [0, 1], transform: ['translateY(14px)', 'translateY(0px)'] },
-						{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
+						{ opacity: [0, 1], transform: ['translateY(12px)', 'translateY(0px)'] },
+						{ duration: 0.75, ease: [0.16, 1, 0.3, 1], delay: contentDelay + staggerDelay * 4 }
 					).finished
 				);
 			}
@@ -523,7 +516,7 @@
 <style>
 	.hero-reveal [data-hero-item] {
 		opacity: 0;
-		transform: translateY(14px);
+		transform: translateY(12px);
 	}
 
 	.hero-surface {

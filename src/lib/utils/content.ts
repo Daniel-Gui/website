@@ -26,14 +26,14 @@ export async function getWorks() {
 
 	for (const path in paths) {
 		const file = paths[path];
-		const id = path.split('/').at(-1)?.replace('.md', '');
+		const slug = path.split('/').at(-1)?.replace('.md', '');
 
-		if (file && typeof file === 'object' && 'metadata' in file && id) {
+		if (file && typeof file === 'object' && 'metadata' in file && slug) {
 			const metadata = file.metadata as Record<string, unknown>;
-			const work = { ...metadata, id } as WorkItem;
+			const work = { ...metadata, slug } as WorkItem;
 			works.push(work);
 		}
 	}
 
-	return works.sort((a, b) => b.id.localeCompare(a.id));
+	return works.sort((a, b) => b.slug.localeCompare(a.slug));
 }

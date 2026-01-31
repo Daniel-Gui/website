@@ -42,12 +42,12 @@
 
 		<!-- Grid -->
 		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
-			{#each works as work (work.id)}
-				<a href={resolve(`/work/${work.id}`, {})} class="group relative flex flex-col gap-4">
+			{#each works as work (work.slug)}
+				<a href={resolve(`/work/${work.slug}`, {})} class="group relative flex flex-col gap-4">
 					<!-- Card Visual -->
 					<div
 						class="relative aspect-4/3 overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm transition-all duration-500 ease-out group-hover:border-black/10 group-hover:shadow-md dark:border-white/10 dark:bg-white/5"
-						style:view-transition-name="work-image-{work.id}"
+						style:view-transition-name="work-image-{work.slug}"
 					>
 						<!-- Image -->
 						{#if work.imageBasename}
@@ -82,10 +82,10 @@
 							class="flex items-center justify-between border-b border-black/5 pb-3 dark:border-white/10"
 						>
 							<div class="flex items-center gap-3">
-								<span class="font-mono text-xs text-muted">/{work.id}</span>
+								<span class="font-mono text-xs text-muted">/{work.slug}</span>
 								<h3
 									class="text-lg font-medium tracking-tight"
-									style:view-transition-name="work-title-{work.id}"
+									style:view-transition-name="work-title-{work.slug}"
 								>
 									{work.title}
 								</h3>

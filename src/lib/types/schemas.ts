@@ -14,7 +14,7 @@ export type PostItem = {
 };
 
 export type WorkItem = {
-	id: string;
+	slug: string;
 	title: string;
 	description: string;
 	year: string;

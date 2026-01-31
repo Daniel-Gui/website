@@ -6,13 +6,13 @@ import type { WorkItem } from '../../../lib/types/schemas';
 export const load: PageLoad = async ({ params }) => {
 	try {
 		// Import specific work markdown
-		const workFile = await import(`../../../lib/content/works/${params.id}.md`);
+		const workFile = await import(`../../../lib/content/works/${params.slug}.md`);
 		const { metadata } = workFile;
 
 		return {
 			work: {
 				...metadata,
-				id: params.id
+				slug: params.slug
 			} as WorkItem,
 			Content: workFile.default as Component
 		};

@@ -58,7 +58,7 @@
 						</div>
 						<h1
 							class="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
-							style:view-transition-name="work-title-{work.id}"
+							style:view-transition-name="work-title-{work.slug}"
 						>
 							{work.title}
 						</h1>
@@ -84,7 +84,7 @@
 					{#each work.galleryImages as imageBasename, i (`${imageBasename}-${i}`)}
 						<div
 							class="w-[85vw] shrink-0 snap-center overflow-hidden rounded-xl border border-black/5 bg-black/5 shadow-sm lg:w-full dark:border-white/10 dark:bg-white/5"
-							style:view-transition-name={i === 0 ? `work-image-${work.id}` : undefined}
+							style:view-transition-name={i === 0 ? `work-image-${work.slug}` : undefined}
 						>
 							<picture class="block w-full">
 								<source srcset="/images/works-covers/{imageBasename}.avif" type="image/avif" />
@@ -124,7 +124,7 @@
 							</div>
 							<h1
 								class="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
-								style:view-transition-name="work-title-{work.id}"
+								style:view-transition-name="work-title-{work.slug}"
 							>
 								{work.title}
 							</h1>

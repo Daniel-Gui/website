@@ -405,15 +405,11 @@
 						<span class="font-serif italic">Ei,Beleza?</span>.
 					</p>
 
-					<div
-						class="flex items-center gap-3 rounded-full border border-border/10 bg-surface/40 px-3 py-1.5 shadow-sm backdrop-blur-md"
-						bind:this={badgeEl}
-						data-hero-item
-					>
+					<div class="chip flex items-center gap-3" bind:this={badgeEl} data-hero-item>
 						<span class="font-mono text-xs tracking-wider text-muted uppercase"
 							>Belém, Pará, Brasil</span
 						>
-						<div class="h-3 w-px bg-border/20"></div>
+						<div class="bg-subtle h-3 w-px"></div>
 						<div class="hero-flags">
 							<span class="hero-flag">
 								<img
@@ -511,9 +507,7 @@
 				</div>
 
 				<div class="mt-7 flex justify-center" bind:this={availabilityEl} data-hero-item>
-					<div
-						class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/40 px-4 py-2 shadow-sm backdrop-blur-md"
-					>
+					<div class="chip flex items-center gap-2">
 						<span class="hero-availability-dot" data-status={availabilityStatus} aria-hidden="true"
 						></span>
 						<span class="font-mono text-xs font-medium tracking-wider text-muted uppercase"
@@ -720,19 +714,19 @@
 		width: 10px;
 		height: 10px;
 		border-radius: 9999px;
-		background: #22c55e;
-		box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.16);
+		background: rgb(var(--success));
+		box-shadow: 0 0 0 6px rgb(var(--success) / 0.16);
 		animation: hero-dot-pulse 1.4s ease-in-out infinite;
 	}
 
 	.hero-availability-dot[data-status='busy'] {
-		background: #f59e0b;
-		box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.16);
+		background: rgb(var(--warning));
+		box-shadow: 0 0 0 6px rgb(var(--warning) / 0.16);
 	}
 
 	.hero-availability-dot[data-status='unavailable'] {
-		background: #ef4444;
-		box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.16);
+		background: rgb(var(--error));
+		box-shadow: 0 0 0 6px rgb(var(--error) / 0.16);
 	}
 
 	@keyframes hero-dot-pulse {

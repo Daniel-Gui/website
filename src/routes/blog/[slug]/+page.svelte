@@ -7,6 +7,7 @@
 	import BackLink from '$lib/components/ui/BackLink.svelte';
 	import BackToTop from '$lib/components/ui/BackToTop.svelte';
 	import TechBadge from '$lib/components/ui/TechBadge.svelte';
+	import Modal from '$lib/components/ui/Modal.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
 
 	let { data }: { data: PageData } = $props();
@@ -15,6 +16,13 @@
 
 	let copied = $state(false);
 	let pageUrl = $state('');
+	let aiModalOpen = $state(false);
+	let aiPromptCopied = $state(false);
+
+	let markdownUrl = $derived(browser ? `${window.location.origin}/blog/${post.slug}.md` : '');
+	let aiPrompt = $derived(
+		`Analise esta publicação e em seguida vamos debater sobre o conteúdo: ${markdownUrl}`
+	);
 
 	function formatDate(dateString: string) {
 		if (!browser) return dateString;
@@ -30,6 +38,12 @@
 		navigator.clipboard.writeText(pageUrl);
 		copied = true;
 		setTimeout(() => (copied = false), 2000);
+	}
+
+	function copyAiPrompt() {
+		navigator.clipboard.writeText(aiPrompt);
+		aiPromptCopied = true;
+		setTimeout(() => (aiPromptCopied = false), 2000);
 	}
 
 	$effect(() => {
@@ -139,7 +153,28 @@
 					{/if}
 				</button>
 
-				<div class=" gap-2 text-xs opacity-60">
+				<button
+					onclick={() => (aiModalOpen = true)}
+					class="focus-visible:ring-focus flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 transition-colors hover:bg-surface hover:text-fg focus-visible:ring-2 focus-visible:outline-none"
+					aria-label="Conversar com IA sobre este post"
+				>
+					<svg
+						class="size-4"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+						stroke-width="2"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
+						/>
+					</svg>
+					<span>Conversar com IA</span>
+				</button>
+
+				<div class="gap-2 text-xs opacity-60">
 					Última atualização {formatDate(post.date)}
 				</div>
 			</div>
@@ -155,3 +190,26 @@
 		</div>
 	</div>
 </main>
+
+<Modal bind:open={aiModalOpen} title="Conversar com IA">
+	<div class="space-y-4">
+		<p class="text-sm text-muted">
+			Copie o prompt abaixo e cole no seu assistente de IA favorito (ChatGPT, Claude, etc.) para
+			debater sobre este artigo.
+		</p>
+
+		<div class="bg-subtle rounded-lg border border-border/10 p-3">
+			<p class="font-mono text-sm break-all text-fg">{aiPrompt}</p>
+		</div>
+
+		<button onclick={copyAiPrompt} class="btn w-full justify-center">
+			{#if aiPromptCopied}
+				<IconCheck class="size-4 text-green-500" />
+				<span class="text-green-500">Prompt copiado!</span>
+			{:else}
+				<IconCopy class="size-4" />
+				<span>Copiar prompt</span>
+			{/if}
+		</button>
+	</div>
+</Modal>

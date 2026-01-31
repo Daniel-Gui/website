@@ -96,7 +96,6 @@
 	});
 </script>
 
-```
 <section
 	bind:this={sectionEl}
 	id="blog"

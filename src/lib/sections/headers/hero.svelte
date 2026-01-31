@@ -2,9 +2,9 @@
 	import { tick } from 'svelte';
 	import { introDone } from '$lib/stores/intro';
 	import IconMail from '$lib/components/icons/icon-mail.svelte';
-	import IconSparkle from '$lib/components/icons/icon-sparkle.svelte';
+	import IconDocFolder from '$lib/components/icons/icon-doc-folder.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
-	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import IconFile from '$lib/components/icons/icon-file.svelte';
 	import { cn } from '$lib/utils';
 	import { lenis } from '$lib/utils/lenis.svelte';
 
@@ -485,7 +485,7 @@
 							onclick={scrollToBlog}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconArrowUpRight class="size-[1.05rem]" />
+								<IconFile class="size-[1.05rem]" />
 							</span>
 							Blog
 						</a>
@@ -499,7 +499,7 @@
 							onclick={scrollToWorks}
 						>
 							<span class="hero-icon" aria-hidden="true">
-								<IconSparkle class="size-[1.05rem]" />
+								<IconDocFolder class="size-[1.05rem]" />
 							</span>
 							Trabalhos
 						</a>

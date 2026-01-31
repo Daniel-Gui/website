@@ -315,16 +315,14 @@
 					id="navbar-menu"
 					bind:this={panelEl}
 					class={cn(
-						'navbar-menu-panel glass-strong absolute top-full right-0 left-0 z-[var(--z-sticky)] mt-3 overflow-hidden px-4 py-4 shadow-[var(--shadow-2)]',
+						'navbar-menu-panel border-default shadow-float absolute top-full right-0 left-0 z-[var(--z-sticky)] mt-3 overflow-hidden rounded-2xl border bg-surface/90 px-4 py-4 backdrop-blur-2xl',
 						menuOpening && 'opacity-0'
 					)}
 					role="dialog"
 					aria-label="Menu"
 				>
-					<div
-						class="pointer-events-none absolute inset-0 bg-white/35 backdrop-blur-2xl"
-						aria-hidden="true"
-					></div>
+					<!-- Decorative overlay -->
+					<div class="pointer-events-none absolute inset-0 bg-surface/40" aria-hidden="true"></div>
 
 					<!-- Decorative Grid Background -->
 					<div class="pointer-events-none absolute inset-0 z-0 opacity-[0.03]" aria-hidden="true">
@@ -344,7 +342,7 @@
 							href={RESUME_PTBR}
 							download
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'navbar-card group border-subtle hover:border-default hover:bg-subtle hover:shadow-elevated focus-visible:ring-focus/20 grid place-items-center gap-3 rounded-xl border bg-overlay/3 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 focus-visible:ring-4 focus-visible:outline-none active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={(e) => {
@@ -371,12 +369,12 @@
 							}}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="border-subtle shadow-subtle group-hover:border-default group-hover:shadow-elevated grid size-12 place-items-center rounded-full border bg-surface/80 transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconFileArrowDown class="size-6" />
 							</span>
 							<span class="text-sm font-medium">Baixar currículo</span>
-							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">PDF</span>
+							<span class="tag">PDF</span>
 						</a>
 
 						<a
@@ -385,36 +383,36 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'navbar-card group border-subtle hover:border-default hover:bg-subtle hover:shadow-elevated focus-visible:ring-focus/20 grid place-items-center gap-3 rounded-xl border bg-overlay/3 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 focus-visible:ring-4 focus-visible:outline-none active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="border-subtle shadow-subtle group-hover:border-default group-hover:shadow-elevated grid size-12 place-items-center rounded-full border bg-surface/80 transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconLinkedin class="size-6" />
 							</span>
 							<span class="text-sm font-medium">LinkedIn</span>
-							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Perfil</span>
+							<span class="tag">Perfil</span>
 						</a>
 
 						<a
 							bind:this={cardEmailEl}
 							href={mailtoHref}
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'navbar-card group border-subtle hover:border-default hover:bg-subtle hover:shadow-elevated focus-visible:ring-focus/20 grid place-items-center gap-3 rounded-xl border bg-overlay/3 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 focus-visible:ring-4 focus-visible:outline-none active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="border-subtle shadow-subtle group-hover:border-default group-hover:shadow-elevated grid size-12 place-items-center rounded-full border bg-surface/80 transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconMail class="size-6" />
 							</span>
 							<span class="text-sm font-medium">Email</span>
-							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Contato</span>
+							<span class="tag">Contato</span>
 						</a>
 
 						<a
@@ -423,19 +421,18 @@
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
-								'card group grid place-items-center gap-2 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 hover:border-border/20 hover:bg-surface/85 hover:shadow-[var(--shadow-2)] focus-visible:ring-4 focus-visible:ring-black/10 focus-visible:outline-none active:-translate-y-[1px] active:scale-[0.98]',
+								'navbar-card group border-subtle hover:border-default hover:bg-subtle hover:shadow-elevated focus-visible:ring-focus/20 grid place-items-center gap-3 rounded-xl border bg-overlay/3 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 focus-visible:ring-4 focus-visible:outline-none active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
 							)}
 							onclick={() => void closeMenu()}
 						>
 							<span
-								class="shadow-soft grid size-12 place-items-center rounded-full border border-border/10 bg-surface/70 transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
+								class="border-subtle shadow-subtle group-hover:border-default group-hover:shadow-elevated grid size-12 place-items-center rounded-full border bg-surface/80 transition-all duration-200 ease-out group-hover:-translate-y-0.5 group-hover:scale-105 group-active:scale-95"
 							>
 								<IconWhatsapp class="size-6" />
 							</span>
 							<span class="text-sm font-medium">WhatsApp</span>
-							<span class="font-mono text-[10px] tracking-wider text-muted uppercase">Mensagem</span
-							>
+							<span class="tag">Mensagem</span>
 						</a>
 					</div>
 				</div>

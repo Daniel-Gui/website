@@ -182,7 +182,7 @@
 {#if isVisible}
 	<div
 		bind:this={overlayEl}
-		class="fixed inset-0 z-(--z-max) grid place-items-center bg-black text-white"
+		class="fixed inset-0 z-(--z-max) grid place-items-center bg-neutral-950 text-white"
 		aria-hidden="true"
 	>
 		<div class="relative grid place-items-center">

@@ -2,6 +2,13 @@ import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { getBlogAuthor } from '$lib/data/blog-authors';
 
+// Pré-carrega todos os posts usando import.meta.glob (funciona em produção)
+const posts = import.meta.glob('/src/lib/content/posts/*.md', {
+    query: '?raw',
+    import: 'default',
+    eager: true
+}) as Record<string, string>;
+
 /**
  * Extrai metadata do frontmatter YAML
  */
@@ -20,7 +27,10 @@ function extractFrontmatter(content: string): Record<string, string> {
             const key = line.slice(0, colonIndex).trim();
             let value = line.slice(colonIndex + 1).trim();
             // Remove aspas
-            if ((value.startsWith("'") && value.endsWith("'")) || (value.startsWith('"') && value.endsWith('"'))) {
+            if (
+                (value.startsWith("'") && value.endsWith("'")) ||
+                (value.startsWith('"') && value.endsWith('"'))
+            ) {
                 value = value.slice(1, -1);
             }
             if (value && !value.startsWith('-')) {
@@ -41,7 +51,11 @@ function stripFrontmatter(content: string): string {
 /**
  * Gera cabeçalho de metadata para IA
  */
-function generateAIHeader(metadata: Record<string, string>, slug: string, baseUrl: string): string {
+function generateAIHeader(
+    metadata: Record<string, string>,
+    slug: string,
+    baseUrl: string
+): string {
     const authorId = metadata.authorId as 'daniel' | undefined;
     const author = getBlogAuthor(authorId);
 
@@ -75,26 +89,26 @@ export const GET: RequestHandler = async ({ params, url }) => {
     const slug = params.slug;
     const baseUrl = url.origin;
 
-    try {
-        // Import dinâmico do arquivo markdown como texto raw
-        const post = await import(`../../../lib/content/posts/${slug}.md?raw`);
-        const rawContent = post.default;
+    // Busca o post pelo slug
+    const postKey = `/src/lib/content/posts/${slug}.md`;
+    const rawContent = posts[postKey];
 
-        const metadata = extractFrontmatter(rawContent);
-        const cleanContent = stripFrontmatter(rawContent);
-        const aiHeader = generateAIHeader(metadata, slug, baseUrl);
-
-        const finalContent = aiHeader + cleanContent;
-
-        return new Response(finalContent, {
-            headers: {
-                'Content-Type': 'text/plain; charset=utf-8',
-                'Cache-Control': 'public, max-age=3600',
-                'X-Robots-Tag': 'noindex', // Evita indexação duplicada
-                'X-Content-Source': `${baseUrl}/blog/${slug}`
-            }
-        });
-    } catch {
+    if (!rawContent) {
         error(404, 'Post not found');
     }
+
+    const metadata = extractFrontmatter(rawContent);
+    const cleanContent = stripFrontmatter(rawContent);
+    const aiHeader = generateAIHeader(metadata, slug, baseUrl);
+
+    const finalContent = aiHeader + cleanContent;
+
+    return new Response(finalContent, {
+        headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'Cache-Control': 'public, max-age=3600',
+            'X-Robots-Tag': 'noindex',
+            'X-Content-Source': `${baseUrl}/blog/${slug}`
+        }
+    });
 };

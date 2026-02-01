@@ -8,6 +8,7 @@
 	import BackToTop from '$lib/components/ui/BackToTop.svelte';
 	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import Modal from '$lib/components/ui/Modal.svelte';
+	import SEO from '$lib/components/seo/SEO.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
 
 	let { data }: { data: PageData } = $props();
@@ -66,68 +67,16 @@
 	});
 </script>
 
-<svelte:head>
-	<!-- Primary Meta Tags -->
-	<title>{post.title} — Blog | Daniel Guimarães</title>
-	<meta name="title" content="{post.title} — Blog | Daniel Guimarães" />
-	<meta name="description" content={post.excerpt} />
-	<meta name="author" content={author.name} />
-	<link rel="canonical" href={pageUrl || `https://heydan.dev/blog/${post.slug}`} />
-
-	<!-- Open Graph / Facebook -->
-	<meta property="og:type" content="article" />
-	<meta property="og:url" content={pageUrl || `https://heydan.dev/blog/${post.slug}`} />
-	<meta property="og:title" content={post.title} />
-	<meta property="og:description" content={post.excerpt} />
-	<meta
-		property="og:image"
-		content={`https://heydan.dev/images/blog-covers/${post.coverImageBasename}.webp`}
-	/>
-	<meta property="og:site_name" content="Daniel Guimarães" />
-	<meta property="article:author" content={author.name} />
-	<meta property="article:published_time" content={post.date} />
-	{#each post.tags as tag}
-		<meta property="article:tag" content={tag} />
-	{/each}
-
-	<!-- Twitter -->
-	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:url" content={pageUrl || `https://heydan.dev/blog/${post.slug}`} />
-	<meta name="twitter:title" content={post.title} />
-	<meta name="twitter:description" content={post.excerpt} />
-	<meta
-		name="twitter:image"
-		content={`https://heydan.dev/images/blog-covers/${post.coverImageBasename}.webp`}
-	/>
-
-	<!-- Schema.org JSON-LD for AI/GEO -->
-	{@html `<script type="application/ld+json">${JSON.stringify({
-		'@context': 'https://schema.org',
-		'@type': 'BlogPosting',
-		headline: post.title,
-		description: post.excerpt,
-		image: `https://heydan.dev/images/blog-covers/${post.coverImageBasename}.webp`,
-		author: {
-			'@type': 'Person',
-			name: author.name,
-			url: 'https://heydan.dev'
-		},
-		publisher: {
-			'@type': 'Person',
-			name: 'Daniel Guimarães',
-			url: 'https://heydan.dev'
-		},
-		datePublished: post.date,
-		dateModified: post.date,
-		mainEntityOfPage: {
-			'@type': 'WebPage',
-			'@id': `https://heydan.dev/blog/${post.slug}`
-		},
-		keywords: post.tags.join(', '),
-		articleSection: post.tags[0] || 'Tecnologia',
-		inLanguage: 'pt-BR'
-	})}</script>`}
-</svelte:head>
+<SEO
+	title="{post.title} — Blog | Daniel Guimarães"
+	description={post.excerpt}
+	type="article"
+	url="/blog/{post.slug}"
+	image="/images/blog-covers/{post.coverImageBasename}.webp"
+	author={author.name}
+	publishedDate={post.date}
+	tags={post.tags}
+/>
 
 <main class="min-h-dvh bg-bg text-fg selection:bg-fg/10 selection:text-fg">
 	<div class="container-page mx-auto max-w-4xl py-24 sm:py-32 md:px-6">

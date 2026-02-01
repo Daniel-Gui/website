@@ -14,8 +14,57 @@
 </script>
 
 <svelte:head>
-	<title>{work.title} — Daniel Gui</title>
+	<!-- Primary Meta Tags -->
+	<title>{work.title} — Portfólio | Daniel Guimarães</title>
+	<meta name="title" content="{work.title} — Portfólio | Daniel Guimarães" />
 	<meta name="description" content={work.description} />
+	<meta name="author" content="Daniel Guimarães" />
+	<link rel="canonical" href={`https://heydan.dev/work/${work.slug}`} />
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="article" />
+	<meta property="og:url" content={`https://heydan.dev/work/${work.slug}`} />
+	<meta property="og:title" content={work.title} />
+	<meta property="og:description" content={work.description} />
+	{#if work.imageBasename}
+		<meta
+			property="og:image"
+			content={`https://heydan.dev/images/works-covers/${work.imageBasename}.webp`}
+		/>
+	{/if}
+	<meta property="og:site_name" content="Daniel Guimarães" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:url" content={`https://heydan.dev/work/${work.slug}`} />
+	<meta name="twitter:title" content={work.title} />
+	<meta name="twitter:description" content={work.description} />
+	{#if work.imageBasename}
+		<meta
+			name="twitter:image"
+			content={`https://heydan.dev/images/works-covers/${work.imageBasename}.webp`}
+		/>
+	{/if}
+
+	<!-- Schema.org JSON-LD for AI/GEO -->
+	{@html `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'CreativeWork',
+		name: work.title,
+		description: work.description,
+		image: work.imageBasename
+			? `https://heydan.dev/images/works-covers/${work.imageBasename}.webp`
+			: undefined,
+		creator: {
+			'@type': 'Person',
+			name: 'Daniel Guimarães',
+			url: 'https://heydan.dev'
+		},
+		dateCreated: work.year,
+		url: `https://heydan.dev/work/${work.slug}`,
+		keywords: work.tags.join(', '),
+		inLanguage: 'pt-BR'
+	})}</script>`}
 </svelte:head>
 
 <main class="relative min-h-dvh pt-24 pb-12 sm:pt-32">

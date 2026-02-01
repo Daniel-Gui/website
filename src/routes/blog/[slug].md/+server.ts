@@ -6,7 +6,7 @@ import { getBlogAuthor } from '$lib/data/blog-authors';
  * Extrai metadata do frontmatter YAML
  */
 function extractFrontmatter(content: string): Record<string, string> {
-    const match = content.match(/^---\n([\s\S]*?)\n---/);
+    const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
     if (!match) return {};
 
     const yaml = match[1];

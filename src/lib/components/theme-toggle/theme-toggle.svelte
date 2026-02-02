@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { toggleMode } from 'mode-watcher';
-	import { onMount } from 'svelte';
 
 	let mounted = $state(false);
 
-	onMount(() => {
+	$effect(() => {
 		mounted = true;
 	});
 </script>

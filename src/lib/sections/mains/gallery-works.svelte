@@ -4,11 +4,23 @@
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import type { WorkItem } from '../../types/schemas';
+	import { WORK_CATEGORIES, type WorkCategory } from '$lib/data/work-categories';
+	import WorkFilter from '$lib/components/ui/WorkFilter.svelte';
+	import { flip } from 'svelte/animate';
+	import { fade, fly } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 
 	let { works }: { works: WorkItem[] } = $props();
 
 	let sectionEl = $state<HTMLElement | null>(null);
 	let revealed = $state(false);
+
+	// Filtering State
+	let activeFilter = $state<WorkCategory>('todos');
+
+	let filteredWorks = $derived(
+		activeFilter === 'todos' ? works : works.filter((work) => work.category === activeFilter)
+	);
 
 	$effect(() => {
 		if (typeof window === 'undefined') return;
@@ -107,7 +119,13 @@
 				>
 					Arquitetura de interfaces <br /> & sistemas complexos.
 				</p>
+
+				<!-- Filter -->
+				<div class="mt-6" class:gallery-hidden={!revealed} data-gallery-header>
+					<WorkFilter bind:activeFilter />
+				</div>
 			</div>
+
 			<div class="hidden md:block" class:gallery-hidden={!revealed} data-gallery-header>
 				<a
 					href={resolve('/work', {})}
@@ -120,71 +138,79 @@
 
 		<!-- Grid -->
 		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
-			{#each works as work (work.slug)}
-				<a
-					href={resolve(`/work/${work.slug}`, {})}
-					class="group relative flex flex-col gap-4"
-					class:gallery-hidden={!revealed}
-					data-gallery-card
-				>
-					<!-- Card Visual -->
-					<div
-						class="media-container relative aspect-4/3"
-						style:view-transition-name="work-image-{work.slug}"
+			{#each filteredWorks as work (work.slug)}
+				<div animate:flip={{ duration: 400, easing: cubicOut }} in:fly={{ y: 20, duration: 400 }}>
+					<a
+						href={resolve(`/work/${work.slug}`, {})}
+						class="group relative flex flex-col gap-4"
+						class:gallery-hidden={!revealed}
+						data-gallery-card
 					>
-						<!-- Image -->
-						{#if work.imageBasename}
-							<picture class="h-full w-full">
-								<source srcset="/images/works-covers/{work.imageBasename}.avif" type="image/avif" />
-								<source srcset="/images/works-covers/{work.imageBasename}.webp" type="image/webp" />
-								<img
-									src="/images/works-covers/{work.imageBasename}.webp"
-									alt={work.title}
-									loading="lazy"
-									class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
-								/>
-							</picture>
-						{/if}
-
-						<!-- Overlay Gradient -->
+						<!-- Card Visual -->
 						<div
-							class="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-						></div>
-
-						<!-- Corner Accents (Technical) -->
-						<div
-							class="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-white/90 text-black opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100"
+							class="media-container relative aspect-4/3"
+							style:view-transition-name="work-image-{work.slug}"
 						>
-							<IconArrowUpRight class="size-4" />
-						</div>
-					</div>
+							<!-- Image -->
+							{#if work.imageBasename}
+								<picture class="h-full w-full">
+									<source
+										srcset="/images/works-covers/{work.imageBasename}.avif"
+										type="image/avif"
+									/>
+									<source
+										srcset="/images/works-covers/{work.imageBasename}.webp"
+										type="image/webp"
+									/>
+									<img
+										src="/images/works-covers/{work.imageBasename}.webp"
+										alt={work.title}
+										loading="lazy"
+										class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
+									/>
+								</picture>
+							{/if}
 
-					<!-- Card Info -->
-					<div class="space-y-3">
-						<div class="divider-subtle flex items-center justify-between border-b pb-3">
-							<div class="flex items-center gap-3">
-								<span class="font-mono text-xs text-muted">/{work.slug}</span>
-								<h3
-									class="text-lg font-medium tracking-tight"
-									style:view-transition-name="work-title-{work.slug}"
-								>
-									{work.title}
-								</h3>
+							<!-- Overlay Gradient -->
+							<div
+								class="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+							></div>
+
+							<!-- Corner Accents (Technical) -->
+							<div
+								class="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-white/90 text-black opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100"
+							>
+								<IconArrowUpRight class="size-4" />
 							</div>
-							<span class="font-mono text-xs text-muted">{work.year}</span>
 						</div>
 
-						<p class="text-sm leading-relaxed text-pretty text-muted">
-							{work.description}
-						</p>
+						<!-- Card Info -->
+						<div class="space-y-3">
+							<div class="divider-subtle flex items-center justify-between border-b pb-3">
+								<div class="flex items-center gap-3">
+									<span class="font-mono text-xs text-muted">/{work.slug}</span>
+									<h3
+										class="text-lg font-medium tracking-tight"
+										style:view-transition-name="work-title-{work.slug}"
+									>
+										{work.title}
+									</h3>
+								</div>
+								<span class="font-mono text-xs text-muted">{work.year}</span>
+							</div>
 
-						<div class="flex flex-wrap gap-2 pt-1">
-							{#each work.tags as tag (tag)}
-								<TechBadge {tag} />
-							{/each}
+							<p class="text-sm leading-relaxed text-pretty text-muted">
+								{work.description}
+							</p>
+
+							<div class="flex flex-wrap gap-2 pt-1">
+								{#each work.tags as tag (tag)}
+									<TechBadge {tag} />
+								{/each}
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
 			{/each}
 		</div>
 	</div>

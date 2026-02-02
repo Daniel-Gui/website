@@ -1,20 +1,16 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import IconArrowLeft from '$lib/components/icons/icon-arrow-left.svelte';
-	import { onMount } from 'svelte';
 	import { animate } from 'motion';
 
-	let containerEl = $state<HTMLElement | null>(null);
-
-	onMount(() => {
-		if (!containerEl) return;
-		const elements = containerEl.querySelectorAll('[data-animate]');
+	function animateIn(node: HTMLElement) {
+		const elements = node.querySelectorAll('[data-animate]');
 		animate(
 			elements,
 			{ opacity: [0, 1], y: [20, 0] },
 			{ delay: 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }
 		);
-	});
+	}
 </script>
 
 <svelte:head>
@@ -23,8 +19,8 @@
 </svelte:head>
 
 <main class="grid min-h-[80vh] place-items-center px-6 py-24 sm:py-32 lg:px-8">
-	<div class="text-center" bind:this={containerEl}>
-		<p class="text-accent font-mono text-base font-semibold" data-animate style="opacity: 0">404</p>
+	<div class="text-center" use:animateIn>
+		<p class="font-mono text-base font-semibold text-accent" data-animate style="opacity: 0">404</p>
 		<h1
 			class="text-foreground mt-4 text-3xl font-bold tracking-tight sm:text-5xl"
 			data-animate

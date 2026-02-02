@@ -107,7 +107,6 @@ export const GET: RequestHandler = async ({ params, url }) => {
         headers: {
             'Content-Type': 'text/plain; charset=utf-8',
             'Cache-Control': 'public, max-age=3600',
-            'X-Robots-Tag': 'noindex',
             'X-Content-Source': `${baseUrl}/blog/${slug}`
         }
     });

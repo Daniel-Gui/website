@@ -7,7 +7,7 @@ tags:
   - TypeScript
   - Tailwindcss
 year: '2025'
-category: 'trabalho'
+category: 'projeto'
 link: '#'
 imageBasename: cover-placeholder-01
 galleryImages:

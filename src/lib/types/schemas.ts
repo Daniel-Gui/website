@@ -1,4 +1,5 @@
 import type { BlogAuthorId } from '../data/blog-authors';
+import type { WorkCategory } from '../data/work-categories';
 
 export type PostItem = {
 	title: string;
@@ -20,6 +21,7 @@ export type WorkItem = {
 	title: string;
 	description: string;
 	year: string;
+	category: WorkCategory;
 	tags: string[];
 	imageBasename?: string;
 	link?: string;

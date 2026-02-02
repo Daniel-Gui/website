@@ -32,9 +32,16 @@
 				<header class="space-y-6">
 					<div class="space-y-2">
 						<div class="flex items-center justify-between">
-							<span class="font-mono text-sm tracking-widest text-accent uppercase">
-								// {work.year}
-							</span>
+							<div class="flex items-center gap-3">
+								<span class="font-mono text-sm tracking-widest text-accent uppercase">
+									// {work.year}
+								</span>
+								{#if work.category}
+									<span class="chip text-xs capitalize">
+										{work.category}
+									</span>
+								{/if}
+							</div>
 							{#if work.link}
 								<a
 									href={resolve(work.link, {})}
@@ -94,9 +101,16 @@
 					<header class="hidden space-y-6 lg:block">
 						<div class="space-y-2">
 							<div class="flex items-center justify-between">
-								<span class="font-mono text-sm tracking-widest text-accent uppercase">
-									// {work.year}
-								</span>
+								<div class="flex items-center gap-3">
+									<span class="font-mono text-sm tracking-widest text-accent uppercase">
+										// {work.year}
+									</span>
+									{#if work.category}
+										<span class="chip text-xs capitalize">
+											{work.category}
+										</span>
+									{/if}
+								</div>
 								{#if work.link}
 									<a
 										href={resolve(work.link, {})}

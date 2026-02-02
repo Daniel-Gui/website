@@ -8,6 +8,7 @@
 	import BackToTop from '$lib/components/ui/BackToTop.svelte';
 	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import Modal from '$lib/components/ui/Modal.svelte';
+	import ContentBlurFade from '$lib/components/ui/ContentBlurFade.svelte';
 	import SEO from '$lib/components/seo/SEO.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
 
@@ -20,7 +21,7 @@
 	let aiModalOpen = $state(false);
 	let aiPromptCopied = $state(false);
 
-	let markdownUrl = $derived(browser ? `${window.location.origin}/blog/${post.slug}.md` : '');
+	let markdownUrl = $derived(browser ? `${window.location.origin}/blog/${post.slug}.txt` : '');
 	let aiPrompt = $derived(
 		`Analise esta publicação e em seguida vamos debater sobre o conteúdo: ${markdownUrl}`
 	);
@@ -197,6 +198,8 @@
 		</div>
 	</div>
 </main>
+
+<ContentBlurFade />
 
 <Modal bind:open={aiModalOpen} title="Conversar com IA">
 	<div class="space-y-4">

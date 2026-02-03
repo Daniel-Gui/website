@@ -13,8 +13,8 @@
 	});
 </script>
 
-<div class="segmented max-w-full">
-	<div class="scroll-mask scrollbar-hide flex w-full items-center gap-1 overflow-x-auto">
+<div class="segmented max-w-full overflow-hidden p-0!">
+	<div class="scroll-mask scrollbar-hide flex w-full items-center gap-1 overflow-x-auto p-1">
 		{#each WORK_CATEGORIES as category}
 			{@const isActive = activeFilter === category}
 			<button
@@ -29,7 +29,7 @@
 					<div
 						in:receive={{ key: 'active-pill' }}
 						out:send={{ key: 'active-pill' }}
-						class="absolute inset-0 z-10 rounded-full bg-surface shadow-sm"
+						class="shadow-subtle absolute inset-0 z-10 rounded-full border border-border/5 bg-surface"
 					></div>
 				{/if}
 			</button>

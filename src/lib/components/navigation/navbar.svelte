@@ -12,6 +12,8 @@
 	import ThemeToggle from '$lib/components/theme-toggle/theme-toggle.svelte';
 	import { cn } from '$lib/utils';
 
+	import { SOCIAL_LINKS, MAILTO_URL, WHATSAPP_URL } from '$lib/data/links';
+
 	type Props = {
 		class?: string;
 	};
@@ -31,21 +33,8 @@
 	let navbarRevealed = $state(false);
 	let navbarAtTop = $state(true);
 
-	const EMAIL = 'dandanielofc@gmail.com';
-	const WHATSAPP_E164 = '5591993105821';
-	const LINKEDIN_URL = 'https://www.linkedin.com/in/danielguii';
-
-	const RESUME_PTBR = resolve('/resume/resume-daniel-guimaraes-ptbr.pdf', {});
-	const RESUME_EN = resolve('/resume/resume-daniel-guimaraes-english.pdf', {});
-
-	const emailSubject = 'Projeto / oportunidade';
-	const emailBody = 'Olá Daniel! Vi seu portfólio e gostaria de conversar.';
-	const mailtoHref = `mailto:${EMAIL}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(
-		emailBody
-	)}`;
-
-	const whatsappText = 'Olá Daniel! Vi seu portfólio e gostaria de conversar.';
-	const whatsappHref = `https://wa.me/${WHATSAPP_E164}?text=${encodeURIComponent(whatsappText)}`;
+	const RESUME_PTBR = resolve(SOCIAL_LINKS.RESUME_PTBR, {});
+	const RESUME_EN = resolve(SOCIAL_LINKS.RESUME_EN, {});
 
 	const nextFrame = () =>
 		new Promise<void>((resolve) => {
@@ -387,7 +376,7 @@
 
 						<a
 							bind:this={cardLinkedinEl}
-							href={LINKEDIN_URL}
+							href={SOCIAL_LINKS.LINKEDIN}
 							target="_blank"
 							rel="noreferrer"
 							class={cn(
@@ -407,7 +396,7 @@
 
 						<a
 							bind:this={cardEmailEl}
-							href={mailtoHref}
+							href={MAILTO_URL}
 							class={cn(
 								'navbar-card group border-subtle hover:border-default hover:bg-subtle hover:shadow-elevated focus-visible:ring-focus/20 grid place-items-center gap-3 rounded-xl border bg-overlay/3 px-4 py-6 text-center transition-all duration-200 ease-out hover:-translate-y-1 focus-visible:ring-4 focus-visible:outline-none active:scale-[0.98]',
 								menuOpening && 'translate-y-3 scale-[0.985] opacity-0'
@@ -425,7 +414,7 @@
 
 						<a
 							bind:this={cardWhatsappEl}
-							href={whatsappHref}
+							href={WHATSAPP_URL}
 							target="_blank"
 							rel="noreferrer"
 							class={cn(

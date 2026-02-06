@@ -73,6 +73,7 @@
 		};
 	});
 	import CameraRoll from '$lib/components/ui/CameraRoll.svelte';
+	import TerminalWidget from '$lib/components/ui/terminal-widget.svelte';
 
 	const cameraRollImages = [
 		{
@@ -107,10 +108,16 @@
 
 <main>
 	<Hero />
-	<GalleryWorks {works} />
-	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2">
-		<CameraRoll images={cameraRollImages} class="w-full" />
-		<WorkWidget items={workExperience} linkedinUrl={SOCIAL_LINKS.LINKEDIN} class="w-full" />
+
+	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+		<CameraRoll images={cameraRollImages} class="w-full lg:col-span-1" />
+		<WorkWidget
+			items={workExperience}
+			linkedinUrl={SOCIAL_LINKS.LINKEDIN}
+			class="w-full lg:col-span-2"
+		/>
+		<TerminalWidget maxHeightClass="h-full max-h-[365px] lg:col-span-2" />
 	</div>
+	<GalleryWorks {works} />
 	<GalleryPosts {posts} />
 </main>

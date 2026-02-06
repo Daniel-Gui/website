@@ -101,7 +101,9 @@
 	</div>
 
 	<!-- Single Image Display -->
-	<div class="relative flex-1 overflow-hidden rounded-xl">
+	<div
+		class="relative aspect-4/3 min-h-48 flex-1 overflow-hidden rounded-xl md:aspect-auto md:min-h-0"
+	>
 		{#each images as img, i (img.id)}
 			<div
 				class={cn(

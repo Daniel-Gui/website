@@ -19,7 +19,7 @@
 </script>
 
 <div
-	class="relative overflow-hidden rounded-2xl border border-border/10 bg-surface/50 shadow-sm backdrop-blur-md {className}"
+	class="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-border/10 bg-surface/50 shadow-sm backdrop-blur-md {className}"
 >
 	<!-- Header -->
 	<div class="flex items-center justify-between p-6 pb-4">
@@ -54,7 +54,7 @@
 						<span
 							class="block font-medium tracking-tight transition-colors sm:inline"
 							class:text-fg={item.current}
-							class:text-muted-foreground={!item.current}
+							class:text-muted={!item.current}
 						>
 							{item.role}
 						</span>

@@ -2,18 +2,32 @@
 	import { WORK_CATEGORIES, type WorkCategory } from '$lib/data/work-categories';
 	import { cubicInOut } from 'svelte/easing';
 	import { crossfade } from 'svelte/transition';
-	import { flip } from 'svelte/animate';
 
-	let { activeFilter = $bindable() }: { activeFilter: WorkCategory } = $props();
+	interface Props {
+		activeFilter: WorkCategory;
+		onchange?: (newFilter: WorkCategory) => void;
+	}
+
+	let { activeFilter, onchange }: Props = $props();
 
 	// Animation for the sliding pill
 	const [send, receive] = crossfade({
 		duration: 300,
 		easing: cubicInOut
 	});
+
+	function handleClick(category: WorkCategory) {
+		if (category !== activeFilter && onchange) {
+			onchange(category);
+		}
+	}
 </script>
 
-<div class="segmented max-w-full overflow-hidden p-0!">
+<div
+	class="segmented max-w-full overflow-hidden p-0!"
+	role="tablist"
+	aria-label="Filtrar trabalhos por categoria"
+>
 	<div class="scroll-mask scrollbar-hide flex w-full items-center gap-1 overflow-x-auto p-1">
 		{#each WORK_CATEGORIES as category}
 			{@const isActive = activeFilter === category}
@@ -21,8 +35,10 @@
 				class="segmented-item relative z-10 shrink-0 text-xs font-medium capitalize transition-colors duration-200"
 				class:text-fg={isActive}
 				class:text-muted={!isActive}
-				onclick={() => (activeFilter = category)}
-				aria-current={isActive}
+				onclick={() => handleClick(category)}
+				role="tab"
+				aria-selected={isActive}
+				tabindex={isActive ? 0 : -1}
 			>
 				<span class="relative z-20">{category}</span>
 				{#if isActive}

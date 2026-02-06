@@ -72,6 +72,30 @@
 			lenis.set(null);
 		};
 	});
+	import CameraRoll from '$lib/components/ui/CameraRoll.svelte';
+
+	const cameraRollImages = [
+		{
+			id: '1',
+			src: 'https://images.unsplash.com/photo-1628157588553-53960fb9bbce?q=80&w=1000&auto=format&fit=crop',
+			alt: 'Coffee shop view'
+		},
+		{
+			id: '2',
+			src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1000&auto=format&fit=crop',
+			alt: 'Tech stack books'
+		},
+		{
+			id: '3',
+			src: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop',
+			alt: 'Vintage computer'
+		},
+		{
+			id: '4',
+			src: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
+			alt: 'Cyberpunk city'
+		}
+	];
 </script>
 
 <SEO {title} {description} type="profile" url="/" image={ogImageAsset} {tags} />
@@ -84,10 +108,9 @@
 <main>
 	<Hero />
 	<GalleryWorks {works} />
-	<WorkWidget
-		items={workExperience}
-		linkedinUrl={SOCIAL_LINKS.LINKEDIN}
-		class="mx-auto max-w-2xl"
-	/>
+	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2">
+		<CameraRoll images={cameraRollImages} class="w-full" />
+		<WorkWidget items={workExperience} linkedinUrl={SOCIAL_LINKS.LINKEDIN} class="w-full" />
+	</div>
 	<GalleryPosts {posts} />
 </main>

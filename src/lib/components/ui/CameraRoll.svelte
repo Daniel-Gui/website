@@ -63,6 +63,8 @@
 	}
 </script>
 
+<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 <div
 	class={cn(
 		'flex h-full w-full flex-col gap-4 rounded-3xl border border-border/10 bg-surface/50 p-4 text-fg backdrop-blur-md',

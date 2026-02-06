@@ -43,6 +43,7 @@
 
 {#if open}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div class="modal-backdrop" onclick={handleBackdropClick}></div>
 	<div
 		class="modal-dialog"
@@ -50,6 +51,8 @@
 		aria-modal="true"
 		aria-labelledby={title ? 'modal-title' : undefined}
 	>
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div class="modal-content glass-strong" onclick={(e) => e.stopPropagation()}>
 			{#if title}
 				<header class="modal-header">

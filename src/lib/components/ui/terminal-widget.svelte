@@ -91,18 +91,20 @@
 		},
 		// Easter egg 🥚
 		alanzoka: () => {
-			// Load Tenor embed script dynamically
-			requestAnimationFrame(() => {
-				if (!document.querySelector('script[src="https://tenor.com/embed.js"]')) {
-					const script = document.createElement('script');
-					script.src = 'https://tenor.com/embed.js';
-					script.async = true;
-					document.body.appendChild(script);
-				} else {
-					// Re-trigger Tenor embed processing
-					(window as any).TENOR?.init?.();
-				}
-			});
+			// Load Tenor embed script dynamically (only in browser)
+			if (typeof window !== 'undefined') {
+				requestAnimationFrame(() => {
+					if (!document.querySelector('script[src="https://tenor.com/embed.js"]')) {
+						const script = document.createElement('script');
+						script.src = 'https://tenor.com/embed.js';
+						script.async = true;
+						document.body.appendChild(script);
+					} else {
+						// Re-trigger Tenor embed processing
+						(window as any).TENOR?.init?.();
+					}
+				});
+			}
 			return {
 				type: 'html' as const,
 				content: `<div class="tenor-gif-embed my-2" data-postid="27194744" data-share-method="host" data-aspect-ratio="1.61616" data-width="100%" style="max-width: 200px;"><a href="https://tenor.com/view/alanzoka-gif-27194744">Alanzoka GIF</a></div>`

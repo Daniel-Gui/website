@@ -98,6 +98,15 @@
 			alt: 'Cyberpunk city'
 		}
 	];
+	const marqueeItems = [
+		{ id: '1', name: 'Vercel' },
+		{ id: '2', name: 'Stripe' },
+		{ id: '3', name: 'Resend' },
+		{ id: '4', name: 'Linear' },
+		{ id: '5', name: 'Raycast' },
+		{ id: '6', name: 'Svelte' },
+		{ id: '7', name: 'Tailwind' }
+	];
 </script>
 
 <SEO {title} {description} type="profile" url="/" image={ogImageAsset} {tags} />
@@ -109,21 +118,14 @@
 
 <main>
 	<Hero />
-	<Marquee
-		items={[
-			{ id: '1', name: 'Vercel' },
-			{ id: '2', name: 'Stripe' },
-			{ id: '3', name: 'Resend' },
-			{ id: '4', name: 'Linear' },
-			{ id: '5', name: 'Raycast' },
-			{ id: '6', name: 'Svelte' },
-			{ id: '7', name: 'Tailwind' }
-		]}
-	/>
+	<!--
+	<Marquee items={marqueeItems} />
+	-->
 	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 		<CameraRoll images={cameraRollImages} class="w-full lg:col-span-1" />
 		<WorkWidget
 			items={workExperience}
+			{marqueeItems}
 			linkedinUrl={SOCIAL_LINKS.LINKEDIN}
 			class="w-full lg:col-span-2"
 		/>

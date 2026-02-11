@@ -1,5 +1,6 @@
 <script lang="ts">
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
+	import Marquee from '$lib/components/marquee/marquee.svelte';
 
 	interface WorkExperience {
 		role: string;
@@ -12,10 +13,17 @@
 		title?: string;
 		items: WorkExperience[];
 		linkedinUrl: string;
+		marqueeItems?: { id: string; name: string; logo?: string }[];
 		class?: string;
 	}
 
-	let { title = 'EXPERIÊNCIA', items, linkedinUrl, class: className = '' }: Props = $props();
+	let {
+		title = 'EXPERIÊNCIA',
+		items,
+		linkedinUrl,
+		marqueeItems = [],
+		class: className = ''
+	}: Props = $props();
 </script>
 
 <div
@@ -92,7 +100,7 @@
 	</div>
 
 	<!-- Footer -->
-	<div class="pt-4 pb-6 pl-6">
+	<div class="px-6 pt-4 pb-6">
 		<a
 			href={linkedinUrl}
 			target="_blank"
@@ -105,4 +113,11 @@
 			/>
 		</a>
 	</div>
+
+	<!-- Marquee Section -->
+	{#if marqueeItems.length > 0}
+		<div class="bg-subtle/30 border-t border-border/5 py-4">
+			<Marquee items={marqueeItems} speed={40} class="mask-linear-to-r" />
+		</div>
+	{/if}
 </div>

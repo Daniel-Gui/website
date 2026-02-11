@@ -74,6 +74,7 @@
 	});
 	import CameraRoll from '$lib/components/ui/CameraRoll.svelte';
 	import TerminalWidget from '$lib/components/ui/terminal-widget.svelte';
+	import Marquee from '$lib/components/marquee/marquee.svelte';
 
 	const cameraRollImages = [
 		{
@@ -108,7 +109,17 @@
 
 <main>
 	<Hero />
-
+	<Marquee
+		items={[
+			{ id: '1', name: 'Vercel' },
+			{ id: '2', name: 'Stripe' },
+			{ id: '3', name: 'Resend' },
+			{ id: '4', name: 'Linear' },
+			{ id: '5', name: 'Raycast' },
+			{ id: '6', name: 'Svelte' },
+			{ id: '7', name: 'Tailwind' }
+		]}
+	/>
 	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 		<CameraRoll images={cameraRollImages} class="w-full lg:col-span-1" />
 		<WorkWidget

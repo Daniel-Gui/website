@@ -99,13 +99,14 @@
 		}
 	];
 	const marqueeItems = [
-		{ id: '1', name: 'Vercel' },
-		{ id: '2', name: 'Stripe' },
-		{ id: '3', name: 'Resend' },
-		{ id: '4', name: 'Linear' },
-		{ id: '5', name: 'Raycast' },
-		{ id: '6', name: 'Svelte' },
-		{ id: '7', name: 'Tailwind' }
+		{ id: '1', name: 'Beleza Brasileira', logoBasename: 'brand-beleza-brasileira' },
+		{ id: '2', name: 'Hidratei', logoBasename: 'brand-hidratei' },
+		// Fallbacks for checking layout
+		{ id: '3', name: 'Vercel' },
+		{ id: '4', name: 'Stripe' },
+		{ id: '5', name: 'Linear' },
+		{ id: '6', name: 'Raycast' }
+		// { id: '7', name: 'Svelte' }
 	];
 </script>
 

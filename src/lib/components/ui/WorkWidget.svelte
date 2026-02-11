@@ -27,7 +27,7 @@
 </script>
 
 <div
-	class="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-border/10 bg-surface/50 shadow-sm backdrop-blur-md {className}"
+	class="relative flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-border/10 bg-surface/50 backdrop-blur-md {className}"
 >
 	<!-- Header -->
 	<div class="flex items-center justify-between p-6 pb-4">

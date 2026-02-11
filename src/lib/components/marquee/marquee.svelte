@@ -2,7 +2,7 @@
 	import { animate } from 'motion';
 
 	interface Props {
-		items?: { id: string; name: string; logo?: string }[];
+		items?: { id: string; name: string; logo?: string; logoBasename?: string }[];
 		speed?: number; // Duration in seconds for one full loop
 		direction?: 'left' | 'right';
 		pauseOnHover?: boolean;
@@ -59,15 +59,8 @@
 	aria-label="Partner Companies"
 	onmouseenter={() => (isHovered = true)}
 	onmouseleave={() => (isHovered = false)}
+	style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);"
 >
-	<!-- Gradient Masks -->
-	<div
-		class="pointer-events-none absolute top-0 left-0 z-10 h-full w-20 bg-linear-to-r from-[rgb(var(--bg))] to-transparent"
-	></div>
-	<div
-		class="pointer-events-none absolute top-0 right-0 z-10 h-full w-20 bg-linear-to-l from-[rgb(var(--bg))] to-transparent"
-	></div>
-
 	<!-- Marquee Track -->
 	<div
 		class="flex min-w-full shrink-0 items-center gap-16 py-8 will-change-transform"
@@ -78,7 +71,18 @@
 				class="group relative flex shrink-0 items-center justify-center grayscale transition-all duration-300 hover:grayscale-0"
 				aria-hidden={i >= items.length ? 'true' : undefined}
 			>
-				{#if item.logo}
+				{#if item.logoBasename}
+					<picture class="flex items-center justify-center">
+						<source srcset="/images/brands/{item.logoBasename}.avif" type="image/avif" />
+						<source srcset="/images/brands/{item.logoBasename}.webp" type="image/webp" />
+						<img
+							src="/images/brands/{item.logoBasename}.webp"
+							alt={item.name}
+							class="h-8 w-auto max-w-[150px] object-contain opacity-60 transition-opacity group-hover:opacity-100 dark:invert"
+							loading="lazy"
+						/>
+					</picture>
+				{:else if item.logo}
 					<img
 						src={item.logo}
 						alt={item.name}

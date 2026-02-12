@@ -7,6 +7,7 @@
 	import { type WorkCategory } from '$lib/data/work-categories';
 	import WorkFilter from '$lib/components/ui/WorkFilter.svelte';
 	import { animateCardsIn, animateCardsOut, prefersReducedMotion } from '$lib/utils/animate-cards';
+	import { getWorkImage } from '$lib/data/work-images';
 
 	let { works }: { works: WorkItem[] } = $props();
 
@@ -167,7 +168,11 @@
 		<!-- Grid -->
 		<div bind:this={gridEl} class="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
 			{#each animatedWorks as work (work.slug)}
-				<WorkCard {work} hidden={!revealed} />
+				<WorkCard
+					{work}
+					hidden={!revealed}
+					image={work.imageBasename ? getWorkImage(work.imageBasename) : undefined}
+				/>
 			{/each}
 		</div>
 	</div>

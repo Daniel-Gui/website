@@ -8,9 +8,10 @@
 		work: WorkItem;
 		/** When true, card is hidden (for reveal animations) */
 		hidden?: boolean;
+		image?: any;
 	}
 
-	let { work, hidden = false }: Props = $props();
+	let { work, hidden = false, image = undefined }: Props = $props();
 </script>
 
 <a
@@ -21,11 +22,19 @@
 >
 	<!-- Card Visual -->
 	<div
-		class="media-container relative aspect-4/3"
+		class="media-container relative aspect-4/3 overflow-hidden rounded-xl border border-border/10 bg-overlay/5"
 		style:view-transition-name="work-image-{work.slug}"
 	>
 		<!-- Image -->
-		{#if work.imageBasename}
+		{#if image}
+			<enhanced:img
+				src={image}
+				alt={work.title}
+				loading="lazy"
+				class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
+			/>
+		{:else if work.imageBasename}
+			<!-- Fallback for legacy/missing images -->
 			<picture class="h-full w-full">
 				<source srcset="/images/works-covers/{work.imageBasename}.avif" type="image/avif" />
 				<source srcset="/images/works-covers/{work.imageBasename}.webp" type="image/webp" />

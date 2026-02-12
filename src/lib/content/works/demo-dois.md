@@ -9,16 +9,16 @@ tags:
 year: '2025'
 category: 'projeto'
 link: '#'
-imageBasename: cover-placeholder-01
+imageBasename: work-cover-placeholder
 galleryImages:
-  - cover-placeholder-01
-  - cover-placeholder-02
-  - cover-placeholder-01
-  - cover-placeholder-02
-  - cover-placeholder-01
-  - cover-placeholder-02
-  - cover-placeholder-01
-  - cover-placeholder-02
+  - work-cover-placeholder
+  - work-cover-placeholder
+  - work-cover-placeholder
+  - work-cover-placeholder
+  - work-cover-placeholder
+  - work-cover-placeholder
+  - work-cover-placeholder
+  - work-cover-placeholder
 ---
 
 ## [01] O Desafio

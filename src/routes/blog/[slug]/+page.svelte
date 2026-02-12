@@ -11,10 +11,12 @@
 	import ContentBlurFade from '$lib/components/ui/ContentBlurFade.svelte';
 	import SEO from '$lib/components/seo/SEO.svelte';
 	import { getBlogAuthor } from '$lib/data/blog-authors';
+	import { getBlogAuthorImage } from '$lib/data/blog-images';
 
 	let { data }: { data: PageData } = $props();
 	let post = $derived(data.post);
 	let author = $derived(getBlogAuthor(post.authorId));
+	let authorImage = $derived(getBlogAuthorImage(author.avatarBasename));
 
 	let copied = $state(false);
 	let pageUrl = $state('');
@@ -107,25 +109,39 @@
 				<div
 					class="flex items-center gap-2 rounded-full border border-border/10 bg-surface/50 px-3 py-1.5 pr-4 text-sm font-medium text-fg backdrop-blur-md"
 				>
-					<picture
-						class="relative size-7 overflow-hidden rounded-full border border-border/10 bg-surface/70"
-					>
-						<source
-							srcset={`/images/blog-authors/${author.avatarBasename}.avif`}
-							type="image/avif"
-						/>
-						<source
-							srcset={`/images/blog-authors/${author.avatarBasename}.webp`}
-							type="image/webp"
-						/>
-						<img
-							src={`/images/blog-authors/${author.avatarBasename}.webp`}
-							alt={`Foto de ${author.name}`}
-							loading="lazy"
-							decoding="async"
-							class="h-full w-full object-cover"
-						/>
-					</picture>
+					{#if authorImage}
+						<div
+							class="relative size-7 overflow-hidden rounded-full border border-border/10 bg-surface/70"
+						>
+							<enhanced:img
+								src={authorImage}
+								alt={`Foto de ${author.name}`}
+								loading="lazy"
+								decoding="async"
+								class="h-full w-full object-cover"
+							/>
+						</div>
+					{:else}
+						<picture
+							class="relative size-7 overflow-hidden rounded-full border border-border/10 bg-surface/70"
+						>
+							<source
+								srcset={`/images/blog-authors/${author.avatarBasename}.avif`}
+								type="image/avif"
+							/>
+							<source
+								srcset={`/images/blog-authors/${author.avatarBasename}.webp`}
+								type="image/webp"
+							/>
+							<img
+								src={`/images/blog-authors/${author.avatarBasename}.webp`}
+								alt={`Foto de ${author.name}`}
+								loading="lazy"
+								decoding="async"
+								class="h-full w-full object-cover"
+							/>
+						</picture>
+					{/if}
 					<span>{author.name}</span>
 				</div>
 			</div>

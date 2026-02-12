@@ -123,9 +123,6 @@
 
 <main>
 	<Hero />
-	<!--
-	<Marquee items={marqueeItems} />
-	-->
 	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 		<CameraRoll images={cameraRollImages} class="w-full lg:col-span-1" />
 		<WorkWidget

@@ -5,6 +5,7 @@
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import { tick } from 'svelte';
+	import { getBlogCover } from '$lib/data/blog-images';
 
 	let { data }: { data: PageData } = $props();
 	let posts = $derived(data.posts);
@@ -61,7 +62,7 @@
 </svelte:head>
 
 <main class="min-h-dvh bg-bg text-fg selection:bg-fg/10 selection:text-fg">
-	<div class="container-page mx-auto max-w-5xl py-24 sm:py-32 md:px-6" bind:this={containerEl}>
+	<div class="container-page mx-auto py-24 sm:py-32 md:px-6" bind:this={containerEl}>
 		<!-- Breadcrumb -->
 		<nav
 			class="mb-12 flex items-center gap-4 text-sm text-muted"
@@ -93,6 +94,7 @@
 		<!-- Posts Grid -->
 		<div class="grid gap-6 md:grid-cols-2">
 			{#each posts as post (post.slug)}
+				{@const coverImage = getBlogCover(post.coverImageBasename)}
 				<article
 					class="card-interactive group relative flex flex-col gap-6 p-4 sm:p-5"
 					data-blog-card
@@ -102,22 +104,14 @@
 						class="bg-subtle relative aspect-2/1 w-full overflow-hidden rounded-lg"
 						style:view-transition-name={`blog-cover-${post.slug}`}
 					>
-						<picture class="absolute inset-0 h-full w-full">
-							<source
-								srcset="/images/blog-covers/{post.coverImageBasename}.avif"
-								type="image/avif"
-							/>
-							<source
-								srcset="/images/blog-covers/{post.coverImageBasename}.webp"
-								type="image/webp"
-							/>
-							<img
-								src="/images/blog-covers/{post.coverImageBasename}.webp"
+						{#if coverImage}
+							<enhanced:img
+								src={coverImage}
 								alt=""
 								loading="lazy"
 								class="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
 							/>
-						</picture>
+						{/if}
 					</div>
 
 					<div class="flex flex-1 flex-col justify-between gap-4">

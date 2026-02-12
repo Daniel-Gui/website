@@ -8,7 +8,7 @@ tags:
   - IA
   - Design Engineer
   - Carreira
-coverImageBasename: design-engineer-era-ia-cover
+coverImageBasename: post-cover-placeholder
 authorId: daniel
 ---
 
@@ -22,12 +22,13 @@ Ali entendi que não queria ser apenas quem projeta a intenção (Designer) ou q
 
 ## [01] O que é, de fato, um Design Engineer?
 
-Muitos acham que é apenas "um designer que sabe codar" ou "um dev com bom gosto". Mas, como bem define *Ryn Gonzalez*, Design Engineering é sobre **autonomia** e **fidelidade**.
+Muitos acham que é apenas "um designer que sabe codar" ou "um dev com bom gosto". Mas, como bem define _Ryn Gonzalez_, Design Engineering é sobre **autonomia** e **fidelidade**.
 
-No modelo tradicional, existe um "problema de tradução". O designer cria no Figma (otimizado para exploração visual) e o engenheiro implementa no VS Code (otimizado para lógica e escala). Nesse *handoff*, detalhes se perdem. A animação fica rígida, o espaçamento quebra, a alma do produto desaparece.
+No modelo tradicional, existe um "problema de tradução". O designer cria no Figma (otimizado para exploração visual) e o engenheiro implementa no VS Code (otimizado para lógica e escala). Nesse _handoff_, detalhes se perdem. A animação fica rígida, o espaçamento quebra, a alma do produto desaparece.
 
 O Design Engineer habita essa lacuna.
-- **Não é sobre acumular títulos**, é sobre ser um *software maker* completo.
+
+- **Não é sobre acumular títulos**, é sobre ser um _software maker_ completo.
 - **É sobre responsabilidade**: garantir que o pixel desenhado seja exatamente o pixel renderizado.
 - **É sobre eficiência**: prototipar em código real valida ideias mais rápido que qualquer imagem estática.
 
@@ -37,11 +38,11 @@ Se você projeta a arquitetura visual e garante que ela se torne um código de p
 
 ## [02] Design Engineering vs. "Vibe Coding"
 
-Com a chegada da IA, surgiu o que a indústria tem chamado de *"Vibe Coding"* — a prática de pedir para a IA gerar uma interface e aceitar o resultado porque "parece ok".
+Com a chegada da IA, surgiu o que a indústria tem chamado de _"Vibe Coding"_ — a prática de pedir para a IA gerar uma interface e aceitar o resultado porque "parece ok".
 
 A barreira de entrada técnica despencou. Qualquer um pode gerar uma tela bonita hoje. Mas é aqui que o Design Engineer se torna indispensável: **nós não aceitamos o "parece ok".**
 
-> Enquanto o *Vibe Coding* pergunta "Isso está bonito?", o Design Engineer pergunta "Por que isso funciona? Como lidamos com os casos de erro? A acessibilidade está correta?".
+> Enquanto o _Vibe Coding_ pergunta "Isso está bonito?", o Design Engineer pergunta "Por que isso funciona? Como lidamos com os casos de erro? A acessibilidade está correta?".
 
 A IA pode gerar 80% do trabalho braçal, mas os 20% finais — o polimento, a arquitetura robusta e a intencionalidade — dependem de quem domina a base.
 

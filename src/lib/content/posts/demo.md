@@ -8,7 +8,7 @@ tags:
   - Design System
   - Componentes
   - Demo
-coverImageBasename: blog-cover-placeholder-01
+coverImageBasename: post-cover-placeholder
 authorId: daniel
 ---
 
@@ -54,7 +54,7 @@ Citações são úteis para destacar pensamentos importantes ou referências ext
 
 O componente de imagem suporta _lazy loading_, formatos modernos (AVIF/WebP) e legendas automáticas.
 
-![Espaço de trabalho minimalista com equipamentos de design](/images/blog-covers/blog-cover-placeholder-02.webp)
+![Espaço de trabalho minimalista com equipamentos de design](/images/blog-content/post-content-placeholder.jpg)
 _Exemplo de imagem com legenda: Setup minimalista para desenvolvimento_
 
 ---

@@ -4,7 +4,7 @@
 // 1. Blog Covers
 const covers = import.meta.glob('../assets/images/blog/blog-covers/*.{jpg,jpeg,png,webp,avif}', {
 	eager: true,
-	query: { enhanced: true }
+	query: { enhanced: true, w: '400;800;1200' }
 });
 
 export function getBlogCover(basename: string) {
@@ -19,7 +19,7 @@ export function getBlogCover(basename: string) {
 // 2. Blog Authors
 const authors = import.meta.glob('../assets/images/blog/blog-authors/*.{jpg,jpeg,png,webp,avif}', {
 	eager: true,
-	query: { enhanced: true }
+	query: { enhanced: true, w: '100;200;400' }
 });
 
 export function getBlogAuthorImage(basename: string) {
@@ -34,7 +34,7 @@ export function getBlogAuthorImage(basename: string) {
 // 3. Blog Content Images
 const contentImages = import.meta.glob('../assets/images/blog/blog-content/*.{jpg,jpeg,png,webp,avif}', {
 	eager: true,
-	query: { enhanced: true }
+	query: { enhanced: true, w: '600;800;1200' }
 });
 
 export function getBlogContentImage(basename: string) {

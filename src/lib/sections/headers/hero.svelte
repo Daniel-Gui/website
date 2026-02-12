@@ -7,9 +7,9 @@
 	import IconFile from '$lib/components/icons/icon-file.svelte';
 	import { cn } from '$lib/utils';
 	import { lenis } from '$lib/utils/lenis.svelte';
-	import heroImage01 from '$lib/assets/images/hero-section/hero-image-01.jpg?enhanced';
-	import heroImage02 from '$lib/assets/images/hero-section/hero-image-02.jpg?enhanced';
-	import heroImage03 from '$lib/assets/images/hero-section/hero-image-03.jpg?enhanced';
+	import heroImage01 from '$lib/assets/images/hero-section/hero-image-01.jpg?enhanced&w=500;800';
+	import heroImage02 from '$lib/assets/images/hero-section/hero-image-02.jpg?enhanced&w=500;800';
+	import heroImage03 from '$lib/assets/images/hero-section/hero-image-03.jpg?enhanced&w=500;800';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -169,21 +169,30 @@
 				Boolean
 			) as HTMLElement[];
 
+			// Batch Read: Get all computed transforms first to avoid thrashing
+			const cardTransforms = showcaseCards.map((el) => {
+				return (
+					getComputedStyle(el).getPropertyValue('--card-transform').trim() ||
+					'translate(-50%, -50%)'
+				);
+			});
+
+			// Batch Write: Initial states
 			for (const el of items) {
 				el.style.opacity = '0';
 				el.style.transform = 'translateY(12px)';
 				el.style.filter = '';
 				el.style.willChange = 'opacity, transform';
 			}
-			for (const el of showcaseCards) {
-				const base =
-					getComputedStyle(el).getPropertyValue('--card-transform').trim() ||
-					'translate(-50%, -50%)';
+
+			showcaseCards.forEach((el, index) => {
+				const base = cardTransforms[index];
 				el.style.transition = 'none';
 				el.style.opacity = '0';
 				el.style.transform = `${base} translateY(12px) scale(0.94)`;
 				el.style.willChange = 'opacity, transform';
-			}
+			});
+
 			if (headingEl) headingEl.style.filter = 'blur(5px)';
 			if (leadTextEl) leadTextEl.style.filter = 'blur(5px)';
 
@@ -203,9 +212,7 @@
 				}
 
 				showcaseCards.forEach((el, index) => {
-					const base =
-						getComputedStyle(el).getPropertyValue('--card-transform').trim() ||
-						'translate(-50%, -50%)';
+					const base = cardTransforms[index]; // Use cached value
 
 					animations.push(
 						animate(

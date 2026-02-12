@@ -31,10 +31,10 @@
 >
 	<!-- Header -->
 	<div class="flex items-center justify-between p-6 pb-4">
-		<h3 class="font-mono text-xs font-medium tracking-widest text-muted uppercase">
+		<h2 class="font-mono text-xs font-medium tracking-widest text-muted uppercase">
 			{title}
-		</h3>
-		<h4 class="font-mono text-sm text-muted">5 anos de carreira</h4>
+		</h2>
+		<h3 class="font-mono text-sm text-muted">5 anos de carreira</h3>
 	</div>
 
 	<!-- List -->

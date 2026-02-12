@@ -4,7 +4,7 @@
 // 1. Blog Covers
 const covers = import.meta.glob('../assets/images/blog/blog-covers/*.{jpg,jpeg,png,webp,avif}', {
 	eager: true,
-	query: { enhanced: true, w: '400;800;1200' }
+	query: { enhanced: true, w: '350;500;750;1000' }
 });
 
 export function getBlogCover(basename: string) {

@@ -89,15 +89,19 @@
 			{#each images as item, i (item.id)}
 				<button
 					onclick={() => goTo(i)}
-					class={cn(
-						'h-1.5 w-1.5 rounded-full transition-all duration-300 md:h-2 md:w-2',
-						i === activeIndex ? 'scale-110 bg-fg' : 'cursor-pointer bg-muted/30 hover:bg-muted/50'
-					)}
+					class="flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 hover:bg-muted/10 md:h-10 md:w-10"
 					aria-label={`Go to image ${i + 1} of ${images.length}`}
 					aria-selected={i === activeIndex}
 					role="tab"
 					type="button"
-				></button>
+				>
+					<span
+						class={cn(
+							'h-1.5 w-1.5 rounded-full transition-all duration-300 md:h-2 md:w-2',
+							i === activeIndex ? 'scale-110 bg-fg' : 'bg-muted/30 group-hover:bg-muted/50'
+						)}
+					></span>
+				</button>
 			{/each}
 		</div>
 	</div>

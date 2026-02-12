@@ -24,26 +24,35 @@
 	let container: HTMLElement | undefined = $state();
 	let isHovered = $state(false);
 
-	let controls: ReturnType<typeof animate> | undefined;
+	let controls = $state<ReturnType<typeof animate> | undefined>();
 
 	$effect(() => {
 		if (!container) return;
 
-		const scrollDistance = container.scrollWidth / 4;
-		const startX = direction === 'left' ? 0 : -scrollDistance;
-		const endX = direction === 'left' ? -scrollDistance : 0;
+		let animationFrame: number;
 
-		controls = animate(
-			container,
-			{ transform: [`translateX(${startX}px)`, `translateX(${endX}px)`] },
-			{
-				duration: speed,
-				ease: 'linear',
-				repeat: Infinity
-			}
-		);
+		// Use requestAnimationFrame to avoid forced reflow (reading layout properties immediately after render/effect)
+		animationFrame = requestAnimationFrame(() => {
+			if (!container) return;
+			const scrollDistance = container.scrollWidth / 4;
+			const startX = direction === 'left' ? 0 : -scrollDistance;
+			const endX = direction === 'left' ? -scrollDistance : 0;
 
-		return () => controls?.stop();
+			controls = animate(
+				container,
+				{ transform: [`translateX(${startX}px)`, `translateX(${endX}px)`] },
+				{
+					duration: speed,
+					ease: 'linear',
+					repeat: Infinity
+				}
+			);
+		});
+
+		return () => {
+			if (animationFrame) cancelAnimationFrame(animationFrame);
+			controls?.stop();
+		};
 	});
 
 	$effect(() => {

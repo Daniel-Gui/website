@@ -3,7 +3,7 @@
 
 const images = import.meta.glob('$lib/assets/images/work/work-covers/*.{jpg,jpeg,png,webp,avif}', {
 	eager: true,
-	query: { enhanced: true, w: '350;500;750;1000' }
+	query: { enhanced: true, w: '340;500;750;1000' }
 });
 
 export function getWorkImage(basename: string) {

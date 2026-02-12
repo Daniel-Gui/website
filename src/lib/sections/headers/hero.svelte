@@ -7,9 +7,9 @@
 	import IconFile from '$lib/components/icons/icon-file.svelte';
 	import { cn } from '$lib/utils';
 	import { lenis } from '$lib/utils/lenis.svelte';
-	import heroImage01 from '$lib/assets/images/hero-section/hero-image-01.jpg?enhanced&w=280;500;800';
-	import heroImage02 from '$lib/assets/images/hero-section/hero-image-02.jpg?enhanced&w=280;500;800';
-	import heroImage03 from '$lib/assets/images/hero-section/hero-image-03.jpg?enhanced&w=280;500;800';
+	import heroImage01 from '$lib/assets/images/hero-section/hero-image-01.jpg?enhanced&w=250;280;500;800';
+	import heroImage02 from '$lib/assets/images/hero-section/hero-image-02.jpg?enhanced&w=250;280;500;800';
+	import heroImage03 from '$lib/assets/images/hero-section/hero-image-03.jpg?enhanced&w=250;280;500;800';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -341,7 +341,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
-									sizes="300px"
+									sizes="(max-width: 640px) 250px, 300px"
 								/>
 							</div>
 						</div>
@@ -353,7 +353,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
-									sizes="300px"
+									sizes="(max-width: 640px) 250px, 300px"
 								/>
 							</div>
 						</div>
@@ -365,7 +365,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
-									sizes="300px"
+									sizes="(max-width: 640px) 250px, 300px"
 								/>
 							</div>
 						</div>

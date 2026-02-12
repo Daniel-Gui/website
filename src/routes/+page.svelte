@@ -5,10 +5,13 @@
 
 	// Brand Images
 	import brandBelezaBrasileira from '$lib/assets/images/brands/brand-beleza-brasileira.png?enhanced';
+	import brandGama from '$lib/assets/images/brands/brand-gama.png?enhanced';
 	import brandHidratei from '$lib/assets/images/brands/brand-hidratei.png?enhanced';
 	import brandImunehair from '$lib/assets/images/brands/brand-imunehair.png?enhanced';
 	import brandLimpatinha from '$lib/assets/images/brands/brand-limpatinha.png?enhanced';
-
+	import brandMaisVelox from '$lib/assets/images/brands/brand-mais-velox.png?enhanced';
+	import brandRizu from '$lib/assets/images/brands/brand-rizu.png?enhanced';
+	import brandSartec from '$lib/assets/images/brands/brand-sartec.png?enhanced';
 	import brandXobafinho from '$lib/assets/images/brands/brand-xobafinho.png?enhanced';
 
 	// Widget Images
@@ -102,15 +105,14 @@
 	];
 	const marqueeItems = [
 		{ id: '1', name: 'Beleza Brasileira', src: brandBelezaBrasileira },
-		{ id: '2', name: 'Hidratei', src: brandHidratei },
-		{ id: '3', name: 'Imunehair', src: brandImunehair },
-		{ id: '4', name: 'Limpatinha', src: brandLimpatinha },
-		{ id: '5', name: 'Xô Bafinho', src: brandXobafinho },
-		// Fallbacks for checking layout
-		{ id: '6', name: 'Vercel' },
-		{ id: '7', name: 'Stripe' },
-		{ id: '8', name: 'Linear' },
-		{ id: '9', name: 'Raycast' }
+		{ id: '2', name: 'Gama', src: brandGama },
+		{ id: '3', name: 'Hidratei', src: brandHidratei },
+		{ id: '4', name: 'Imunehair', src: brandImunehair },
+		{ id: '5', name: 'Limpatinha', src: brandLimpatinha },
+		{ id: '6', name: 'Mais Veloz', src: brandMaisVelox },
+		{ id: '7', name: 'Rizu', src: brandRizu },
+		{ id: '8', name: 'Sartec', src: brandSartec },
+		{ id: '9', name: 'Xô Bafinho', src: brandXobafinho }
 	];
 </script>
 

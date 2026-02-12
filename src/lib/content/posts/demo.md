@@ -1,6 +1,6 @@
 ---
 title: Showcase de Componentes de Conteúdo
-published: true
+published: false
 excerpt: Uma demonstração completa de todos os componentes visuais disponíveis para uso em artigos e estudos de caso.
 date: '2026-01-30'
 readTime: 5 minutos

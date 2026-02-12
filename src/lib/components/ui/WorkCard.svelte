@@ -12,6 +12,7 @@
 	}
 
 	let { work, hidden = false, image = undefined }: Props = $props();
+	let loaded = $state(false);
 </script>
 
 <a
@@ -31,7 +32,10 @@
 				src={image}
 				alt={work.title}
 				loading="lazy"
-				class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
+				class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105 {loaded
+					? 'opacity-100'
+					: 'opacity-0'}"
+				onload={() => (loaded = true)}
 			/>
 		{:else if work.imageBasename}
 			<!-- Fallback for legacy/missing images -->
@@ -42,9 +46,20 @@
 					src="/images/works-covers/{work.imageBasename}.webp"
 					alt={work.title}
 					loading="lazy"
-					class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
+					class="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105 {loaded
+						? 'opacity-100'
+						: 'opacity-0'}"
+					onload={() => (loaded = true)}
 				/>
 			</picture>
+		{/if}
+
+		<!-- Skeleton Loader -->
+		{#if !loaded}
+			<div
+				class="absolute inset-0 animate-pulse bg-neutral-300 dark:bg-neutral-700"
+				aria-hidden="true"
+			></div>
 		{/if}
 
 		<!-- Overlay Gradient (decorative) -->

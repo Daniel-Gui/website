@@ -386,8 +386,7 @@
 						bind:this={leadTextEl}
 						data-hero-item
 					>
-						Ux & Brand Designer, Desenvolvedor Frontend e intusiasta de tecnologia. Atualmente
-						espalhando beleza no grupo <span class="font-serif italic">Ei,Beleza?</span>.
+						Desenvolvedor Frontend, UX, Product & Brand Designer.
 					</p>
 
 					<div class="chip flex items-center gap-3" bind:this={badgeEl} data-hero-item>

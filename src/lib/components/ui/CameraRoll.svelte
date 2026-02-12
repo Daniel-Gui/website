@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { cn } from '$lib/utils';
 
-	interface ImageItem {
+	interface MediaItem {
+		type: 'image' | 'video';
 		src: any;
 		alt: string;
 		id: string;
 	}
 
 	interface Props {
-		images: ImageItem[];
+		items: MediaItem[];
 		class?: string;
 		/** Enable auto-play slideshow */
 		autoPlay?: boolean;
@@ -16,35 +17,35 @@
 		interval?: number;
 	}
 
-	let { images, class: className = '', autoPlay = true, interval = 2000 }: Props = $props();
+	let { items, class: className = '', autoPlay = true, interval = 3000 }: Props = $props();
 
 	let activeIndex = $state(0);
 	let isPaused = $state(false);
 
 	/**
-	 * Navigate to the specified image index
+	 * Navigate to the specified item index
 	 */
 	function goTo(index: number) {
-		activeIndex = Math.max(0, Math.min(index, images.length - 1));
+		activeIndex = Math.max(0, Math.min(index, items.length - 1));
 	}
 
 	/**
-	 * Navigate to next image (wraps around)
+	 * Navigate to next item (wraps around)
 	 */
 	function next() {
-		activeIndex = (activeIndex + 1) % images.length;
+		activeIndex = (activeIndex + 1) % items.length;
 	}
 
 	/**
-	 * Navigate to previous image (wraps around)
+	 * Navigate to previous item (wraps around)
 	 */
 	function prev() {
-		activeIndex = (activeIndex - 1 + images.length) % images.length;
+		activeIndex = (activeIndex - 1 + items.length) % items.length;
 	}
 
 	// Auto-play effect
 	$effect(() => {
-		if (!autoPlay || isPaused || images.length <= 1) return;
+		if (!autoPlay || isPaused || items.length <= 1) return;
 
 		const timer = setInterval(() => {
 			next();
@@ -76,7 +77,7 @@
 	onblur={() => (isPaused = false)}
 	onkeydown={handleKeydown}
 	role="region"
-	aria-label="Image Carousel"
+	aria-label="Media Carousel"
 	aria-roledescription="carousel"
 	tabindex="0"
 >
@@ -86,11 +87,11 @@
 			>Camera Roll</span
 		>
 		<div class="flex gap-1.5" role="tablist" aria-label="Slide indicators">
-			{#each images as item, i (item.id)}
+			{#each items as item, i (item.id)}
 				<button
 					onclick={() => goTo(i)}
 					class="flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 hover:bg-muted/10 md:h-10 md:w-10"
-					aria-label={`Go to image ${i + 1} of ${images.length}`}
+					aria-label={`Go to item ${i + 1} of ${items.length}`}
 					aria-selected={i === activeIndex}
 					role="tab"
 					type="button"
@@ -106,11 +107,11 @@
 		</div>
 	</div>
 
-	<!-- Single Image Display -->
+	<!-- Single Item Display -->
 	<div
 		class="relative aspect-4/3 min-h-48 flex-1 overflow-hidden rounded-xl md:aspect-auto md:min-h-0"
 	>
-		{#each images as img, i (img.id)}
+		{#each items as item, i (item.id)}
 			<div
 				class={cn(
 					'absolute inset-0 transition-opacity duration-500 ease-out',
@@ -122,13 +123,19 @@
 				<div
 					class="group relative h-full w-full overflow-hidden rounded-xl border border-border/10 bg-overlay/5"
 				>
-					<enhanced:img
-						src={img.src}
-						alt={img.alt}
-						class="h-full w-full object-cover"
-						loading={i === 0 ? 'eager' : 'lazy'}
-						draggable="false"
-					/>
+					{#if item.type === 'video'}
+						<video src={item.src} class="h-full w-full object-cover" autoplay loop muted playsinline
+						></video>
+					{:else}
+						<enhanced:img
+							src={item.src}
+							alt={item.alt}
+							class="h-full w-full object-cover"
+							loading={i === 0 ? 'eager' : 'lazy'}
+							draggable="false"
+						/>
+					{/if}
+
 					<!-- Vignette/Gloss overlay -->
 					<div
 						class="pointer-events-none absolute inset-0 rounded-xl mix-blend-overlay ring-1 ring-white/10 ring-inset"

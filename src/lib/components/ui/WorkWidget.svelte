@@ -18,7 +18,7 @@
 	}
 
 	let {
-		title = 'EXPERIÊNCIA',
+		title = 'EXPERIÊNCIAS',
 		items,
 		linkedinUrl,
 		marqueeItems = [],
@@ -67,11 +67,11 @@
 							{item.role}
 						</span>
 						<span
-							class="block transition-colors sm:inline sm:before:text-muted sm:before:content-['at_']"
+							class="block transition-colors sm:inline sm:before:px-2 sm:before:text-muted sm:before:content-['—']"
 							class:text-fg={item.current}
 							class:text-muted={!item.current}
 						>
-							<span class="sm:hidden">at</span>
+							<span class="sm:hidden"></span>
 							{item.company}
 						</span>
 					</div>

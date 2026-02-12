@@ -2,6 +2,21 @@
 	import Hero from '$lib/sections/headers/hero.svelte';
 	import GalleryWorks from '$lib/sections/mains/gallery-works.svelte';
 	import GalleryPosts from '$lib/sections/mains/gallery-posts.svelte';
+
+	// Brand Images
+	import brandBelezaBrasileira from '$lib/assets/images/brands/brand-beleza-brasileira.png?enhanced';
+	import brandGama from '$lib/assets/images/brands/brand-gama.png?enhanced';
+	import brandHidratei from '$lib/assets/images/brands/brand-hidratei.png?enhanced';
+	import brandImunehair from '$lib/assets/images/brands/brand-imunehair.png?enhanced';
+	import brandLimpatinha from '$lib/assets/images/brands/brand-limpatinha.png?enhanced';
+	import brandMaisVelox from '$lib/assets/images/brands/brand-mais-velox.png?enhanced';
+	import brandRizu from '$lib/assets/images/brands/brand-rizu.png?enhanced';
+	import brandSartec from '$lib/assets/images/brands/brand-sartec.png?enhanced';
+	import brandXobafinho from '$lib/assets/images/brands/brand-xobafinho.png?enhanced';
+
+	// Widget Images
+	import cameraRoll01 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-01.jpg?enhanced';
+	import cameraRoll02 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-02.jpg?enhanced';
 	import SEO from '$lib/components/seo/SEO.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
 	import { lenis } from '$lib/utils/lenis.svelte';
@@ -79,34 +94,25 @@
 	const cameraRollImages = [
 		{
 			id: '1',
-			src: 'https://images.unsplash.com/photo-1628157588553-53960fb9bbce?q=80&w=1000&auto=format&fit=crop',
+			src: cameraRoll01,
 			alt: 'Coffee shop view'
 		},
 		{
 			id: '2',
-			src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1000&auto=format&fit=crop',
+			src: cameraRoll02,
 			alt: 'Tech stack books'
-		},
-		{
-			id: '3',
-			src: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop',
-			alt: 'Vintage computer'
-		},
-		{
-			id: '4',
-			src: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
-			alt: 'Cyberpunk city'
 		}
 	];
 	const marqueeItems = [
-		{ id: '1', name: 'Beleza Brasileira', logoBasename: 'brand-beleza-brasileira' },
-		{ id: '2', name: 'Hidratei', logoBasename: 'brand-hidratei' },
-		// Fallbacks for checking layout
-		{ id: '3', name: 'Vercel' },
-		{ id: '4', name: 'Stripe' },
-		{ id: '5', name: 'Linear' },
-		{ id: '6', name: 'Raycast' }
-		// { id: '7', name: 'Svelte' }
+		{ id: '1', name: 'Beleza Brasileira', src: brandBelezaBrasileira },
+		{ id: '2', name: 'Gama', src: brandGama },
+		{ id: '3', name: 'Hidratei', src: brandHidratei },
+		{ id: '4', name: 'Imunehair', src: brandImunehair },
+		{ id: '5', name: 'Limpatinha', src: brandLimpatinha },
+		{ id: '6', name: 'Mais Veloz', src: brandMaisVelox },
+		{ id: '7', name: 'Rizu', src: brandRizu },
+		{ id: '8', name: 'Sartec', src: brandSartec },
+		{ id: '9', name: 'Xô Bafinho', src: brandXobafinho }
 	];
 </script>
 
@@ -119,9 +125,6 @@
 
 <main>
 	<Hero />
-	<!--
-	<Marquee items={marqueeItems} />
-	-->
 	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 		<CameraRoll images={cameraRollImages} class="w-full lg:col-span-1" />
 		<WorkWidget

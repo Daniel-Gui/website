@@ -4,20 +4,12 @@
 	import IconArrowUpRight from '$lib/components/icons/icon-arrow-up-right.svelte';
 	import TechBadge from '$lib/components/ui/TechBadge.svelte';
 	import type { PostItem } from '../../types/schemas';
+	import PostCard from '$lib/components/ui/PostCard.svelte';
 
 	let { posts }: { posts: PostItem[] } = $props();
 
 	let sectionEl = $state<HTMLElement | null>(null);
 	let revealed = $state(false);
-
-	function formatDate(dateString: string) {
-		if (typeof window === 'undefined') return dateString;
-		return new Intl.DateTimeFormat('pt-BR', {
-			day: 'numeric',
-			month: 'short',
-			year: 'numeric'
-		}).format(new Date(dateString));
-	}
 
 	$effect(() => {
 		if (typeof window === 'undefined') return;
@@ -134,72 +126,7 @@
 		<!-- Posts List -->
 		<div class="grid gap-6 md:grid-cols-2">
 			{#each posts.slice(0, 6) as post (post.slug)}
-				<article
-					class="card-interactive group relative flex flex-col gap-6 p-4 sm:p-5"
-					class:gallery-hidden={!revealed}
-					data-post-card
-				>
-					<!-- Cover Image (Visible) -->
-					<div
-						class="bg-subtle relative aspect-2/1 w-full overflow-hidden rounded-lg"
-						style:view-transition-name={`blog-cover-${post.slug}`}
-					>
-						<picture class="absolute inset-0 h-full w-full">
-							<source
-								srcset="/images/blog-covers/{post.coverImageBasename}.avif"
-								type="image/avif"
-							/>
-							<source
-								srcset="/images/blog-covers/{post.coverImageBasename}.webp"
-								type="image/webp"
-							/>
-							<img
-								src="/images/blog-covers/{post.coverImageBasename}.webp"
-								alt=""
-								loading="lazy"
-								class="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
-							/>
-						</picture>
-					</div>
-
-					<div class="flex flex-1 flex-col justify-between gap-4">
-						<div class="space-y-3">
-							<div class="text-muted-foreground flex items-center justify-between text-xs">
-								<div class="flex items-center gap-2">
-									<span class="font-mono uppercase">{post.tags[0]}</span>
-									<span class="text-black/20 dark:text-white/20">/</span>
-									<time datetime={post.date} class="font-mono">
-										{formatDate(post.date)}
-									</time>
-								</div>
-							</div>
-
-							<h3
-								class="text-lg font-semibold tracking-tight text-balance transition-colors group-hover:text-accent sm:text-xl"
-								style:view-transition-name={`blog-title-${post.slug}`}
-							>
-								<a
-									href={resolve(`/blog/${post.slug}`, {})}
-									class="before:absolute before:inset-0 focus:outline-none"
-								>
-									{post.title}
-								</a>
-							</h3>
-
-							<p class="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-								{post.excerpt}
-							</p>
-
-							{#if post.tags.length > 0}
-								<div class="flex flex-wrap gap-2 pt-1">
-									{#each post.tags as tag (tag)}
-										<TechBadge {tag} />
-									{/each}
-								</div>
-							{/if}
-						</div>
-					</div>
-				</article>
+				<PostCard {post} hidden={!revealed} />
 			{/each}
 		</div>
 
@@ -219,9 +146,5 @@
 	.gallery-hidden {
 		opacity: 0;
 		transform: translateY(16px);
-	}
-
-	article.gallery-hidden {
-		transform: translateY(24px);
 	}
 </style>

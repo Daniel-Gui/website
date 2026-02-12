@@ -7,6 +7,9 @@
 	import IconFile from '$lib/components/icons/icon-file.svelte';
 	import { cn } from '$lib/utils';
 	import { lenis } from '$lib/utils/lenis.svelte';
+	import heroImage01 from '$lib/assets/images/hero-section/hero-image-01.jpg?enhanced';
+	import heroImage02 from '$lib/assets/images/hero-section/hero-image-02.jpg?enhanced';
+	import heroImage03 from '$lib/assets/images/hero-section/hero-image-03.jpg?enhanced';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -324,43 +327,37 @@
 				<div class="hero-showcase-bleed">
 					<div bind:this={showcaseEl} class="hero-showcase" aria-hidden="true" data-hero-item>
 						<div class="hero-showcase-card hero-showcase-left" data-showcase-card>
-							<picture class="hero-showcase-media">
-								<source srcset="/images/hero/hero-image-01.avif" type="image/avif" />
-								<source srcset="/images/hero/hero-image-01.webp" type="image/webp" />
-								<img
-									src="/images/hero/hero-image-01.webp"
-									alt=""
+							<div class="hero-showcase-media">
+								<enhanced:img
+									src={heroImage01}
+									alt="card-imagem-01"
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
 								/>
-							</picture>
+							</div>
 						</div>
 						<div class="hero-showcase-card hero-showcase-center" data-showcase-card>
-							<picture class="hero-showcase-media">
-								<source srcset="/images/hero/hero-image-02.avif" type="image/avif" />
-								<source srcset="/images/hero/hero-image-02.webp" type="image/webp" />
-								<img
-									src="/images/hero/hero-image-02.webp"
-									alt=""
+							<div class="hero-showcase-media">
+								<enhanced:img
+									src={heroImage02}
+									alt="card-imagem-02"
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
 								/>
-							</picture>
+							</div>
 						</div>
 						<div class="hero-showcase-card hero-showcase-right" data-showcase-card>
-							<picture class="hero-showcase-media">
-								<source srcset="/images/hero/hero-image-03.avif" type="image/avif" />
-								<source srcset="/images/hero/hero-image-03.webp" type="image/webp" />
-								<img
-									src="/images/hero/hero-image-03.webp"
-									alt=""
+							<div class="hero-showcase-media">
+								<enhanced:img
+									src={heroImage03}
+									alt="card-imagem-03"
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
 								/>
-							</picture>
+							</div>
 						</div>
 					</div>
 				</div>

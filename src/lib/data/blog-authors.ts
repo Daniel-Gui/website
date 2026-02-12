@@ -8,7 +8,7 @@ export const BLOG_AUTHORS = {
 	daniel: {
 		id: 'daniel',
 		name: 'Daniel Guimarães',
-		avatarBasename: 'post-avatar-dan'
+		avatarBasename: 'content-author-daniel-guimaraes'
 	}
 } as const satisfies Record<string, BlogAuthor>;
 

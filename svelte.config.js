@@ -2,6 +2,7 @@ import { mdsvex } from 'mdsvex';
 import adapter from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { remarkCodeToComponent } from './src/lib/utils/remark-code-to-component.js';
+import { remarkImageToComponent } from './src/lib/utils/remark-image-to-component.js';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,7 +12,7 @@ const config = {
 		vitePreprocess(),
 		mdsvex({
 			extensions: ['.md', '.svx'],
-			remarkPlugins: [remarkCodeToComponent]
+			remarkPlugins: [remarkCodeToComponent, remarkImageToComponent]
 		})
 	],
 	kit: { adapter: adapter() },

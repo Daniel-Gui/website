@@ -8,6 +8,7 @@
 	import type { PageData } from './$types';
 	import type { Component } from 'svelte';
 	import type { WorkItem } from '$lib/types/schemas';
+	import { getWorkImage } from '$lib/data/work-images';
 
 	let { data }: { data: PageData & { Content: Component; work: WorkItem } } = $props();
 	let work = $derived(data.work);
@@ -75,20 +76,30 @@
 					class="scrollbar-hide ml-[calc(50%-50vw)] flex w-screen snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-8 lg:ml-0 lg:block lg:w-full lg:space-y-12 lg:overflow-visible lg:px-0 lg:pb-0"
 				>
 					{#each work.galleryImages as imageBasename, i (`${imageBasename}-${i}`)}
+						{@const image = getWorkImage(imageBasename)}
 						<div
 							class="media-container w-[85vw] shrink-0 snap-center lg:w-full"
 							style:view-transition-name={i === 0 ? `work-image-${work.slug}` : undefined}
 						>
-							<picture class="block w-full">
-								<source srcset="/images/works-covers/{imageBasename}.avif" type="image/avif" />
-								<source srcset="/images/works-covers/{imageBasename}.webp" type="image/webp" />
-								<img
-									src="/images/works-covers/{imageBasename}.webp"
+							{#if image}
+								<enhanced:img
+									src={image}
 									alt={`${work.title} - Imagem ${i + 1}`}
 									loading={i === 0 ? 'eager' : 'lazy'}
 									class="h-auto w-full object-cover"
 								/>
-							</picture>
+							{:else}
+								<picture class="block w-full">
+									<source srcset="/images/works-covers/{imageBasename}.avif" type="image/avif" />
+									<source srcset="/images/works-covers/{imageBasename}.webp" type="image/webp" />
+									<img
+										src="/images/works-covers/{imageBasename}.webp"
+										alt={`${work.title} - Imagem ${i + 1}`}
+										loading={i === 0 ? 'eager' : 'lazy'}
+										class="h-auto w-full object-cover"
+									/>
+								</picture>
+							{/if}
 						</div>
 					{/each}
 				</div>

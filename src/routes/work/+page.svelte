@@ -8,6 +8,7 @@
 	import type { WorkCategory } from '$lib/data/work-categories';
 	import type { WorkItem } from '$lib/types/schemas';
 	import { animateCardsIn, animateCardsOut, prefersReducedMotion } from '$lib/utils/animate-cards';
+	import { getWorkImage } from '$lib/data/work-images';
 
 	let { data }: { data: PageData } = $props();
 	let works = $derived(data.works);
@@ -115,7 +116,10 @@
 		<!-- Grid -->
 		<div bind:this={gridEl} class="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
 			{#each animatedWorks as work (work.slug)}
-				<WorkCard {work} />
+				<WorkCard
+					{work}
+					image={work.imageBasename ? getWorkImage(work.imageBasename) : undefined}
+				/>
 			{/each}
 		</div>
 	</div>

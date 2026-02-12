@@ -2,7 +2,11 @@
 	import { animate } from 'motion';
 
 	interface Props {
-		items?: { id: string; name: string; logo?: string; logoBasename?: string }[];
+		items?: {
+			id: string;
+			name: string;
+			src?: any; // strict type is difficult with enhanced-img, using any
+		}[];
 		speed?: number; // Duration in seconds for one full loop
 		direction?: 'left' | 'right';
 		pauseOnHover?: boolean;
@@ -71,22 +75,11 @@
 				class="group relative flex shrink-0 items-center justify-center grayscale transition-all duration-300 hover:grayscale-0"
 				aria-hidden={i >= items.length ? 'true' : undefined}
 			>
-				{#if item.logoBasename}
-					<picture class="flex items-center justify-center">
-						<source srcset="/images/brands/{item.logoBasename}.avif" type="image/avif" />
-						<source srcset="/images/brands/{item.logoBasename}.webp" type="image/webp" />
-						<img
-							src="/images/brands/{item.logoBasename}.webp"
-							alt={item.name}
-							class="h-8 w-auto max-w-[150px] object-contain opacity-60 transition-opacity group-hover:opacity-100 dark:invert"
-							loading="lazy"
-						/>
-					</picture>
-				{:else if item.logo}
-					<img
-						src={item.logo}
+				{#if item.src}
+					<enhanced:img
+						src={item.src}
 						alt={item.name}
-						class="h-8 max-w-[150px] object-contain opacity-60 transition-opacity group-hover:opacity-100 dark:invert"
+						class="h-8 w-auto max-w-[150px] object-contain opacity-60 transition-opacity group-hover:opacity-100 dark:invert"
 						loading="lazy"
 					/>
 				{:else}

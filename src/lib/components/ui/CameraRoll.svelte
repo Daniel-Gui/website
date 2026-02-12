@@ -2,7 +2,7 @@
 	import { cn } from '$lib/utils';
 
 	interface ImageItem {
-		src: string;
+		src: any;
 		alt: string;
 		id: string;
 	}
@@ -118,7 +118,7 @@
 				<div
 					class="group relative h-full w-full overflow-hidden rounded-xl border border-border/10 bg-overlay/5"
 				>
-					<img
+					<enhanced:img
 						src={img.src}
 						alt={img.alt}
 						class="h-full w-full object-cover"

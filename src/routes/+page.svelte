@@ -8,7 +8,12 @@
 	import brandHidratei from '$lib/assets/images/brands/brand-hidratei.png?enhanced';
 	import brandImunehair from '$lib/assets/images/brands/brand-imunehair.png?enhanced';
 	import brandLimpatinha from '$lib/assets/images/brands/brand-limpatinha.png?enhanced';
+
 	import brandXobafinho from '$lib/assets/images/brands/brand-xobafinho.png?enhanced';
+
+	// Widget Images
+	import cameraRoll01 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-01.jpg?enhanced';
+	import cameraRoll02 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-02.jpg?enhanced';
 	import SEO from '$lib/components/seo/SEO.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
 	import { lenis } from '$lib/utils/lenis.svelte';
@@ -86,23 +91,13 @@
 	const cameraRollImages = [
 		{
 			id: '1',
-			src: 'https://images.unsplash.com/photo-1628157588553-53960fb9bbce?q=80&w=1000&auto=format&fit=crop',
+			src: cameraRoll01,
 			alt: 'Coffee shop view'
 		},
 		{
 			id: '2',
-			src: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1000&auto=format&fit=crop',
+			src: cameraRoll02,
 			alt: 'Tech stack books'
-		},
-		{
-			id: '3',
-			src: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop',
-			alt: 'Vintage computer'
-		},
-		{
-			id: '4',
-			src: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop',
-			alt: 'Cyberpunk city'
 		}
 	];
 	const marqueeItems = [

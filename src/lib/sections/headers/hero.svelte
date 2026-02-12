@@ -334,6 +334,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
+									sizes="300px"
 								/>
 							</div>
 						</div>
@@ -345,6 +346,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
+									sizes="300px"
 								/>
 							</div>
 						</div>
@@ -356,6 +358,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
+									sizes="300px"
 								/>
 							</div>
 						</div>

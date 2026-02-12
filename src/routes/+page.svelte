@@ -2,6 +2,13 @@
 	import Hero from '$lib/sections/headers/hero.svelte';
 	import GalleryWorks from '$lib/sections/mains/gallery-works.svelte';
 	import GalleryPosts from '$lib/sections/mains/gallery-posts.svelte';
+
+	// Brand Images
+	import brandBelezaBrasileira from '$lib/assets/images/brands/brand-beleza-brasileira.png?enhanced';
+	import brandHidratei from '$lib/assets/images/brands/brand-hidratei.png?enhanced';
+	import brandImunehair from '$lib/assets/images/brands/brand-imunehair.png?enhanced';
+	import brandLimpatinha from '$lib/assets/images/brands/brand-limpatinha.png?enhanced';
+	import brandXobafinho from '$lib/assets/images/brands/brand-xobafinho.png?enhanced';
 	import SEO from '$lib/components/seo/SEO.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
 	import { lenis } from '$lib/utils/lenis.svelte';
@@ -99,14 +106,16 @@
 		}
 	];
 	const marqueeItems = [
-		{ id: '1', name: 'Beleza Brasileira', logoBasename: 'brand-beleza-brasileira' },
-		{ id: '2', name: 'Hidratei', logoBasename: 'brand-hidratei' },
+		{ id: '1', name: 'Beleza Brasileira', src: brandBelezaBrasileira },
+		{ id: '2', name: 'Hidratei', src: brandHidratei },
+		{ id: '3', name: 'Imunehair', src: brandImunehair },
+		{ id: '4', name: 'Limpatinha', src: brandLimpatinha },
+		{ id: '5', name: 'Xô Bafinho', src: brandXobafinho },
 		// Fallbacks for checking layout
-		{ id: '3', name: 'Vercel' },
-		{ id: '4', name: 'Stripe' },
-		{ id: '5', name: 'Linear' },
-		{ id: '6', name: 'Raycast' }
-		// { id: '7', name: 'Svelte' }
+		{ id: '6', name: 'Vercel' },
+		{ id: '7', name: 'Stripe' },
+		{ id: '8', name: 'Linear' },
+		{ id: '9', name: 'Raycast' }
 	];
 </script>
 

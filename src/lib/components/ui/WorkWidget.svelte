@@ -13,7 +13,7 @@
 		title?: string;
 		items: WorkExperience[];
 		linkedinUrl: string;
-		marqueeItems?: { id: string; name: string; logo?: string }[];
+		marqueeItems?: { id: string; name: string; src?: any }[];
 		class?: string;
 	}
 

@@ -9,6 +9,7 @@
 	import type { Component } from 'svelte';
 	import type { WorkItem } from '$lib/types/schemas';
 	import { getWorkImage } from '$lib/data/work-images';
+	import GalleryImage from '$lib/components/ui/GalleryImage.svelte';
 
 	let { data }: { data: PageData & { Content: Component; work: WorkItem } } = $props();
 	let work = $derived(data.work);
@@ -37,11 +38,6 @@
 								<span class="font-mono text-sm tracking-widest text-accent uppercase">
 									// {work.year}
 								</span>
-								{#if work.category}
-									<span class="chip text-xs capitalize">
-										{work.category}
-									</span>
-								{/if}
 							</div>
 							{#if work.link}
 								<a
@@ -81,25 +77,13 @@
 							class="media-container w-[85vw] shrink-0 snap-center lg:w-full"
 							style:view-transition-name={i === 0 ? `work-image-${work.slug}` : undefined}
 						>
-							{#if image}
-								<enhanced:img
-									src={image}
-									alt={`${work.title} - Imagem ${i + 1}`}
-									loading={i === 0 ? 'eager' : 'lazy'}
-									class="h-auto w-full object-cover"
-								/>
-							{:else}
-								<picture class="block w-full">
-									<source srcset="/images/works-covers/{imageBasename}.avif" type="image/avif" />
-									<source srcset="/images/works-covers/{imageBasename}.webp" type="image/webp" />
-									<img
-										src="/images/works-covers/{imageBasename}.webp"
-										alt={`${work.title} - Imagem ${i + 1}`}
-										loading={i === 0 ? 'eager' : 'lazy'}
-										class="h-auto w-full object-cover"
-									/>
-								</picture>
-							{/if}
+							<GalleryImage
+								{image}
+								basename={imageBasename}
+								alt={`${work.title} - Imagem ${i + 1}`}
+								loading={i === 0 ? 'eager' : 'lazy'}
+								class="h-auto w-full"
+							/>
 						</div>
 					{/each}
 				</div>
@@ -116,11 +100,6 @@
 									<span class="font-mono text-sm tracking-widest text-accent uppercase">
 										// {work.year}
 									</span>
-									{#if work.category}
-										<span class="chip text-xs capitalize">
-											{work.category}
-										</span>
-									{/if}
 								</div>
 								{#if work.link}
 									<a

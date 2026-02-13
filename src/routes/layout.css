@@ -4,7 +4,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* Fonts */
-@import '@fontsource-variable/archivo';
+@import '@fontsource-variable/funnel-display';
 @import '@fontsource-variable/jetbrains-mono';
 
 /* ============================================
@@ -15,7 +15,7 @@
 
 @theme {
 	/* Typography */
-	--font-sans: 'Archivo Variable', sans-serif;
+	--font-sans: 'Funnel Display Variable', sans-serif;
 	--font-mono: 'JetBrains Mono Variable', monospace;
 
 	/* Core Colors - Semantic */
@@ -51,22 +51,22 @@
 @layer base {
 	:root {
 		/* ========== LIGHT THEME ========== */
-		
+
 		/* Core Colors */
-		--bg: 253 253 253;              /* #FDFDFD - Resend White */
-		--fg: 0 0 0;                    /* #000000 - Resend Black */
-		--muted: 113 113 122;           /* Neutral gray for secondary text */
-		--surface: 255 255 255;         /* Pure white for elevated surfaces */
-		--overlay: 0 0 0;               /* For overlay backgrounds */
+		--bg: 253 253 253; /* #FDFDFD - Resend White */
+		--fg: 0 0 0; /* #000000 - Resend Black */
+		--muted: 113 113 122; /* Neutral gray for secondary text */
+		--surface: 255 255 255; /* Pure white for elevated surfaces */
+		--overlay: 0 0 0; /* For overlay backgrounds */
 
 		/* Semantic Colors */
-		--accent: 0 119 255;            /* #0077FF - Resend Blue */
-		--success: 16 185 129;          /* Green */
-		--warning: 245 158 11;          /* Amber */
-		--error: 239 68 68;             /* Red */
+		--accent: 0 119 255; /* #0077FF - Resend Blue */
+		--success: 16 185 129; /* Green */
+		--warning: 245 158 11; /* Amber */
+		--error: 239 68 68; /* Red */
 
 		/* Borders */
-		--border: 0 0 0;                /* For border opacity classes */
+		--border: 0 0 0; /* For border opacity classes */
 		--border-subtle: 0 0 0;
 
 		/* Focus */
@@ -93,19 +93,19 @@
 
 	html.dark {
 		/* ========== DARK THEME (Primary - Resend Dark-First) ========== */
-		
+
 		/* Core Colors */
-		--bg: 0 0 0;                    /* #000000 - Resend Black */
-		--fg: 253 253 253;              /* #FDFDFD - Resend White */
-		--muted: 161 161 170;           /* Neutral gray for secondary text */
-		--surface: 22 23 26;            /* #16171A - Resend Gray bg */
-		--overlay: 255 255 255;         /* For overlay backgrounds */
+		--bg: 0 0 0; /* #000000 - Resend Black */
+		--fg: 253 253 253; /* #FDFDFD - Resend White */
+		--muted: 161 161 170; /* Neutral gray for secondary text */
+		--surface: 22 23 26; /* #16171A - Resend Gray bg */
+		--overlay: 255 255 255; /* For overlay backgrounds */
 
 		/* Semantic Colors - Dark variants */
-		--accent: 112 184 255;          /* #70B8FF - Resend Blue fg */
-		--success: 70 254 165;          /* #46FEA5 - Resend Green fg */
-		--warning: 255 202 22;          /* #FFCA16 - Resend Amber fg */
-		--error: 255 149 146;           /* #FF9592 - Resend Red fg */
+		--accent: 112 184 255; /* #70B8FF - Resend Blue fg */
+		--success: 70 254 165; /* #46FEA5 - Resend Green fg */
+		--warning: 255 202 22; /* #FFCA16 - Resend Amber fg */
+		--error: 255 149 146; /* #FF9592 - Resend Red fg */
 
 		/* Borders */
 		--border: 255 255 255;
@@ -216,7 +216,7 @@
 
 @layer utilities {
 	/* ========== Background Utilities ========== */
-	
+
 	/* Subtle background - replaces bg-black/5 dark:bg-white/5 */
 	.bg-subtle {
 		background: rgb(var(--overlay) / 0.05);
@@ -254,7 +254,7 @@
 	}
 
 	/* ========== Border Utilities ========== */
-	
+
 	/* Subtle border - replaces border-black/5 dark:border-white/5 */
 	.border-subtle {
 		border-color: rgb(var(--border) / 0.05);
@@ -284,7 +284,7 @@
 	}
 
 	/* ========== Text Utilities ========== */
-	
+
 	.text-accent {
 		color: rgb(var(--accent));
 	}
@@ -306,7 +306,7 @@
 	}
 
 	/* ========== Glass Effect ========== */
-	
+
 	.glass {
 		background: rgb(var(--surface) / 0.6);
 		border: 1px solid rgb(var(--border) / 0.1);
@@ -319,12 +319,14 @@
 		background: rgb(var(--surface) / 0.75);
 		border: 1px solid rgb(var(--border) / 0.12);
 		box-shadow: var(--shadow-lg);
-		backdrop-filter: blur(calc(var(--glass-blur) + 10px)) saturate(calc(var(--glass-saturate) + 0.1));
-		-webkit-backdrop-filter: blur(calc(var(--glass-blur) + 10px)) saturate(calc(var(--glass-saturate) + 0.1));
+		backdrop-filter: blur(calc(var(--glass-blur) + 10px))
+			saturate(calc(var(--glass-saturate) + 0.1));
+		-webkit-backdrop-filter: blur(calc(var(--glass-blur) + 10px))
+			saturate(calc(var(--glass-saturate) + 0.1));
 	}
 
 	/* ========== Shadow Utilities ========== */
-	
+
 	.shadow-subtle {
 		box-shadow: var(--shadow-sm);
 	}
@@ -338,13 +340,13 @@
 	}
 
 	/* ========== Focus Utilities ========== */
-	
+
 	.ring-focus {
 		box-shadow: 0 0 0 3px rgb(var(--focus) / 0.2);
 	}
 
 	/* ========== Text Wrapping ========== */
-	
+
 	.text-balance {
 		text-wrap: balance;
 	}
@@ -396,7 +398,9 @@
 
 	.btn:focus-visible {
 		outline: none;
-		box-shadow: var(--shadow-sm), 0 0 0 3px rgb(var(--focus) / 0.2);
+		box-shadow:
+			var(--shadow-sm),
+			0 0 0 3px rgb(var(--focus) / 0.2);
 	}
 
 	.btn-ghost {
@@ -506,7 +510,9 @@
 		border-radius: var(--radius-full);
 		color: rgb(var(--muted));
 		line-height: 1;
-		transition: color 0.2s ease, background 0.2s ease;
+		transition:
+			color 0.2s ease,
+			background 0.2s ease;
 	}
 
 	.segmented-item:hover {

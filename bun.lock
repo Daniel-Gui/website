@@ -5,6 +5,7 @@
       "name": "website",
       "dependencies": {
         "@fontsource-variable/archivo": "^5.2.8",
+        "@fontsource-variable/funnel-display": "^5.2.8",
         "@fontsource-variable/jetbrains-mono": "^5.2.8",
         "clsx": "^2.1.1",
         "lenis": "^1.3.17",
@@ -137,6 +138,8 @@
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.4.1", "", { "dependencies": { "@eslint/core": "^0.17.0", "levn": "^0.4.1" } }, "sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA=="],
 
     "@fontsource-variable/archivo": ["@fontsource-variable/archivo@5.2.8", "", {}, "sha512-R8EotpKHEsKv7d7oiUyjyPENRi2gtAlwdTlzDCOs5BfX/LJP7jvUYJ4fF/qyd3rnbgk3r1xp33g1P57bYJfhzQ=="],
+
+    "@fontsource-variable/funnel-display": ["@fontsource-variable/funnel-display@5.2.8", "", {}, "sha512-krvlZmy6EoFdmCKldTHpAzxxt5gFRXebueyDZ7DUIQ37YRAD8SrH0ljwoLOL/ZSCD5jHqKS6EhFPXLuhuJrOGA=="],
 
     "@fontsource-variable/jetbrains-mono": ["@fontsource-variable/jetbrains-mono@5.2.8", "", {}, "sha512-WBA9elru6Jdp5df2mES55wuOO0WIrn3kpXnI4+W2ek5u3ZgLS9XS4gmIlcQhiZOWEKl95meYdvK7xI+ETLCq/Q=="],
 

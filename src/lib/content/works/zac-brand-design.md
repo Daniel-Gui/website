@@ -8,7 +8,7 @@ tags:
   - Direção de Arte
   - Moda
 year: '2023'
-category: 'branding'
+category: 'design'
 link: ''
 imageBasename: work-cover-zac
 galleryImages:

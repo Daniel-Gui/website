@@ -82,7 +82,9 @@
 	<div class="space-y-3">
 		<div class="divider-subtle flex items-center justify-between border-b pb-3">
 			<div class="flex items-center gap-3">
+				<!--
 				<span class="font-mono text-xs text-muted">/{work.slug}</span>
+				-->
 				<h3
 					class="text-lg font-medium tracking-tight"
 					style:view-transition-name="work-title-{work.slug}"

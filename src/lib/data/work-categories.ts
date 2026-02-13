@@ -1,8 +1,7 @@
 export const WORK_CATEGORIES = [
     'todos',
-    'trabalho',
-    'projeto',
-    'componente',
+    'desenvolvimento',
+    'design',
     'conceito'
 ] as const;
 

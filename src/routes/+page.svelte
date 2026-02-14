@@ -2,6 +2,7 @@
 	// Sections
 	import Hero from '$lib/sections/headers/hero.svelte';
 	import CameraRoll from '$lib/components/ui/CameraRoll.svelte';
+	import CertificationsWidget from '$lib/components/ui/CertificationsWidget.svelte';
 	import TerminalWidget from '$lib/components/ui/terminal-widget.svelte';
 	import GalleryWorks from '$lib/sections/mains/gallery-works.svelte';
 	import GalleryPosts from '$lib/sections/mains/gallery-posts.svelte';
@@ -146,7 +147,32 @@
 			linkedinUrl={SOCIAL_LINKS.LINKEDIN}
 			class="w-full lg:col-span-2"
 		/>
-		<TerminalWidget maxHeightClass="h-full max-h-[365px] lg:col-span-2" />
+		<TerminalWidget maxHeightClass="h-full min-h-[365px] max-h-[415px] lg:col-span-2" />
+		<CertificationsWidget
+			items={[
+				{
+					name: 'Interface Craft',
+					institution: 'Josh Puckett',
+					year: '2025'
+				},
+				{
+					name: 'Product Design',
+					institution: 'Rian Dutra',
+					year: '2024'
+				},
+				{
+					name: 'Desenvolvimento Web',
+					institution: 'Rocketseat',
+					year: '2023'
+				},
+				{
+					name: 'UI Design Avançado',
+					institution: 'Origamid',
+					year: '2022'
+				}
+			]}
+			class="w-full lg:col-span-1"
+		/>
 	</div>
 	<GalleryWorks {works} />
 	<GalleryPosts {posts} />

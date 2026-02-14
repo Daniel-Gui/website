@@ -230,6 +230,7 @@
 	<div
 		bind:this={scrollRef}
 		class="flex-1 touch-pan-y overflow-x-hidden overflow-y-auto overscroll-contain p-4 font-mono text-xs leading-relaxed md:text-sm"
+		data-lenis-prevent
 	>
 		{#each history as entry (entry.id)}
 			<div class="terminal-entry mb-1">

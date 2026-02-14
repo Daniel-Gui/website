@@ -334,7 +334,7 @@
 	<div class="container-page relative z-10 pt-20 pb-20 sm:pt-24 sm:pb-24">
 		<div class="relative">
 			<div class="mx-auto max-w-[880px] space-y-10 text-center">
-				<div class="hero-showcase-bleed">
+				<div class="hero-showcase-bleed z-10">
 					<div bind:this={showcaseEl} class="hero-showcase" aria-hidden="true" data-hero-item>
 						<div class="hero-showcase-card hero-showcase-left" data-showcase-card>
 							<div class="hero-showcase-media">
@@ -605,8 +605,9 @@
 		background: rgb(var(--surface) / 0.05);
 		box-shadow: var(--shadow-2);
 		overflow: hidden;
+		cursor: pointer;
 		transition:
-			transform 260ms cubic-bezier(0.16, 1, 0.3, 1),
+			transform 260ms cubic-bezier(0.34, 1.56, 0.64, 1),
 			box-shadow 260ms cubic-bezier(0.16, 1, 0.3, 1),
 			border 260ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
@@ -657,6 +658,14 @@
 		box-shadow: var(--shadow-2);
 		transform: var(--card-transform) translateY(calc(var(--card-y) - 8px))
 			scale(calc(var(--card-scale) * 1.06));
+	}
+
+	/* Elastic press — Squash & Stretch (Principle 1) + Follow Through (Principle 5) */
+	.hero-showcase-card:active {
+		transition-duration: 120ms;
+		transition-timing-function: cubic-bezier(0.2, 0, 0.7, 1);
+		transform: var(--card-transform) translateY(calc(var(--card-y) + 2px))
+			scale(calc(var(--card-scale) * 0.94));
 	}
 
 	.hero-location {

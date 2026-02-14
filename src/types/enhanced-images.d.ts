@@ -43,3 +43,8 @@ declare module '*&w=64' {
 	const value: string;
 	export default value;
 }
+
+declare module '*&w=150' {
+	const value: string;
+	export default value;
+}

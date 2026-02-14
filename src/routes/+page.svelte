@@ -22,6 +22,14 @@
 	import cameraRoll01 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-01.jpg?enhanced';
 	import cameraRoll02 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-02.jpg?enhanced';
 
+	// Institution / Training Images
+	import imgRianDutra from '$lib/assets/images/hero-section/training-riandutra.jpg?enhanced&w=150';
+	import imgInterfaceCraft from '$lib/assets/images/hero-section/training-interface-craft.jpg?enhanced&w=150';
+	import imgUnama from '$lib/assets/images/hero-section/institution-unama.jpg?enhanced&w=150';
+	import imgG4 from '$lib/assets/images/hero-section/institution-g4.jpg?enhanced&w=150';
+	import imgFilmboss from '$lib/assets/images/hero-section/training-filmboss.jpg?enhanced&w=150';
+	import imgUnip from '$lib/assets/images/hero-section/institution-unip.jpg?enhanced&w=150';
+
 	// SEO
 	import SEO from '$lib/components/seo/SEO.svelte';
 	import ogImageAsset from '$lib/assets/ogimage.webp';
@@ -154,43 +162,50 @@
 					name: 'Psicologia Aplicada ao Design',
 					institution: 'Rian Dutra',
 					year: '2026',
-					status: 'in-progress'
+					status: 'in-progress',
+					image: imgRianDutra
 				},
 				{
 					name: 'Interface Craft',
 					institution: 'Josh Puckett',
 					year: '2026',
-					status: 'in-progress'
+					status: 'in-progress',
+					image: imgInterfaceCraft
 				},
 				{
 					name: 'Pós-graduação em Design de Experiência do Usuário',
 					institution: 'UNAMA',
 					year: '2025',
-					status: 'completed'
+					status: 'completed',
+					image: imgUnama
 				},
 				{
 					name: 'Fundamentos em Liderança',
 					institution: 'G4 Educação',
 					year: '2025',
-					status: 'completed'
+					status: 'completed',
+					image: imgG4
 				},
 				{
 					name: 'Workshop IA MAKER',
 					institution: 'FILMBOOS',
 					year: '2025',
-					status: 'completed'
+					status: 'completed',
+					image: imgFilmboss
 				},
 				{
 					name: 'Assumindo a Posição de Liderança',
 					institution: 'G4 Educação',
 					year: '2024',
-					status: 'completed'
+					status: 'completed',
+					image: imgG4
 				},
 				{
 					name: 'CST Análise de Sistemas de Computação',
 					institution: 'Universidade Paulista',
 					year: '2020',
-					status: 'completed'
+					status: 'completed',
+					image: imgUnip
 				}
 			]}
 			maxHeightClass="max-h-[415px]"

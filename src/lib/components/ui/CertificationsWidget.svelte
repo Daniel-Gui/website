@@ -9,6 +9,7 @@
 		institution: string;
 		year: string;
 		status: 'completed' | 'in-progress';
+		image?: any;
 	}
 
 	interface Props {
@@ -55,12 +56,21 @@
 	// Auto-scroll list to keep active item visible
 	$effect(() => {
 		if (!listEl) return;
-		const activeItem = listEl.querySelectorAll('.cert-item')[activeIndex] as
-			| HTMLElement
-			| undefined;
+		const items_els = listEl.querySelectorAll('.cert-item');
+		const activeItem = items_els[activeIndex] as HTMLElement | undefined;
 		if (!activeItem) return;
 
-		activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+		// Scoped scroll — only scroll within the list container, never the page
+		const listTop = listEl.scrollTop;
+		const listHeight = listEl.clientHeight;
+		const itemTop = activeItem.offsetTop - listEl.offsetTop;
+		const itemHeight = activeItem.offsetHeight;
+
+		if (itemTop < listTop) {
+			listEl.scrollTo({ top: itemTop, behavior: 'smooth' });
+		} else if (itemTop + itemHeight > listTop + listHeight) {
+			listEl.scrollTo({ top: itemTop + itemHeight - listHeight, behavior: 'smooth' });
+		}
 	});
 
 	// InView stagger animation
@@ -115,27 +125,36 @@
 				class:featured-exit={isAnimating}
 				class:featured-enter={!isAnimating}
 			>
-				<div class="mb-3 flex items-center gap-2">
-					<div
-						class="flex size-8 items-center justify-center rounded-xl {items[activeIndex].status ===
-						'completed'
-							? 'bg-success/10'
-							: 'bg-accent/10'}"
-					>
-						{#if items[activeIndex].status === 'completed'}
-							<IconSealCheck class="size-5 text-success" />
-						{:else}
-							<IconHourglassHigh class="size-5 text-accent" />
-						{/if}
+				<div class="mb-3 flex items-center justify-between gap-2">
+					<div class="flex items-center gap-2">
+						<div
+							class="flex size-8 items-center justify-center rounded-xl {items[activeIndex]
+								.status === 'completed'
+								? 'bg-success/10'
+								: 'bg-accent/10'}"
+						>
+							{#if items[activeIndex].status === 'completed'}
+								<IconSealCheck class="size-5 text-success" />
+							{:else}
+								<IconHourglassHigh class="size-5 text-accent" />
+							{/if}
+						</div>
+						<span
+							class="font-mono text-[10px] tracking-widest uppercase {items[activeIndex].status ===
+							'completed'
+								? 'text-success'
+								: 'text-accent'}"
+						>
+							{items[activeIndex].status === 'completed' ? 'Concluído' : 'Em andamento'}
+						</span>
 					</div>
-					<span
-						class="font-mono text-[10px] tracking-widest uppercase {items[activeIndex].status ===
-						'completed'
-							? 'text-success'
-							: 'text-accent'}"
-					>
-						{items[activeIndex].status === 'completed' ? 'Concluído' : 'Em andamento'}
-					</span>
+					{#if items[activeIndex].image}
+						<enhanced:img
+							src={items[activeIndex].image}
+							alt={items[activeIndex].institution}
+							class="h-8 w-auto shrink-0 rounded-md object-contain"
+						/>
+					{/if}
 				</div>
 				<h3 class="mb-1 text-base font-medium text-fg">
 					{items[activeIndex].name}

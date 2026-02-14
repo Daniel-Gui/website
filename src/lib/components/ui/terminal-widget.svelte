@@ -258,7 +258,7 @@
 				onkeydown={handleKeydown}
 				type="text"
 				class="flex-1 border-none bg-transparent p-0 text-fg caret-accent shadow-none ring-0 outline-none placeholder:text-muted/50 focus:border-none focus:ring-0 focus:outline-none"
-				placeholder="Type a command..."
+				placeholder="Insira um comando..."
 				spellcheck="false"
 				autocomplete="off"
 				autocapitalize="off"

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import IconSealCheck from '$lib/components/icons/icon-seal-check.svelte';
+	import IconHourglassHigh from '$lib/components/icons/icon-hourglass-high.svelte';
 	import { cn } from '$lib/utils';
 	import { animate, stagger, inView } from 'motion';
 
@@ -7,18 +8,27 @@
 		name: string;
 		institution: string;
 		year: string;
-		highlight?: boolean;
+		status: 'completed' | 'in-progress';
 	}
 
 	interface Props {
 		title?: string;
 		items: Certification[];
 		class?: string;
+		maxHeightClass?: string;
+		minHeightClass?: string;
 	}
 
-	let { title = 'CERTIFICAÇÕES', items, class: className = '' }: Props = $props();
+	let {
+		title = 'CERTIFICAÇÕES',
+		items,
+		class: className = '',
+		maxHeightClass = '',
+		minHeightClass = ''
+	}: Props = $props();
 
 	let containerEl: HTMLDivElement | undefined = $state();
+	let listEl: HTMLDivElement | undefined = $state();
 	let activeIndex = $state(0);
 	let isAnimating = $state(false);
 
@@ -40,6 +50,17 @@
 		}, 4000);
 
 		return () => clearInterval(interval);
+	});
+
+	// Auto-scroll list to keep active item visible
+	$effect(() => {
+		if (!listEl) return;
+		const activeItem = listEl.querySelectorAll('.cert-item')[activeIndex] as
+			| HTMLElement
+			| undefined;
+		if (!activeItem) return;
+
+		activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 	});
 
 	// InView stagger animation
@@ -72,7 +93,9 @@
 <div
 	bind:this={containerEl}
 	class={cn(
-		'relative flex h-full flex-col overflow-hidden rounded-3xl border border-border/10 bg-surface/50 backdrop-blur-md',
+		'relative flex flex-col overflow-hidden rounded-3xl border border-border/10 bg-surface/50 backdrop-blur-md',
+		maxHeightClass,
+		minHeightClass,
 		className
 	)}
 >
@@ -81,7 +104,7 @@
 		<h2 class="font-mono text-xs font-medium tracking-widest text-muted uppercase">
 			{title}
 		</h2>
-		<span class="font-mono text-sm text-muted">{items.length} cursos</span>
+		<span class="font-mono text-sm text-muted">{items.length} formações</span>
 	</div>
 
 	<!-- Featured Certification -->
@@ -93,11 +116,25 @@
 				class:featured-enter={!isAnimating}
 			>
 				<div class="mb-3 flex items-center gap-2">
-					<div class="flex size-8 items-center justify-center rounded-xl bg-accent/10">
-						<IconSealCheck class="size-5 text-accent" />
+					<div
+						class="flex size-8 items-center justify-center rounded-xl {items[activeIndex].status ===
+						'completed'
+							? 'bg-success/10'
+							: 'bg-accent/10'}"
+					>
+						{#if items[activeIndex].status === 'completed'}
+							<IconSealCheck class="size-5 text-success" />
+						{:else}
+							<IconHourglassHigh class="size-5 text-accent" />
+						{/if}
 					</div>
-					<span class="font-mono text-[10px] tracking-widest text-accent uppercase">
-						Em destaque
+					<span
+						class="font-mono text-[10px] tracking-widest uppercase {items[activeIndex].status ===
+						'completed'
+							? 'text-success'
+							: 'text-accent'}"
+					>
+						{items[activeIndex].status === 'completed' ? 'Concluído' : 'Em andamento'}
 					</span>
 				</div>
 				<h3 class="mb-1 text-base font-medium text-fg">
@@ -130,18 +167,30 @@
 	{/if}
 
 	<!-- Certifications List -->
-	<div class="flex flex-1 flex-col">
+	<div
+		bind:this={listEl}
+		class="flex flex-1 flex-col overflow-y-auto overscroll-contain"
+		data-lenis-prevent
+	>
 		{#each items as item, i (item.name)}
 			<div
 				class="cert-item group relative flex items-center gap-3 px-6 py-3 transition-colors"
 				style="opacity: 0"
 			>
-				<!-- Seal icon -->
-				<IconSealCheck
-					class="size-4 shrink-0 transition-colors duration-200 {i === activeIndex
-						? 'text-accent'
-						: 'text-muted'}"
-				/>
+				<!-- Status icon -->
+				{#if item.status === 'completed'}
+					<IconSealCheck
+						class="size-4 shrink-0 transition-colors duration-200 {i === activeIndex
+							? 'text-success'
+							: 'text-muted'}"
+					/>
+				{:else}
+					<IconHourglassHigh
+						class="size-4 shrink-0 transition-colors duration-200 {i === activeIndex
+							? 'text-accent'
+							: 'text-muted'}"
+					/>
+				{/if}
 
 				<!-- Content -->
 				<div class="flex min-w-0 flex-1 items-baseline justify-between gap-2">

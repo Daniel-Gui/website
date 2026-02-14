@@ -151,27 +151,51 @@
 		<CertificationsWidget
 			items={[
 				{
+					name: 'Psicologia Aplicada ao Design',
+					institution: 'Rian Dutra',
+					year: '2026',
+					status: 'in-progress'
+				},
+				{
 					name: 'Interface Craft',
 					institution: 'Josh Puckett',
-					year: '2025'
+					year: '2026',
+					status: 'in-progress'
 				},
 				{
-					name: 'Product Design',
-					institution: 'Rian Dutra',
-					year: '2024'
+					name: 'Pós-graduação em Design de Experiência do Usuário',
+					institution: 'UNAMA',
+					year: '2025',
+					status: 'completed'
 				},
 				{
-					name: 'Desenvolvimento Web',
-					institution: 'Rocketseat',
-					year: '2023'
+					name: 'Fundamentos em Liderança',
+					institution: 'G4 Educação',
+					year: '2025',
+					status: 'completed'
 				},
 				{
-					name: 'UI Design Avançado',
-					institution: 'Origamid',
-					year: '2022'
+					name: 'Workshop IA MAKER',
+					institution: 'FILMBOOS',
+					year: '2025',
+					status: 'completed'
+				},
+				{
+					name: 'Assumindo a Posição de Liderança',
+					institution: 'G4 Educação',
+					year: '2024',
+					status: 'completed'
+				},
+				{
+					name: 'CST Análise de Sistemas de Computação',
+					institution: 'Universidade Paulista',
+					year: '2020',
+					status: 'completed'
 				}
 			]}
-			class="w-full lg:col-span-1"
+			maxHeightClass="max-h-[415px]"
+			minHeightClass="min-h-[365px]"
+			class="w-full  lg:col-span-1"
 		/>
 	</div>
 	<GalleryWorks {works} />

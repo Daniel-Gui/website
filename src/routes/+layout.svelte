@@ -33,7 +33,9 @@
 	<link rel="icon" type="image/webp" href={favicon3} sizes="48x48" />
 </svelte:head>
 <ModeWatcher />
+<!--
 <Cursor color="#fff" />
+-->
 <Navbar />
 {@render children()}
 

@@ -5,11 +5,14 @@
 	import IconDocFolder from '$lib/components/icons/icon-doc-folder.svelte';
 	import IconWhatsapp from '$lib/components/icons/icon-whatsapp.svelte';
 	import IconFile from '$lib/components/icons/icon-file.svelte';
+	import IconSealCheck from '$lib/components/icons/icon-seal-check.svelte';
 	import { cn } from '$lib/utils';
 	import { lenis } from '$lib/utils/lenis.svelte';
 	import heroImage01 from '$lib/assets/images/hero-section/hero-image-01.jpg?enhanced&w=250;280;500;800';
 	import heroImage02 from '$lib/assets/images/hero-section/hero-image-02.jpg?enhanced&w=250;280;500;800';
 	import heroImage03 from '$lib/assets/images/hero-section/hero-image-03.jpg?enhanced&w=250;280;500;800';
+	import joshPuckettImage from '$lib/assets/images/hero-section/joshpuckett.jpg?enhanced&w=64';
+	import rianDutraImage from '$lib/assets/images/hero-section/riandutra.jpg?enhanced&w=64';
 
 	type AvailabilityStatus = 'available' | 'busy' | 'unavailable';
 
@@ -382,11 +385,38 @@
 
 				<div class="mx-auto mt-6 flex max-w-[62ch] flex-col items-center gap-4">
 					<p
-						class="text-lg text-pretty text-muted sm:text-xl"
+						class="text-lg leading-relaxed text-pretty text-muted sm:text-xl"
 						bind:this={leadTextEl}
 						data-hero-item
 					>
-						Desenvolvedor Frontend, UX, Product & Brand Designer.
+						Desenvolvedor Front-end, UX, Product & Brand Designer.
+						<br />
+						Atualmente construindo
+						<span class="hero-badge">Waypoint.AI</span>
+						&
+						<span class="hero-badge">QuadraLink</span>.
+						<br />
+						Aprendendo mais com
+						<span class="hero-badge pr-3 pl-1">
+							<enhanced:img
+								src={rianDutraImage}
+								alt="Rian Dutra"
+								class="size-5 rounded-full object-cover"
+							/>
+							Rian Dutra
+							<IconSealCheck class="ml-1 size-4 text-accent" />
+						</span>
+						com psicologia aplicada ao design, e
+						<span class="hero-badge pr-3 pl-1">
+							<enhanced:img
+								src={joshPuckettImage}
+								alt="Josh Puckett"
+								class="size-5 rounded-full object-cover"
+							/>
+							Josh Puckett
+							<IconSealCheck class="ml-1 size-4 text-accent" />
+						</span>
+						no Interface Craft.
 					</p>
 
 					<div class="chip flex items-center gap-3" bind:this={badgeEl} data-hero-item>
@@ -775,11 +805,26 @@
 		transform: translateX(calc(var(--hl-x, 0px) - var(--seg-pad)));
 		border-radius: 9999px;
 		background: rgb(var(--surface) / 0.92);
+		background: rgb(var(--surface) / 0.92);
 		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
 		transition:
 			transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
 			width 420ms cubic-bezier(0.16, 1, 0.3, 1),
 			opacity 240ms ease;
+	}
+
+	.hero-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.375rem;
+		border-radius: 9999px;
+		border: 1px solid rgb(var(--border) / 0.05);
+		background: rgb(var(--overlay) / 0.05);
+		padding: 0.25rem 0.5rem;
+		font-size: 0.875rem;
+		line-height: 1;
+		vertical-align: middle;
+		color: rgb(var(--fg));
 	}
 
 	:global(html.dark) .hero-highlight {

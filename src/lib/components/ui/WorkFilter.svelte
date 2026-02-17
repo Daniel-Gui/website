@@ -32,7 +32,7 @@
 		{#each WORK_CATEGORIES as category}
 			{@const isActive = activeFilter === category}
 			<button
-				class="segmented-item relative z-10 shrink-0 text-xs font-medium capitalize transition-colors duration-200"
+				class="segmented-item relative z-10 shrink-0 cursor-pointer text-xs font-medium capitalize transition-colors duration-200"
 				class:text-fg={isActive}
 				class:text-muted={!isActive}
 				onclick={() => handleClick(category)}

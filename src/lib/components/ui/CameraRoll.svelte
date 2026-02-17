@@ -90,7 +90,7 @@
 			{#each items as item, i (item.id)}
 				<button
 					onclick={() => goTo(i)}
-					class="flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300 hover:bg-muted/10 md:h-10 md:w-10"
+					class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full transition-all duration-300 hover:bg-muted/10 md:h-10 md:w-10"
 					aria-label={`Go to item ${i + 1} of ${items.length}`}
 					aria-selected={i === activeIndex}
 					role="tab"

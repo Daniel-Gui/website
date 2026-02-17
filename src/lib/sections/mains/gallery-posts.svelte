@@ -123,8 +123,8 @@
 			</div>
 		</div>
 
-		<!-- Posts List -->
-		<div class="grid gap-6 md:grid-cols-2">
+		<!-- Posts List / Mobile Carousel -->
+		<div class="gallery-carousel gap-6 md:grid md:grid-cols-2" data-lenis-prevent>
 			{#each posts.slice(0, 6) as post (post.slug)}
 				<PostCard {post} hidden={!revealed} />
 			{/each}
@@ -146,5 +146,33 @@
 	.gallery-hidden {
 		opacity: 0;
 		transform: translateY(16px);
+	}
+
+	/* Mobile carousel with scroll-snap */
+	@media (max-width: 767px) {
+		.gallery-carousel {
+			display: flex;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			-webkit-overflow-scrolling: touch;
+			scroll-padding-inline: 1.5rem;
+			padding-inline: 1.5rem;
+			margin-inline: -1.5rem;
+		}
+
+		.gallery-carousel > :global(*) {
+			flex: 0 0 85%;
+			scroll-snap-align: center;
+		}
+
+		/* Hide scrollbar */
+		.gallery-carousel::-webkit-scrollbar {
+			display: none;
+		}
+
+		.gallery-carousel {
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
 	}
 </style>

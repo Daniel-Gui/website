@@ -165,8 +165,12 @@
 			</div>
 		</div>
 
-		<!-- Grid -->
-		<div bind:this={gridEl} class="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+		<!-- Grid / Mobile Carousel -->
+		<div
+			bind:this={gridEl}
+			class="gallery-carousel gap-6 sm:grid sm:grid-cols-2 lg:grid-cols-2"
+			data-lenis-prevent
+		>
 			{#each animatedWorks as work (work.slug)}
 				<WorkCard
 					{work}
@@ -182,5 +186,33 @@
 	.gallery-hidden {
 		opacity: 0;
 		transform: translateY(16px);
+	}
+
+	/* Mobile carousel with scroll-snap */
+	@media (max-width: 639px) {
+		.gallery-carousel {
+			display: flex;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			-webkit-overflow-scrolling: touch;
+			scroll-padding-inline: 1.5rem;
+			padding-inline: 1.5rem;
+			margin-inline: -1.5rem;
+		}
+
+		.gallery-carousel > :global(*) {
+			flex: 0 0 85%;
+			scroll-snap-align: center;
+		}
+
+		/* Hide scrollbar */
+		.gallery-carousel::-webkit-scrollbar {
+			display: none;
+		}
+
+		.gallery-carousel {
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
 	}
 </style>

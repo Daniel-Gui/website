@@ -91,29 +91,31 @@
 				return;
 			}
 
-			// ── Phase 0: Initial state ──
+			// ── Phase 0: Batch all initial states + will-change (avoid forced reflows) ──
 			overlay.style.opacity = '1';
 			grid.style.opacity = '0';
 			grid.style.transform = 'scale(0.92)';
+			grid.style.willChange = 'transform, opacity';
 
 			for (const cell of cellEls) {
 				cell.style.opacity = '0';
 				cell.style.transform = 'scale(0.88)';
+				cell.style.willChange = 'transform, opacity, filter';
 			}
 			for (const label of labelEls) {
 				label.style.opacity = '0';
 				label.style.transform = 'translateY(12px)';
+				label.style.willChange = 'transform, opacity, filter';
 			}
 
-			await sleep(200);
+			await sleep(100);
 			if (cancelled) return;
 
 			// ── Phase 1: Grid entrance with spring ──
-			grid.style.willChange = 'transform, opacity';
 			const gridReveal = animate(
 				grid,
 				{ opacity: [0, 1], transform: ['scale(0.92)', 'scale(1.02)', 'scale(1)'] },
-				{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }
+				{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }
 			);
 			controls.push(gridReveal);
 
@@ -122,20 +124,20 @@
 				if (cancelled) return;
 				const cell = cellEls[i];
 				if (!cell) continue;
-				cell.style.willChange = 'transform, opacity';
-				const delay = 0.08 * i;
-				const ctrl = animate(
-					cell,
-					{ opacity: [0, 1], transform: ['scale(0.88)', 'scale(1.03)', 'scale(1)'] },
-					{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay }
+				const delay = 0.06 * i;
+				controls.push(
+					animate(
+						cell,
+						{ opacity: [0, 1], transform: ['scale(0.88)', 'scale(1.03)', 'scale(1)'] },
+						{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay }
+					)
 				);
-				controls.push(ctrl);
 			}
 
-			await sleep(700);
+			await sleep(450);
 			if (cancelled) return;
 
-			// ── Phase 2: Spotlight sequence ──
+			// ── Phase 2: Spotlight sequence (faster dwell) ──
 			for (let i = 0; i < steps.length; i++) {
 				if (cancelled) return;
 
@@ -143,7 +145,6 @@
 				for (let j = 0; j < cellEls.length; j++) {
 					const cell = cellEls[j];
 					if (!cell) continue;
-					cell.style.willChange = 'transform, opacity';
 
 					if (j === i) {
 						controls.push(
@@ -154,7 +155,7 @@
 									transform: 'scale(1.08)',
 									filter: 'brightness(1.1)'
 								},
-								{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+								{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }
 							)
 						);
 					} else {
@@ -166,7 +167,7 @@
 									transform: 'scale(0.95)',
 									filter: 'brightness(0.6)'
 								},
-								{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }
+								{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }
 							)
 						);
 					}
@@ -175,7 +176,6 @@
 				// Show label
 				const label = labelEls[i];
 				if (label) {
-					label.style.willChange = 'transform, opacity';
 					controls.push(
 						animate(
 							label,
@@ -184,12 +184,12 @@
 								transform: ['translateY(12px)', 'translateY(0px)'],
 								filter: ['blur(4px)', 'blur(0px)']
 							},
-							{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+							{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }
 						)
 					);
 				}
 
-				await sleep(1100);
+				await sleep(800);
 				if (cancelled) return;
 
 				// Hide label before next
@@ -202,10 +202,10 @@
 								transform: 'translateY(-8px)',
 								filter: 'blur(4px)'
 							},
-							{ duration: 0.25, ease: [0.7, 0, 0.84, 0] }
+							{ duration: 0.2, ease: [0.7, 0, 0.84, 0] }
 						)
 					);
-					await sleep(200);
+					await sleep(150);
 					if (cancelled) return;
 				}
 			}
@@ -216,7 +216,6 @@
 			for (let j = 0; j < cellEls.length; j++) {
 				const cell = cellEls[j];
 				if (!cell) continue;
-				cell.style.willChange = 'transform, opacity';
 
 				if (j === lastIdx) {
 					controls.push(
@@ -227,7 +226,7 @@
 								opacity: 1,
 								filter: 'brightness(1.15)'
 							},
-							{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+							{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }
 						)
 					);
 				} else {
@@ -235,7 +234,7 @@
 						animate(
 							cell,
 							{ opacity: 0, transform: 'scale(0.8)' },
-							{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }
+							{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }
 						)
 					);
 				}
@@ -248,24 +247,23 @@
 					animate(
 						lastLabel,
 						{ opacity: 0, transform: 'translateY(-6px)' },
-						{ duration: 0.35, ease: [0.4, 0, 0.2, 1], delay: 0.3 }
+						{ duration: 0.3, ease: [0.4, 0, 0.2, 1], delay: 0.2 }
 					)
 				);
 			}
 
-			await sleep(800);
+			await sleep(600);
 			if (cancelled) return;
 
 			// ── Phase 4: Reveal site ──
-			grid.style.willChange = 'transform, opacity';
 			controls.push(
 				animate(
 					grid,
 					{ opacity: 0, transform: 'scale(0.9)' },
-					{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }
+					{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }
 				)
 			);
-			await sleep(300);
+			await sleep(250);
 			if (cancelled) return;
 
 			overlay.style.willChange = 'clip-path';
@@ -274,17 +272,21 @@
 				animate(
 					overlay,
 					{ clipPath: 'inset(0% 0% 100% 0%)' },
-					{ duration: 0.7, ease: [0.8, 0, 0.1, 1] }
+					{ duration: 0.6, ease: [0.8, 0, 0.1, 1] }
 				)
 			);
-			await sleep(700);
+			await sleep(600);
 
 			if (cancelled) return;
 
-			// Clean up will-change
+			// ── Cleanup: batch all will-change removals ──
 			grid.style.willChange = 'auto';
+			overlay.style.willChange = 'auto';
 			for (const cell of cellEls) {
 				if (cell) cell.style.willChange = 'auto';
+			}
+			for (const label of labelEls) {
+				if (label) label.style.willChange = 'auto';
 			}
 
 			isVisible = false;

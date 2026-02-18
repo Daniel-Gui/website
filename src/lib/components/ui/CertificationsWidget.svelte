@@ -119,7 +119,7 @@
 
 	<!-- Featured Certification -->
 	{#if items.length > 0}
-		<div class="mx-6 mb-4 rounded-2xl border border-border/5 bg-overlay/5 p-5">
+		<div class="mx-6 mb-4 rounded-2xl border border-border/5 bg-surface p-5">
 			<div
 				class="featured-cert"
 				class:featured-exit={isAnimating}
@@ -164,22 +164,16 @@
 				</p>
 			</div>
 
-			<!-- Dots indicator -->
-			<div class="mt-4 flex items-center justify-center gap-1.5">
+			<!-- Dots indicator (visual only, not interactive) -->
+			<div class="mt-4 flex items-center justify-center gap-1.5" aria-hidden="true">
 				{#each items as _, i (i)}
-					<button
-						type="button"
+					<span
 						class="size-1.5 rounded-full transition-all duration-300"
 						class:bg-accent={i === activeIndex}
 						class:scale-125={i === activeIndex}
 						class:bg-muted={i !== activeIndex}
 						class:opacity-30={i !== activeIndex}
-						onclick={() => {
-							activeIndex = i;
-							isAnimating = false;
-						}}
-						aria-label="Ver certificação {i + 1}"
-					></button>
+					></span>
 				{/each}
 			</div>
 		</div>

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { tick } from 'svelte';
+	import type { Picture } from 'vite-imagetools';
 
 	type Step = {
-		src: string;
+		src: string | Picture;
 		alt: string;
 		label: string;
 	};
@@ -317,13 +317,14 @@
 						bind:this={cellEls[i]}
 						class="intro-cell group relative aspect-square w-[min(38vw,180px)] overflow-hidden rounded-2xl border border-white/10 sm:w-[min(38vw,200px)]"
 					>
-						<img
+						<enhanced:img
 							class="h-full w-full object-cover"
 							src={step.src}
 							alt={step.alt}
 							loading="eager"
 							fetchpriority={i === 0 ? 'high' : 'auto'}
 							decoding="async"
+							sizes="(max-width: 640px) 38vw, 200px"
 						/>
 						<!-- Subtle vignette -->
 						<div

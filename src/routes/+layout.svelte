@@ -11,10 +11,10 @@
 	import { ModeWatcher } from 'mode-watcher';
 
 	// Preloading images
-	import introImg01 from '$lib/assets/images/preloading/Intro-website-03.jpg';
-	import introImg02 from '$lib/assets/images/preloading/Intro-website-02.jpg';
-	import introImg03 from '$lib/assets/images/preloading/Intro-website-01.jpg';
-	import introImg04 from '$lib/assets/images/preloading/Intro-website-04.jpg';
+	import introImg01 from '$lib/assets/images/preloading/Intro-website-03.jpg?enhanced&w=200;400';
+	import introImg02 from '$lib/assets/images/preloading/Intro-website-02.jpg?enhanced&w=200;400';
+	import introImg03 from '$lib/assets/images/preloading/Intro-website-01.jpg?enhanced&w=200;400';
+	import introImg04 from '$lib/assets/images/preloading/Intro-website-04.jpg?enhanced&w=200;400';
 
 	const introSteps = [
 		{

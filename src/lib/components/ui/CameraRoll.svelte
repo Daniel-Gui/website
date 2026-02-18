@@ -133,6 +133,7 @@
 							class="h-full w-full object-cover"
 							loading={i === 0 ? 'eager' : 'lazy'}
 							draggable="false"
+							sizes="(max-width: 640px) 85vw, 340px"
 						/>
 					{/if}
 

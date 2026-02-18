@@ -3,7 +3,7 @@
 	import favicon1 from '$lib/assets/favicon@1x.webp';
 	import favicon2 from '$lib/assets/favicon@2x.webp';
 	import favicon3 from '$lib/assets/favicon@3x.webp';
-	import Cursor from '$lib/components/cursor/cursor.svelte';
+	//import Cursor from '$lib/components/cursor/cursor.svelte';
 	import Introduction from '$lib/components/introduction/introduction.svelte';
 	import Navbar from '$lib/components/navigation/navbar.svelte';
 	import { introDone } from '$lib/stores/intro';
@@ -11,10 +11,10 @@
 	import { ModeWatcher } from 'mode-watcher';
 
 	// Preloading images
-	import introImg01 from '$lib/assets/images/preloading/Intro-website-03.jpg?enhanced&w=200;400';
-	import introImg02 from '$lib/assets/images/preloading/Intro-website-02.jpg?enhanced&w=200;400';
-	import introImg03 from '$lib/assets/images/preloading/Intro-website-01.jpg?enhanced&w=200;400';
-	import introImg04 from '$lib/assets/images/preloading/Intro-website-04.jpg?enhanced&w=200;400';
+	import introImg01 from '$lib/assets/images/preloading/Intro-website-03.jpg?enhanced&w=160;320';
+	import introImg02 from '$lib/assets/images/preloading/Intro-website-02.jpg?enhanced&w=160;320';
+	import introImg03 from '$lib/assets/images/preloading/Intro-website-01.jpg?enhanced&w=160;320';
+	import introImg04 from '$lib/assets/images/preloading/Intro-website-04.jpg?enhanced&w=160;320';
 
 	const introSteps = [
 		{

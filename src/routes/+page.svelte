@@ -19,8 +19,8 @@
 	import brandXobafinho from '$lib/assets/images/brands/brand-xobafinho.png?enhanced';
 
 	// Widget Images
-	import cameraRoll01 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-01.jpg?enhanced';
-	import cameraRoll02 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-02.jpg?enhanced';
+	import cameraRoll01 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-01.jpg?enhanced&w=340;650';
+	import cameraRoll02 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-02.jpg?enhanced&w=340;650';
 
 	// Institution / Training Images
 	import imgRianDutra from '$lib/assets/images/hero-section/training-riandutra.jpg?enhanced&w=150';

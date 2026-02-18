@@ -39,7 +39,7 @@
 				src={coverImage}
 				alt=""
 				loading="lazy"
-				sizes="(max-width: 768px) 85vw, (max-width: 1024px) 50vw, 33vw"
+				sizes="(max-width: 639px) 85vw, (max-width: 1023px) 50vw, 548px"
 				class="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105 {loaded
 					? 'opacity-100'
 					: 'opacity-0'}"

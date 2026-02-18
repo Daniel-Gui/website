@@ -344,7 +344,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
-									sizes="(max-width: 640px) 250px, 300px"
+									sizes="(max-width: 639px) 220px, 240px"
 								/>
 							</div>
 						</div>
@@ -356,7 +356,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
-									sizes="(max-width: 640px) 250px, 300px"
+									sizes="(max-width: 639px) 220px, 240px"
 								/>
 							</div>
 						</div>
@@ -368,7 +368,7 @@
 									loading="eager"
 									fetchpriority="low"
 									decoding="async"
-									sizes="(max-width: 640px) 250px, 300px"
+									sizes="(max-width: 639px) 220px, 240px"
 								/>
 							</div>
 						</div>

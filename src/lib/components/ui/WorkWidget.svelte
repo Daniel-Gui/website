@@ -9,11 +9,18 @@
 		current?: boolean;
 	}
 
+	interface MarqueeBrand {
+		id: string;
+		name: string;
+		src?: any;
+	}
+
 	interface Props {
 		title?: string;
 		items: WorkExperience[];
 		linkedinUrl: string;
-		marqueeItems?: { id: string; name: string; src?: any }[];
+		groupBrands?: MarqueeBrand[];
+		freelanceBrands?: MarqueeBrand[];
 		class?: string;
 	}
 
@@ -21,9 +28,12 @@
 		title = 'EXPERIÊNCIAS',
 		items,
 		linkedinUrl,
-		marqueeItems = [],
+		groupBrands = [],
+		freelanceBrands = [],
 		class: className = ''
 	}: Props = $props();
+
+	let hasMarquee = $derived(groupBrands.length > 0 || freelanceBrands.length > 0);
 </script>
 
 <div
@@ -39,7 +49,7 @@
 
 	<!-- List -->
 	<div class="flex flex-col">
-		{#each items as item, i}
+		{#each items as item, i (item.company + item.period)}
 			<div class="group relative flex items-start gap-4 px-6 py-4 transition-colors">
 				<!-- Bullet Point -->
 				<div class="mt-1.5 flex h-3 items-center">
@@ -115,9 +125,33 @@
 	</div>
 
 	<!-- Marquee Section -->
-	{#if marqueeItems.length > 0}
-		<div class="bg-subtle/30 border-t border-border/5 py-4">
-			<Marquee items={marqueeItems} speed={40} class="mask-linear-to-r" />
+	{#if hasMarquee}
+		<div class="flex flex-col gap-0 border-t border-border/5">
+			{#if groupBrands.length > 0}
+				<div class="flex items-center gap-0">
+					<span
+						class="shrink-0 border-r border-border/5 px-4 py-3 font-mono text-[10px] tracking-widest text-muted/60 uppercase"
+					>
+						Contratado
+					</span>
+					<div class="min-w-0 flex-1 overflow-hidden py-3">
+						<Marquee items={groupBrands} speed={35} direction="left" />
+					</div>
+				</div>
+			{/if}
+
+			{#if freelanceBrands.length > 0}
+				<div class="flex items-center gap-0 border-t border-border/5">
+					<span
+						class="shrink-0 border-r border-border/5 px-4 py-3 font-mono text-[10px] tracking-widest text-muted/60 uppercase"
+					>
+						Freelance
+					</span>
+					<div class="min-w-0 flex-1 overflow-hidden py-3">
+						<Marquee items={freelanceBrands} speed={30} direction="right" />
+					</div>
+				</div>
+			{/if}
 		</div>
 	{/if}
 </div>

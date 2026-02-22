@@ -14,9 +14,11 @@
 	import brandImunehair from '$lib/assets/images/brands/brand-imunehair.png?enhanced';
 	import brandLimpatinha from '$lib/assets/images/brands/brand-limpatinha.png?enhanced';
 	import brandMaisVelox from '$lib/assets/images/brands/brand-mais-velox.png?enhanced';
+	import brandOusada from '$lib/assets/images/brands/brand-ousada.png?enhanced';
 	import brandRizu from '$lib/assets/images/brands/brand-rizu.png?enhanced';
 	import brandSartec from '$lib/assets/images/brands/brand-sartec.png?enhanced';
 	import brandXobafinho from '$lib/assets/images/brands/brand-xobafinho.png?enhanced';
+	import brandZac from '$lib/assets/images/brands/brand-zac.png?enhanced';
 
 	// Widget Images
 	import cameraRoll01 from '$lib/assets/images/widgets/cameraroll/cameraroll-image-01.jpg?enhanced&w=340;650';
@@ -99,63 +101,6 @@
 <main>
 	<Hero />
 	<div class="container-page grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-		<CameraRoll
-			items={[
-				{
-					id: '1',
-					type: 'image',
-					src: cameraRoll01,
-					alt: 'Coffee shop view'
-				},
-				{
-					id: '2',
-					type: 'video',
-					src: cameraRollVideo01,
-					alt: 'Abstract tech viz'
-				},
-				{
-					id: '3',
-					type: 'image',
-					src: cameraRoll02,
-					alt: 'Tech stack books'
-				}
-			]}
-			class="min-h-[400px] w-full lg:col-span-1"
-		/>
-		<WorkWidget
-			items={[
-				{
-					role: 'Front-end developer / UX & UI Designer',
-					company: 'Grupo Ei, beleza?',
-					period: '2022 — 2026',
-					current: true
-				},
-				{
-					role: 'Front-end developer / UI Designer',
-					company: 'Sartec Sistemas',
-					period: '2021 — 2022'
-				},
-				{
-					role: 'Front-end developer (Estágio)',
-					company: 'Sartec Sistemas',
-					period: '2019 — 2020'
-				}
-			]}
-			marqueeItems={[
-				{ id: '1', name: 'Beleza Brasileira', src: brandBelezaBrasileira },
-				{ id: '2', name: 'Gama', src: brandGama },
-				{ id: '3', name: 'Hidratei', src: brandHidratei },
-				{ id: '4', name: 'Imunehair', src: brandImunehair },
-				{ id: '5', name: 'Limpatinha', src: brandLimpatinha },
-				{ id: '6', name: 'Mais Veloz', src: brandMaisVelox },
-				{ id: '7', name: 'Rizu', src: brandRizu },
-				{ id: '8', name: 'Sartec', src: brandSartec },
-				{ id: '9', name: 'Xô Bafinho', src: brandXobafinho }
-			]}
-			linkedinUrl={SOCIAL_LINKS.LINKEDIN}
-			class="w-full lg:col-span-2"
-		/>
-		<TerminalWidget maxHeightClass="h-full min-h-[365px] max-h-[415px] lg:col-span-2" />
 		<CertificationsWidget
 			items={[
 				{
@@ -208,9 +153,70 @@
 					image: imgUnip
 				}
 			]}
-			maxHeightClass="max-h-[415px]"
+			maxHeightClass="max-h-[527px]"
 			minHeightClass="min-h-[365px]"
-			class="w-full  lg:col-span-1"
+			class="h-full w-full  lg:col-span-1"
+		/>
+		<WorkWidget
+			items={[
+				{
+					role: 'Front-end developer / UX & UI Designer',
+					company: 'Grupo Ei, beleza?',
+					period: '2022 — 2026',
+					current: true
+				},
+				{
+					role: 'Front-end developer / UI Designer',
+					company: 'Sartec Sistemas',
+					period: '2021 — 2022'
+				},
+				{
+					role: 'Front-end developer (Estágio)',
+					company: 'Sartec Sistemas',
+					period: '2019 — 2020'
+				}
+			]}
+			groupBrands={[
+				{ id: '1', name: 'Sartec', src: brandSartec },
+				{ id: '2', name: 'Beleza Brasileira', src: brandBelezaBrasileira },
+				{ id: '3', name: 'Hidratei', src: brandHidratei },
+				{ id: '4', name: 'Imunehair', src: brandImunehair },
+				{ id: '5', name: 'Limpatinha', src: brandLimpatinha },
+				{ id: '6', name: 'Rizu', src: brandRizu },
+				{ id: '7', name: 'Xô Bafinho', src: brandXobafinho }
+			]}
+			freelanceBrands={[
+				{ id: '1', name: 'Gama', src: brandGama },
+				{ id: '2', name: 'Mais Velox', src: brandMaisVelox },
+				{ id: '3', name: 'Zac', src: brandZac },
+				{ id: '4', name: 'Ousada', src: brandOusada }
+			]}
+			linkedinUrl={SOCIAL_LINKS.LINKEDIN}
+			class="w-full lg:col-span-2"
+		/>
+		<TerminalWidget maxHeightClass="h-full min-h-[365px] max-h-[415px] lg:col-span-2" />
+		<CameraRoll
+			items={[
+				{
+					id: '1',
+					type: 'image',
+					src: cameraRoll01,
+					alt: 'Coffee shop view'
+				},
+				{
+					id: '2',
+					type: 'video',
+					src: cameraRollVideo01,
+					alt: 'Abstract tech viz'
+				},
+				{
+					id: '3',
+					type: 'image',
+					src: cameraRoll02,
+					alt: 'Tech stack books'
+				}
+			]}
+			class="min-h-[400px] w-full lg:col-span-1"
 		/>
 	</div>
 	<GalleryWorks {works} />
